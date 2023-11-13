@@ -1,12 +1,10 @@
 package co.geisyanne.meuapp.main.view
 
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.databinding.ActivityMainBinding
-import co.geisyanne.meuapp.drawTeam.DrawTeamActivity
+import co.geisyanne.meuapp.drawTeam.view.DrawTeamActivity
 import co.geisyanne.meuapp.scoreboard.view.ScoreboardActivity
 
 class MainActivity : AppCompatActivity() {

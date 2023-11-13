@@ -3,5 +3,5 @@
     <string name="btn_draw_team">Sortear times</string>
     <string name="btn_scoreboard">Placar</string>
     <string name="txt_score">%02d</string>
-    <string name="txt_help">Click normal: +1 ponto\\n\nClick longo: -1 ponto\n</string>
+    <string name="txt_help">Click normal: +1 ponto\n\nClick longo: -1 ponto\n</string>
 </resources>

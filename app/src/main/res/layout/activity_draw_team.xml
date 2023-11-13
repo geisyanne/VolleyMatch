@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF07799"
-    tools:context=".drawTeam.DrawTeamActivity">
+    tools:context=".drawTeam.view.DrawTeamActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
