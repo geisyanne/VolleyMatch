@@ -12,7 +12,7 @@
         android:id="@+id/main_btn_draw_team"
         android:layout_width="150dp"
         android:layout_height="120dp"
-        android:text="@string/btn_draw_team"
+        android:text="@string/draw_teams"
         android:layout_marginBottom="60dp"/>
 
 

@@ -1,7 +1,33 @@
 <resources>
     <string name="app_name">MeuApp</string>
-    <string name="btn_draw_team">Sortear times</string>
+    <string name="draw_teams">Sortear times</string>
+    <string name="draw">Sortear</string>
     <string name="btn_scoreboard">Placar</string>
     <string name="txt_score">%02d</string>
     <string name="txt_help">Click normal: +1 ponto\n\nClick longo: -1 ponto\n</string>
+    <string name="player">Jogador</string>
+    <string name="groups">Grupos</string>
+    <string name="group">Grupo</string>
+
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="register_player">Cadastrar Jogador</string>
+    <string name="create_group">Criar Grupo</string>
+    <string name="save">Salvar</string>
+    <string name="players">Jogadores</string>
+    <string name="empty_player_list">Nenhum jogador cadastrado</string>
+    <string name="group_empty_player_list">Nenhum jogador no grupo</string>
+    <string name="empty_groups_list">Nenhum grupo criado</string>
+    <string name="name">Nome</string>
+    <string name="position">Posição</string>
+    <string name="undefined_position">Não definida</string>
+    <string name="skill_level">Nível de habilidade</string>
+    <string name="qtd_players">Qtd Jogadores</string>
+    <string name="select_players">Selecionar jogadores</string>
+    <string name="select_group">Selecionar grupo</string>
+    <string name="list">Lista</string>
+    <string name="qtd_players_team">Quantos jogadores por time:</string>
+    <string name="position_5x1">Considerar posicionamento 5x1:</string>
+    <string name="skill_level_drawTeam">Considerar habilidade dos jogadores:</string>
+
+
 </resources>

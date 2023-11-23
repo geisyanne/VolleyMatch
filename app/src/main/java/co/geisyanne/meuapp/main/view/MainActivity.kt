@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import co.geisyanne.meuapp.databinding.ActivityMainBinding
-import co.geisyanne.meuapp.drawTeam.view.DrawTeamActivity
+import co.geisyanne.meuapp.drawTeams.view.DrawTeamsActivity
 import co.geisyanne.meuapp.scoreboard.view.ScoreboardActivity
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             mainBtnDrawTeam.setOnClickListener {
-                val intent = Intent(baseContext, DrawTeamActivity::class.java)
+                val intent = Intent(baseContext, DrawTeamsActivity::class.java)
                 startActivity(intent)
             }
         }

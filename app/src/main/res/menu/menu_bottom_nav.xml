@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_bottom_player"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/player" />
+
+    <item android:id="@+id/menu_bottom_draw_times"
+        android:icon="@drawable/baseline_shuffle_24"
+        android:title="@string/draw_teams" />
+
+    <item android:id="@+id/menu_bottom_groups"
+        android:icon="@drawable/baseline_groups_24"
+        android:title="@string/groups" />
+
+</menu>
