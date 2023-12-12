@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import co.geisyanne.meuapp.databinding.ActivityMainBinding
-import co.geisyanne.meuapp.drawTeams.view.DrawTeamsActivity
+import co.geisyanne.meuapp.drawTeams.home.view.DrawTeamsActivity
 import co.geisyanne.meuapp.scoreboard.view.ScoreboardActivity
 
 class MainActivity : AppCompatActivity() {

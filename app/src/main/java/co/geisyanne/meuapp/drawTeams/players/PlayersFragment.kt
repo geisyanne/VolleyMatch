@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.drawTeams.view
+package co.geisyanne.meuapp.drawTeams.players
 
 import android.os.Bundle
 import android.view.View
@@ -9,7 +9,6 @@ import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
 class PlayersFragment : Fragment(R.layout.fragment_player_list) {
 
     private var binding: FragmentPlayerListBinding? = null
-//    private lateinit var playerRegisterFragment: PlayerRegisterFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -17,14 +16,7 @@ class PlayersFragment : Fragment(R.layout.fragment_player_list) {
         binding = FragmentPlayerListBinding.bind(view)
 
 
-        /*binding?.playerBtnRegister?.setOnClickListener {
-            playerRegisterFragment = PlayerRegisterFragment()
-            childFragmentManager.beginTransaction().apply {
-                add(R.id.drawTeam_container_fragment, playerRegisterFragment)
-                addToBackStack(null)
-                commit()
-            }
-        }*/
+
 
 
 

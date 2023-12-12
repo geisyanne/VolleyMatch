@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="16dp"
+    android:orientation="vertical"
+    android:paddingVertical="8dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/item_result_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/team"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="5dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_result_rv_players"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_rv_result_player" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/darker_gray" />
+
+</LinearLayout>

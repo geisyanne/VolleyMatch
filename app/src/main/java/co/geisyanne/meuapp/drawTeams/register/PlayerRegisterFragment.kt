@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.drawTeams.view
+package co.geisyanne.meuapp.drawTeams.register
 
 import android.os.Bundle
 import android.view.View

@@ -28,6 +28,12 @@
     <string name="qtd_players_team">Quantos jogadores por time:</string>
     <string name="position_5x1">Considerar posicionamento 5x1:</string>
     <string name="skill_level_drawTeam">Considerar habilidade dos jogadores:</string>
+    <string name="result">Resultado</string>
+    <string name="team">Time</string>
+    <string name="toolbar_title_players">Jogadores</string>
+    <string name="toolbar_title_drawTeams">Sortear Times</string>
+    <string name="toolbar_title_groups">Grupos</string>
+    <string name="search">Pesquisar</string>
 
 
 </resources>
