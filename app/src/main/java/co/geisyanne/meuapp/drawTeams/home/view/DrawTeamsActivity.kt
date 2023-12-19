@@ -1,22 +1,20 @@
 package co.geisyanne.meuapp.drawTeams.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.blue
 import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
 import co.geisyanne.meuapp.drawTeams.draw.DrawFragment
 import co.geisyanne.meuapp.drawTeams.groups.GroupListFragment
+import co.geisyanne.meuapp.drawTeams.home.FragmentAttachListener
 import co.geisyanne.meuapp.drawTeams.players.PlayersFragment
-import com.google.android.material.color.MaterialColors
-import com.google.android.material.shape.MaterialShapeDrawable
+import co.geisyanne.meuapp.drawTeams.register.PlayerRegisterFragment
 
-class DrawTeamsActivity : AppCompatActivity() {
+class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     private lateinit var binding: ActivityDrawTeamsBinding
 
@@ -89,6 +87,12 @@ class DrawTeamsActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.drawTeam_container_fragment, fragment)
             .commit()
+    }
+
+    override fun goToRegisterPlayer() {
+        val fragment = PlayerRegisterFragment()
+        replaceFragment(fragment)
+        binding.drawTeamBottomNav.visibility = View.GONE
     }
 
 }

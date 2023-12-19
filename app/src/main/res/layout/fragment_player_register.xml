@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,68 +16,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="7dp"
-                android:text="@string/name"
-                android:textSize="15sp" />
+                style="@style/Theme.MeuApp.FormTextTitle"
+                android:text="@string/name" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="20dp"
-                app:hintEnabled="false">
+                android:id="@+id/player_register_input_name"
+                style="@style/Theme.MeuApp.FormInputLayout_EditText">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="teste"
-                    android:textSize="15sp" />
+                    android:id="@+id/player_register_edit_name"
+                    style="@style/Theme.MeuApp.FormEditText" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="7dp"
-                android:text="@string/position"
-                android:textSize="15sp" />
+                style="@style/Theme.MeuApp.FormTextTitle"
+                android:text="@string/position" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="20dp"
-                app:hintEnabled="false">
+                style="@style/Theme.MeuApp.FormInputLayout_DropDown">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/player_register_txt_dropdown_positions"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="10dp"
-                    android:dropDownSelector="@android:color/holo_green_light"
-                    android:entries="@array/positions"
-                    android:inputType="none"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp" />
+                    style="@style/Theme.MeuApp.FormAutoComplete_DropDown"
+                    android:entries="@array/positions" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="7dp"
-                android:text="@string/skill_level"
-                android:textSize="15sp" />
+                style="@style/Theme.MeuApp.FormTextTitle"
+                android:text="@string/skill_level" />
 
             <RatingBar
                 android:id="@+id/player_register_ratingbar"
@@ -88,41 +61,23 @@
                 android:stepSize="1.0" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="7dp"
-                android:text="@string/group"
-                android:textSize="15sp" />
+                style="@style/Theme.MeuApp.FormTextTitle"
+                android:text="@string/group" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="20dp"
-                app:hintEnabled="false">
+                style="@style/Theme.MeuApp.FormInputLayout_DropDown">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/player_register_txt_dropdown_groups"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="10dp"
-                    android:dropDownSelector="@android:color/holo_green_light"
-                    android:entries="@array/positions"
-                    android:inputType="none"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp" />
+                    style="@style/Theme.MeuApp.FormAutoComplete_DropDown"
+                    android:entries="@array/positions" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <co.geisyanne.meuapp.common.util.LoadingButton
                 android:id="@+id/player_register_btn_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/save" />
+                style="@style/Theme.MeuApp.FormLoadingButton"
+                app:text="@string/save" />
 
         </LinearLayout>
 

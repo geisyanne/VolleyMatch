@@ -16,7 +16,6 @@ class HomeFragment: Fragment(R.layout.fragment_initial_sort_draw_teams) {
         binding = FragmentInitialSortDrawTeamsBinding.bind(view)
 
 
-
     }
 
 }

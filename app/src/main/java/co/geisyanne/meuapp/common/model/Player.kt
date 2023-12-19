@@ -5,5 +5,5 @@ data class Player(
     val name: String,
     val position: String,
     val level: Int,
-    val group: Group
+    val group: Group?
 )

@@ -34,6 +34,8 @@
     <string name="toolbar_title_drawTeams">Sortear Times</string>
     <string name="toolbar_title_groups">Grupos</string>
     <string name="search">Pesquisar</string>
+    <string name="desc_name">Escreva o nome do jogador</string>
+    <string name="desc_group">Selecione o grupo do qual o jogador faz parte</string>
 
 
 </resources>
