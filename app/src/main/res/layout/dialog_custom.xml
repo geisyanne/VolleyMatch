@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingVertical="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Theme.MeuApp.FormTextTitle"
+        android:layout_marginTop="16dp"
+        android:text="@string/name_group" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/group_register_input_name"
+        style="@style/Theme.MeuApp.FormInputLayout_EditText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/group_register_edit_name"
+            style="@style/Theme.MeuApp.FormEditText" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

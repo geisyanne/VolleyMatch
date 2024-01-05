@@ -6,6 +6,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
@@ -19,19 +20,19 @@ class PlayerRegisterFragment : Fragment(R.layout.fragment_player_register) {
 
     private var binding: FragmentPlayerRegisterBinding? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.e("teste", "inicio")
-
         binding = FragmentPlayerRegisterBinding.bind(view)
 
         binding?.playerRegisterEditName?.addTextChangedListener(watcher)
 
         val positions = resources.getStringArray(R.array.positions)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown, positions)
-
-        Log.e("teste", "meio")
 
         binding?.playerRegisterTxtDropdownPositions?.apply {
             setAdapter(arrayAdapter)
@@ -45,7 +46,6 @@ class PlayerRegisterFragment : Fragment(R.layout.fragment_player_register) {
         btnSave?.setOnClickListener {
             btnSave.showProgress(true)
 
-            Log.e("teste", "clique")
 
             Handler(Looper.getMainLooper()).postDelayed({
                 btnSave.showProgress(false)
@@ -67,5 +67,10 @@ class PlayerRegisterFragment : Fragment(R.layout.fragment_player_register) {
 
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val searchItem = menu.findItem(R.id.menu_search)
+        searchItem?.isVisible = false
+        super.onPrepareOptionsMenu(menu)
+    }
 
 }

@@ -3,6 +3,9 @@ package co.geisyanne.meuapp.main.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowInsetsController
+import co.geisyanne.meuapp.common.extension.hideSystemBars
+import co.geisyanne.meuapp.common.extension.showSystemBars
 import co.geisyanne.meuapp.databinding.ActivityMainBinding
 import co.geisyanne.meuapp.drawTeams.home.view.DrawTeamsActivity
 import co.geisyanne.meuapp.scoreboard.view.ScoreboardActivity
@@ -29,9 +32,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
     }
+
 
 
 }

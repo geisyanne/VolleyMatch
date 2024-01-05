@@ -1,41 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/item_group_txt_name"
-        android:layout_width="wrap_content"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F4F0F0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="@string/group"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:maxLines="1" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/item_group_txt_players"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:text="@string/qtd_players"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_group_txt_name"
-        android:maxLines="1" />
+        <TextView
+            android:id="@+id/item_group_txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/group"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/item_group_btn_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/item_group_txt_name"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/baseline_more_vert_24"
-        app:layout_constraintBottom_toBottomOf="@id/item_group_txt_name"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/item_group_txt_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:text="@string/qtd_players"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_group_txt_name" />
 
+        <ImageButton
+            android:id="@+id/item_group_btn_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/baseline_more_vert_24"
+            app:layout_constraintBottom_toBottomOf="@id/item_group_txt_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_group_txt_name" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

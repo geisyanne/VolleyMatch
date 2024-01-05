@@ -10,6 +10,7 @@
     <string name="group">Grupo</string>
 
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+
     <string name="register_player">Cadastrar Jogador</string>
     <string name="create_group">Criar Grupo</string>
     <string name="save">Salvar</string>
@@ -21,7 +22,11 @@
     <string name="position">Posição</string>
     <string name="undefined_position">Não definida</string>
     <string name="skill_level">Nível de habilidade</string>
-    <string name="qtd_players">Qtd Jogadores</string>
+
+    <string name="no_player">Nenhum jogador</string>
+    <string name="qtd_player">%d Jogador</string>
+    <string name="qtd_players">%d Jogadores</string>
+
     <string name="select_players">Selecionar jogadores</string>
     <string name="select_group">Selecionar grupo</string>
     <string name="list">Lista</string>
@@ -36,6 +41,14 @@
     <string name="search">Pesquisar</string>
     <string name="desc_name">Escreva o nome do jogador</string>
     <string name="desc_group">Selecione o grupo do qual o jogador faz parte</string>
-
+    <string name="name_group">Nome do grupo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="create">Criar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
+    <string name="confirm_player_deletion">Excluir este jogador?</string>
+    <string name="confirm_group_deletion">Excluir este grupo?</string>
+    <string name="yes">SIM</string>
+    <string name="no">NÃO</string>
 
 </resources>

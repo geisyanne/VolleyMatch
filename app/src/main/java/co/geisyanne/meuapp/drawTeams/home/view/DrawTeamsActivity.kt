@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
 import co.geisyanne.meuapp.drawTeams.draw.DrawFragment
-import co.geisyanne.meuapp.drawTeams.groups.GroupListFragment
+import co.geisyanne.meuapp.drawTeams.groups.view.GroupListFragment
 import co.geisyanne.meuapp.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.drawTeams.players.PlayersFragment
+import co.geisyanne.meuapp.drawTeams.players.PlayersAdapter
+import co.geisyanne.meuapp.drawTeams.players.view.PlayersFragment
 import co.geisyanne.meuapp.drawTeams.register.PlayerRegisterFragment
 
 class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
@@ -21,6 +22,7 @@ class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
     private lateinit var playersFragment: PlayersFragment
     private lateinit var drawFragment: DrawFragment
     private lateinit var groupListFragment: GroupListFragment
+    private lateinit var homeDrawFragment: HomeDrawFragment
     private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,14 +33,27 @@ class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+
 
         playersFragment = PlayersFragment()
         drawFragment = DrawFragment()
         groupListFragment = GroupListFragment()
+        homeDrawFragment = HomeDrawFragment()
 
+        replaceFragment(homeDrawFragment)
+        binding.drawTeamBottomNav.selectedItemId =
+            R.id.invisible // NO PRE-SELECTED BOTTOM NAVIGATION
 
         binding.drawTeamBottomNav.setOnItemSelectedListener { menuItem ->
+
             when (menuItem.itemId) {
+                R.id.menu_bottom_groups -> {
+                    showFragment(groupListFragment)
+                    setToolbarTitle(R.string.toolbar_title_groups)
+                    true
+                }
+
                 R.id.menu_bottom_player -> {
                     showFragment(playersFragment)
                     setToolbarTitle(R.string.toolbar_title_players)
@@ -51,12 +66,6 @@ class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
                     true
                 }
 
-                R.id.menu_bottom_groups -> {
-                    showFragment(groupListFragment)
-                    setToolbarTitle(R.string.toolbar_title_groups)
-                    true
-                }
-
                 else -> throw IllegalArgumentException("Menu item desconhecido: ${menuItem.itemId}")
             }
 
@@ -64,9 +73,11 @@ class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     }
 
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
-        
+
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -94,5 +105,8 @@ class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         replaceFragment(fragment)
         binding.drawTeamBottomNav.visibility = View.GONE
     }
+
+
+
 
 }
