@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:text="@string/group"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,19 +32,9 @@
             android:layout_marginTop="5dp"
             android:maxLines="1"
             android:text="@string/qtd_players"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_group_txt_name" />
-
-        <ImageButton
-            android:id="@+id/item_group_btn_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/baseline_more_vert_24"
-            app:layout_constraintBottom_toBottomOf="@id/item_group_txt_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/item_group_txt_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

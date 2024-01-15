@@ -14,7 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ScoreboardActivity : AppCompatActivity(), Scoreboard.View {
 
-    private lateinit var binding: ActivityScoreboardBinding
+    private var binding: ActivityScoreboardBinding? = null
     override lateinit var presenter: Scoreboard.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,49 +23,50 @@ class ScoreboardActivity : AppCompatActivity(), Scoreboard.View {
 
         binding = ActivityScoreboardBinding.inflate(layoutInflater)
 
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
         presenter = ScoreboardPresenter(this)
 
-        with(binding) {
+        binding?.let {
+            with(it) {
 
-            scoreboardTxtScore1.setOnClickListener {
-                presenter.increaseScore(1)
+                scoreboardTxtScore1.setOnClickListener {
+                    presenter.increaseScore(1)
+                }
+
+                scoreboardTxtScore2.setOnClickListener {
+                    presenter.increaseScore(2)
+                }
+
+                scoreboardTxtScore1.setOnLongClickListener {
+                    presenter.decreaseScore(1)
+                    true
+                }
+
+                scoreboardTxtScore2.setOnLongClickListener {
+                    presenter.decreaseScore(2)
+                    true
+                }
+
+                scoreboardBtnRestart.setOnClickListener {
+                    presenter.restartScore()
+                }
+
+                scoreboardBtnHelp.setOnClickListener {
+                    displayHelp()
+                }
             }
-
-            scoreboardTxtScore2.setOnClickListener {
-                presenter.increaseScore(2)
-            }
-
-            scoreboardTxtScore1.setOnLongClickListener {
-                presenter.decreaseScore(1)
-                true
-            }
-
-            scoreboardTxtScore2.setOnLongClickListener {
-                presenter.decreaseScore(2)
-                true
-            }
-
-            scoreboardBtnRestart.setOnClickListener {
-                presenter.restartScore()
-            }
-
-            scoreboardBtnHelp.setOnClickListener {
-                displayHelp()
-            }
-
         }
 
     }
 
     override fun updateScore(team: Int, score: Int) {
         val textView = when (team) {
-            1 -> binding.scoreboardTxtScore1
-            2 -> binding.scoreboardTxtScore2
+            1 -> binding?.scoreboardTxtScore1
+            2 -> binding?.scoreboardTxtScore2
             else -> throw IllegalArgumentException("Invalid team: $team")
         }
-        textView.text = getString(R.string.txt_score, score)
+        textView?.text = getString(R.string.txt_score, score)
     }
 
     override fun displayHelp() {
@@ -93,6 +94,11 @@ class ScoreboardActivity : AppCompatActivity(), Scoreboard.View {
         }
     }
 
+    override fun onDestroy() {
+        binding = null
+        presenter.onDestroy()
+        super.onDestroy()
+    }
 
 }
 

@@ -15,12 +15,16 @@ import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.common.model.Player
 import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
 import co.geisyanne.meuapp.drawTeams.home.FragmentAttachListener
+import co.geisyanne.meuapp.drawTeams.players.Players
 import co.geisyanne.meuapp.drawTeams.players.PlayersAdapter
+import co.geisyanne.meuapp.drawTeams.players.presenter.PlayersPresenter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 
 
-class PlayersFragment : Fragment(R.layout.fragment_player_list) {
+class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View {
+
+    override lateinit var presenter: Players.Presenter
 
     private var binding: FragmentPlayerListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
@@ -34,6 +38,8 @@ class PlayersFragment : Fragment(R.layout.fragment_player_list) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentPlayerListBinding.bind(view)
+
+        presenter = PlayersPresenter(this)
 
         binding?.run {
 
@@ -65,7 +71,7 @@ class PlayersFragment : Fragment(R.layout.fragment_player_list) {
 
     }
 
-    private fun enableActionMode(position: Int) {
+      private fun enableActionMode(position: Int) {
         if (actionMode == null && activity is AppCompatActivity) {
             actionMode = (activity as AppCompatActivity).startSupportActionMode(object :
                 ActionMode.Callback {
@@ -121,11 +127,9 @@ class PlayersFragment : Fragment(R.layout.fragment_player_list) {
                 .setPositiveButton(R.string.yes) { _, _ ->
                     players.removeAt(position)
                     adapter.notifyItemRemoved(position)
-                    Log.i("teste", "excluiu")
                 }
                 .setNeutralButton(R.string.no) { dialog, _ ->
                     adapter.notifyItemChanged(position)
-                    Log.e("teste", "cancelou")
                     dialog.cancel()
                 }
             builder.create().show()
@@ -144,7 +148,6 @@ class PlayersFragment : Fragment(R.layout.fragment_player_list) {
     private fun fakePlayers() {
         for (i in 1..30) {
             val player = Player(
-                uuid = i.toString(),
                 name = "Jogador$i",
                 position = "Posição$i",
                 level = 2,
@@ -152,6 +155,17 @@ class PlayersFragment : Fragment(R.layout.fragment_player_list) {
             )
             players.add(player)
         }
+    }
+
+    override fun onDestroy() {
+        binding = null
+        presenter.onDestroy()
+
+        // DESTROY ACTION MODE
+        if(actionMode != null)
+            actionMode?.finish()
+
+        super.onDestroy()
     }
 
 }

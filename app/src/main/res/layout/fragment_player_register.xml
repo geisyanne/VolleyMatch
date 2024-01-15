@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,8 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="30dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingVertical="30dp">
 
             <TextView
                 style="@style/Theme.MeuApp.FormTextTitle"
@@ -37,8 +37,7 @@
                 style="@style/Theme.MeuApp.FormTextTitle"
                 android:text="@string/position" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Theme.MeuApp.FormInputLayout_DropDown">
+            <com.google.android.material.textfield.TextInputLayout style="@style/Theme.MeuApp.FormInputLayout_DropDown">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/player_register_txt_dropdown_positions"
@@ -60,19 +59,25 @@
                 android:numStars="5"
                 android:stepSize="1.0" />
 
-            <TextView
-                style="@style/Theme.MeuApp.FormTextTitle"
-                android:text="@string/group" />
+            <LinearLayout
+                android:id="@+id/container_dropdown_groups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Theme.MeuApp.FormInputLayout_DropDown">
+                <TextView
+                    style="@style/Theme.MeuApp.FormTextTitle"
+                    android:text="@string/group" />
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/player_register_txt_dropdown_groups"
-                    style="@style/Theme.MeuApp.FormAutoComplete_DropDown"
-                    android:entries="@array/positions" />
+                <com.google.android.material.textfield.TextInputLayout style="@style/Theme.MeuApp.FormInputLayout_DropDown">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/player_register_txt_dropdown_groups"
+                        style="@style/Theme.MeuApp.FormAutoComplete_DropDown"
+                        android:entries="@array/positions" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <co.geisyanne.meuapp.common.util.LoadingButton
                 android:id="@+id/player_register_btn_save"

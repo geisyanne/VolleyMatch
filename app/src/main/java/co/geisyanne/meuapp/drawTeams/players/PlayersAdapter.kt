@@ -84,12 +84,6 @@ class PlayersAdapter : RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder>() 
         fun bind(player: Player) {
             itemView.findViewById<TextView>(R.id.item_player_txt_name).text = player.name
 
-            val moreBtn = itemView.findViewById<ImageButton>(R.id.item_player_btn_more)
-
-            moreBtn.setOnClickListener {
-                Log.i("teste", "clicou")
-            }
-
             // CHANGE COLOR FOR SELECTED ITEM
             if (player.selected) {
                 itemView.background = GradientDrawable().apply {

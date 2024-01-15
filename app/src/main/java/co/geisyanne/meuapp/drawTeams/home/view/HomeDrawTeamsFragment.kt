@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.databinding.FragmentInitialSortDrawTeamsBinding
 
-class HomeDrawFragment: Fragment(R.layout.fragment_initial_sort_draw_teams) {
+class HomeDrawTeamsFragment: Fragment(R.layout.fragment_initial_sort_draw_teams) {
 
     private var binding: FragmentInitialSortDrawTeamsBinding? = null
 

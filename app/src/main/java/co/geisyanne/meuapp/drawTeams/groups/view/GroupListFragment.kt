@@ -119,11 +119,9 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
                 .setPositiveButton(R.string.yes) { _, _ ->
                     groups.removeAt(position)
                     adapter.notifyItemRemoved(position)
-                    Log.i("teste", "excluiu")
                 }
                 .setNeutralButton(R.string.no) { dialog, _ ->
                     adapter.notifyItemChanged(position)
-                    Log.e("teste", "cancelou")
                     dialog.cancel()
                 }
             builder.create().show()
@@ -160,7 +158,6 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
         val players1 = mutableListOf<Player>()
         players1.add(
             Player(
-                uuid = "1",
                 name = "Jogador1",
                 position = "Central",
                 level = 1,
@@ -170,7 +167,6 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
         val players2 = mutableListOf<Player>()
         players2.add(
             Player(
-                uuid = "2",
                 name = "Jogador2",
                 position = "Levantador",
                 level = 3,
@@ -179,7 +175,6 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
         )
         players2.add(
             Player(
-                uuid = "3",
                 name = "Jogador3",
                 position = "Ponta",
                 level = 5,
@@ -205,6 +200,14 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
                 players = emptyList()
             )
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // DESTROY ACTION MODE
+        if(actionMode != null)
+            actionMode?.finish()
     }
 
 

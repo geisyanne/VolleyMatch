@@ -11,41 +11,40 @@ import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
 import co.geisyanne.meuapp.drawTeams.draw.DrawFragment
 import co.geisyanne.meuapp.drawTeams.groups.view.GroupListFragment
 import co.geisyanne.meuapp.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.drawTeams.players.PlayersAdapter
 import co.geisyanne.meuapp.drawTeams.players.view.PlayersFragment
-import co.geisyanne.meuapp.drawTeams.register.PlayerRegisterFragment
+import co.geisyanne.meuapp.drawTeams.register.view.PlayerRegisterFragment
 
-class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
+class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
-    private lateinit var binding: ActivityDrawTeamsBinding
+    private var binding: ActivityDrawTeamsBinding? = null
 
     private lateinit var playersFragment: PlayersFragment
+
     private lateinit var drawFragment: DrawFragment
     private lateinit var groupListFragment: GroupListFragment
-    private lateinit var homeDrawFragment: HomeDrawFragment
+    private lateinit var homeDrawTeamsFragment: HomeDrawTeamsFragment
     private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDrawTeamsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
-        setSupportActionBar(binding.mainToolbar)
+        setSupportActionBar(binding?.mainToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-
 
         playersFragment = PlayersFragment()
         drawFragment = DrawFragment()
         groupListFragment = GroupListFragment()
-        homeDrawFragment = HomeDrawFragment()
+        homeDrawTeamsFragment = HomeDrawTeamsFragment()
 
-        replaceFragment(homeDrawFragment)
-        binding.drawTeamBottomNav.selectedItemId =
+        replaceFragment(homeDrawTeamsFragment)
+        binding?.drawTeamBottomNav?.selectedItemId =
             R.id.invisible // NO PRE-SELECTED BOTTOM NAVIGATION
 
-        binding.drawTeamBottomNav.setOnItemSelectedListener { menuItem ->
+        binding?.drawTeamBottomNav?.setOnItemSelectedListener { menuItem ->
 
             when (menuItem.itemId) {
                 R.id.menu_bottom_groups -> {
@@ -73,19 +72,15 @@ class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     }
 
-
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
 
         return super.onCreateOptionsMenu(menu)
     }
 
-
     private fun setToolbarTitle(@StringRes resId: Int) {
-        binding.mainToolbar.setTitle(resId)
+        binding?.mainToolbar?.setTitle(resId)
     }
-
 
     private fun showFragment(fragment: Fragment) {
         if (currentFragment !== fragment) {
@@ -103,10 +98,12 @@ class DrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
     override fun goToRegisterPlayer() {
         val fragment = PlayerRegisterFragment()
         replaceFragment(fragment)
-        binding.drawTeamBottomNav.visibility = View.GONE
+        binding?.drawTeamBottomNav?.visibility = View.GONE
     }
 
-
-
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
+    }
 
 }
