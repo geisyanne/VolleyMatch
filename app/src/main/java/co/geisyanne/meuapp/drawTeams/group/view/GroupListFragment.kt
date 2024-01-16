@@ -1,35 +1,29 @@
-package co.geisyanne.meuapp.drawTeams.players.view
+package co.geisyanne.meuapp.drawTeams.group.view
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.meuapp.R
+import co.geisyanne.meuapp.common.model.Group
 import co.geisyanne.meuapp.common.model.Player
-import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
-import co.geisyanne.meuapp.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.drawTeams.players.Players
-import co.geisyanne.meuapp.drawTeams.players.PlayersAdapter
-import co.geisyanne.meuapp.drawTeams.players.presenter.PlayersPresenter
+import co.geisyanne.meuapp.databinding.FragmentGroupListBinding
+import co.geisyanne.meuapp.drawTeams.group.GroupAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 
+class GroupListFragment : Fragment(R.layout.fragment_group_list) {
 
-class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View {
-
-    override lateinit var presenter: Players.Presenter
-
-    private var binding: FragmentPlayerListBinding? = null
-    private var fragmentAttachListener: FragmentAttachListener? = null
-    private var adapter = PlayersAdapter()
-    private var players = mutableListOf<Player>()
+    private var binding: FragmentGroupListBinding? = null
+    private val adapter = GroupAdapter()
+    private var groups = mutableListOf<Group>()
     private var actionMode: ActionMode? = null
 
     @SuppressLint("NotifyDataSetChanged")
@@ -37,20 +31,17 @@ class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentPlayerListBinding.bind(view)
-
-        presenter = PlayersPresenter(this)
+        binding = FragmentGroupListBinding.bind(view)
 
         binding?.run {
-
-            playerBtnRegister.setOnClickListener {
-                fragmentAttachListener?.goToRegisterPlayer()
+            groupBtnCreate.setOnClickListener {
+                showCreateGroupDialog()
             }
 
-            playerRv.layoutManager = LinearLayoutManager(requireContext())
-            playerRv.adapter = adapter
+            groupRv.layoutManager = LinearLayoutManager(requireContext())
+            groupRv.adapter = adapter
 
-            playerRv.setListener(object : SwipeLeftRightCallback.Listener {
+            groupRv.setListener(object : SwipeLeftRightCallback.Listener {
                 override fun onSwipedLeft(position: Int) {
                     removeItem(position)
                 }
@@ -60,18 +51,19 @@ class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View 
             })
         }
 
-        fakePlayers()
+        fakeGroups()
         adapter.apply {
-            items = players
+            items = groups
             notifyDataSetChanged()
 
-            onItemClick = { enableActionMode(it) } // TOOLBAR WITH ACTION
-            onItemLongClick = { enableActionMode(it) }
+            onItemClick = { enabledActionMode(it) } // TOOLBAR WITH ACTION
+            onItemLongClick = { enabledActionMode(it) }
         }
 
     }
 
-      private fun enableActionMode(position: Int) {
+    // ACTIVATE ACTION MODE
+    private fun enabledActionMode(position: Int) {
         if (actionMode == null && activity is AppCompatActivity) {
             actionMode = (activity as AppCompatActivity).startSupportActionMode(object :
                 ActionMode.Callback {
@@ -86,7 +78,7 @@ class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View 
 
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     if (item?.itemId == R.id.menu_action_delete) {
-                        adapter.deletePlayers()
+                        adapter.deleteGroups()
                         mode?.finish()
                         return true
                     }
@@ -99,7 +91,7 @@ class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View 
                         selectedItems.clear()
                         items
                             .filter { it.selected }
-                            .forEach { it.selected = false }
+                            .forEach { it.selected = false}
                         notifyDataSetChanged()
                     }
                     actionMode = null
@@ -111,7 +103,7 @@ class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View 
         adapter.toggleSelection(position)
         val size = adapter.selectedItems.size()
         if (size == 0) {
-            actionMode?.finish()  // DISABLE TOOLBAR ACTION
+            actionMode?.finish() // DISABLE TOOLBAR ACTION
         } else {
             actionMode?.title = "$size"
             actionMode?.invalidate()
@@ -123,9 +115,9 @@ class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View 
         activity?.let {
             val builder = MaterialAlertDialogBuilder(it)
 
-            builder.setMessage(R.string.confirm_player_deletion)
+            builder.setMessage(R.string.confirm_group_deletion)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    players.removeAt(position)
+                    groups.removeAt(position)
                     adapter.notifyItemRemoved(position)
                 }
                 .setNeutralButton(R.string.no) { dialog, _ ->
@@ -137,35 +129,86 @@ class PlayersFragment() : Fragment(R.layout.fragment_player_list), Players.View 
 
     }
 
-    // CHECK: IF THE ACTIVITY IMPLEMENTS AN INTERFACE
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is FragmentAttachListener) {
-            fragmentAttachListener = context
-        }
+    private fun showCreateGroupDialog() {
+        activity?.let {
+            val builder = MaterialAlertDialogBuilder(it)
+            val inflater = requireActivity().layoutInflater
+
+            val dialogView = inflater.inflate(R.layout.dialog_custom, null)
+            val editText = dialogView.findViewById<EditText>(R.id.group_register_edit_name)
+
+            builder.setView(dialogView)
+                .setPositiveButton(R.string.create) { _, _ ->
+
+                    val newGroupName = editText.text.toString()
+                    Log.i("Grupo", newGroupName)
+
+                }
+                .setNeutralButton(R.string.cancel) { dialog, _ ->
+
+                    Log.e("teste", "cancelou")
+                    dialog.cancel()
+                }
+            builder.create().show()
+        } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    private fun fakePlayers() {
-        for (i in 1..30) {
-            val player = Player(
-                name = "Jogador$i",
-                position = "Posição$i",
-                level = 2,
+
+    private fun fakeGroups() {
+        val players1 = mutableListOf<Player>()
+        players1.add(
+            Player(
+                name = "Jogador1",
+                position = "Central",
+                level = 1,
                 group = null
             )
-            players.add(player)
-        }
+        )
+        val players2 = mutableListOf<Player>()
+        players2.add(
+            Player(
+                name = "Jogador2",
+                position = "Levantador",
+                level = 3,
+                group = null
+            )
+        )
+        players2.add(
+            Player(
+                name = "Jogador3",
+                position = "Ponta",
+                level = 5,
+                group = null
+            )
+        )
+
+        groups.add(
+            Group(
+                name = "Univolei",
+                players = players1
+            )
+        )
+        groups.add(
+            Group(
+                name = "UVP",
+                players = players2
+            )
+        )
+        groups.add(
+            Group(
+                name = "CVP",
+                players = emptyList()
+            )
+        )
     }
 
     override fun onDestroy() {
-        binding = null
-        presenter.onDestroy()
+        super.onDestroy()
 
         // DESTROY ACTION MODE
         if(actionMode != null)
             actionMode?.finish()
-
-        super.onDestroy()
     }
+
 
 }

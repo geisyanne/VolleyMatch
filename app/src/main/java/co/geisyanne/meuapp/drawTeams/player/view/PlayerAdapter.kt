@@ -1,14 +1,12 @@
-package co.geisyanne.meuapp.drawTeams.players
+package co.geisyanne.meuapp.drawTeams.player.view
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.util.isNotEmpty
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +14,7 @@ import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.common.model.Player
 
 
-class PlayersAdapter : RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder>() {
+class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayersViewHolder>() {
 
     var items: MutableList<Player> = mutableListOf()
     val selectedItems = SparseBooleanArray()

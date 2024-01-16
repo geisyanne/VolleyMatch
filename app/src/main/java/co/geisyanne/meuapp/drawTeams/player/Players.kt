@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.drawTeams.players
+package co.geisyanne.meuapp.drawTeams.player
 
 import co.geisyanne.meuapp.common.base.BasePresenter
 import co.geisyanne.meuapp.common.base.BaseView

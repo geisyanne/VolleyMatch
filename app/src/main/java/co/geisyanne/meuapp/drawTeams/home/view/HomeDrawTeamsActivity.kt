@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
 import co.geisyanne.meuapp.drawTeams.draw.DrawFragment
-import co.geisyanne.meuapp.drawTeams.groups.view.GroupListFragment
+import co.geisyanne.meuapp.drawTeams.group.view.GroupListFragment
 import co.geisyanne.meuapp.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.drawTeams.players.view.PlayersFragment
-import co.geisyanne.meuapp.drawTeams.register.view.PlayerRegisterFragment
+import co.geisyanne.meuapp.drawTeams.player.view.PlayerListFragment
+import co.geisyanne.meuapp.drawTeams.player.view.RegisterPlayerFragment
 
 class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     private var binding: ActivityDrawTeamsBinding? = null
 
-    private lateinit var playersFragment: PlayersFragment
+    private lateinit var playerListFragment: PlayerListFragment
 
     private lateinit var drawFragment: DrawFragment
     private lateinit var groupListFragment: GroupListFragment
@@ -35,7 +35,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        playersFragment = PlayersFragment()
+        playerListFragment = PlayerListFragment()
         drawFragment = DrawFragment()
         groupListFragment = GroupListFragment()
         homeDrawTeamsFragment = HomeDrawTeamsFragment()
@@ -54,7 +54,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
                 }
 
                 R.id.menu_bottom_player -> {
-                    showFragment(playersFragment)
+                    showFragment(playerListFragment)
                     setToolbarTitle(R.string.toolbar_title_players)
                     true
                 }
@@ -96,7 +96,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
     }
 
     override fun goToRegisterPlayer() {
-        val fragment = PlayerRegisterFragment()
+        val fragment = RegisterPlayerFragment()
         replaceFragment(fragment)
         binding?.drawTeamBottomNav?.visibility = View.GONE
     }

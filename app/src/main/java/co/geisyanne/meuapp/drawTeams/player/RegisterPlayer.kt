@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.drawTeams.register
+package co.geisyanne.meuapp.drawTeams.player
 
 import co.geisyanne.meuapp.common.base.BasePresenter
 import co.geisyanne.meuapp.common.base.BaseView
@@ -15,14 +15,6 @@ interface RegisterPlayer {
 
     interface Presenter : BasePresenter {
         fun createPlayer(name: String, position: String?, level: Int?, group: Group?)
-
-    }
-
-    interface Repository {
-        fun createPlayer()
-        fun createGroup()
-        fun updatePlayer()
-        fun updateGroup()
 
     }
 

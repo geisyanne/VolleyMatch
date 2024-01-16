@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.drawTeams.register.data
+package co.geisyanne.meuapp.common.base
 
 interface RegisterCallback {
 

@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.drawTeams.register.view
+package co.geisyanne.meuapp.drawTeams.player.view
 
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +10,11 @@ import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.common.util.TxtWatcher
 import co.geisyanne.meuapp.databinding.FragmentPlayerRegisterBinding
-import co.geisyanne.meuapp.drawTeams.register.RegisterPlayer
-import co.geisyanne.meuapp.drawTeams.register.data.RegisterRepository
-import co.geisyanne.meuapp.drawTeams.register.presenter.PlayerRegisterPresenter
+import co.geisyanne.meuapp.drawTeams.player.RegisterPlayer
+import co.geisyanne.meuapp.drawTeams.player.presenter.RegisterPlayerPresenter
 
 
-class PlayerRegisterFragment : Fragment(R.layout.fragment_player_register), RegisterPlayer.View {
+class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register), RegisterPlayer.View {
 
 
     private var binding: FragmentPlayerRegisterBinding? = null
@@ -33,7 +32,7 @@ class PlayerRegisterFragment : Fragment(R.layout.fragment_player_register), Regi
 
         // val repository = RegisterRepository()
 
-        presenter = PlayerRegisterPresenter(this)
+        presenter = RegisterPlayerPresenter(this)
 
         binding?.playerRegisterEditName?.addTextChangedListener(TxtWatcher {
             binding?.playerRegisterBtnSave?.isEnabled = it.isNotEmpty()

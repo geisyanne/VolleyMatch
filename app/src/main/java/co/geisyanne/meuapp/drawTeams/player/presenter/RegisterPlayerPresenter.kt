@@ -1,11 +1,9 @@
-package co.geisyanne.meuapp.drawTeams.register.presenter
+package co.geisyanne.meuapp.drawTeams.player.presenter
 
 import co.geisyanne.meuapp.common.model.Group
-import co.geisyanne.meuapp.drawTeams.register.RegisterPlayer
-import co.geisyanne.meuapp.drawTeams.register.data.RegisterCallback
-import co.geisyanne.meuapp.drawTeams.register.data.RegisterRepository
+import co.geisyanne.meuapp.drawTeams.player.RegisterPlayer
 
-class PlayerRegisterPresenter(
+class RegisterPlayerPresenter(
     private var view: RegisterPlayer.View?,
     // private val repository: RegisterRepository
 ) : RegisterPlayer.Presenter {
