@@ -79,7 +79,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <co.geisyanne.meuapp.common.util.LoadingButton
+            <co.geisyanne.meuapp.presentation.common.util.LoadingButton
                 android:id="@+id/player_register_btn_save"
                 style="@style/Theme.MeuApp.FormLoadingButton"
                 app:text="@string/save" />

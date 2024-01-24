@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".main.view.MainActivity">
+    tools:context=".presentation.main.MainActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/main_btn_draw_team"

@@ -14,14 +14,14 @@
         android:theme="@style/Theme.MeuApp"
         tools:targetApi="31">
         <activity
-            android:name=".drawTeams.home.view.HomeDrawTeamsActivity"
-            android:parentActivityName=".main.view.MainActivity"
+            android:name=".presentation.drawTeams.home.view.HomeDrawTeamsActivity"
+            android:parentActivityName=".presentation.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".scoreboard.view.ScoreboardActivity"
+            android:name=".presentation.scoreboard.ScoreboardActivity"
             android:exported="false" />
         <activity
-            android:name=".main.view.MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
