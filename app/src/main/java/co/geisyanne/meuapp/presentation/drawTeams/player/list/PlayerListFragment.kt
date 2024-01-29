@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.presentation.drawTeams.player.view
+package co.geisyanne.meuapp.presentation.drawTeams.player.list
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,23 +9,25 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.meuapp.R
+import co.geisyanne.meuapp.data.local.AppDatabase
+import co.geisyanne.meuapp.data.local.repository.PlayerLocalDataSource
 import co.geisyanne.meuapp.domain.model.Player
 
 import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
+import co.geisyanne.meuapp.domain.repository.PlayerRepository
+import co.geisyanne.meuapp.presentation.common.util.viewModelFactory
 import co.geisyanne.meuapp.presentation.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.presentation.drawTeams.player.PlayerList
 
-import co.geisyanne.meuapp.presentation.drawTeams.player.presenter.PlayerListPresenter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 
 
-class PlayerListFragment() : Fragment(R.layout.fragment_player_list), PlayerList.View {
+class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
 
-    override lateinit var presenter: PlayerList.Presenter
-
+    private lateinit var viewModel: PlayerListViewModel
     private var binding: FragmentPlayerListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
     private var adapter = PlayerListAdapter()
@@ -39,7 +41,11 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list), PlayerList
 
         binding = FragmentPlayerListBinding.bind(view)
 
-        presenter = PlayerListPresenter(this)
+        val playerDao = AppDatabase.getInstance(requireContext()).playerDao
+        val repository: PlayerRepository = PlayerLocalDataSource(playerDao)
+        val factory = viewModelFactory { PlayerListViewModel(repository) }
+        viewModel = ViewModelProvider(this, factory)[PlayerListViewModel::class.java]
+
 
         binding?.run {
 
@@ -60,7 +66,7 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list), PlayerList
             })
         }
 
-        fakePlayers()
+        // fakePlayers()
         adapter.apply {
             items = players
             notifyDataSetChanged()
@@ -71,7 +77,7 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list), PlayerList
 
     }
 
-      private fun enableActionMode(position: Int) {
+    private fun enableActionMode(position: Int) {
         if (actionMode == null && activity is AppCompatActivity) {
             actionMode = (activity as AppCompatActivity).startSupportActionMode(object :
                 ActionMode.Callback {
@@ -145,7 +151,7 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list), PlayerList
         }
     }
 
-    private fun fakePlayers() {
+   /* private fun fakePlayers() {
         for (i in 1..30) {
             val players = Player(
                 name = "Jogador$i",
@@ -155,14 +161,13 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list), PlayerList
             )
             this.players.add(players)
         }
-    }
+    }*/
 
     override fun onDestroy() {
         binding = null
-        presenter.onDestroy()
 
         // DESTROY ACTION MODE
-        if(actionMode != null)
+        if (actionMode != null)
             actionMode?.finish()
 
         super.onDestroy()

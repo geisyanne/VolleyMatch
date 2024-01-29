@@ -4,6 +4,6 @@ data class Player(
     val name: String,
     val position: Int?,
     val level: Int?,
-    val group: Group?,
+    val group: Int?,
     var selected: Boolean = false
 )

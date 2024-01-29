@@ -1,21 +1,21 @@
-package co.geisyanne.meuapp.presentation.drawTeams.player.model
+package co.geisyanne.meuapp.data.local.repository
 
+import androidx.lifecycle.LiveData
 import co.geisyanne.meuapp.domain.model.Group
 import co.geisyanne.meuapp.data.local.dao.PlayerDao
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
+import co.geisyanne.meuapp.domain.repository.PlayerRepository
 import co.geisyanne.meuapp.presentation.common.base.RegisterCallback
-import kotlinx.coroutines.flow.Flow
 
 class PlayerLocalDataSource(
     private val playerDao: PlayerDao
-) : PlayerDataSource {
+) : PlayerRepository {
 
     override suspend fun insertPlayer(
         name: String,
         position: Int?,
         level: Int?,
-        group: Group?,
-        callback: RegisterCallback
+        group: Int?,
     ): Long {
         val player = PlayerEntity(
             name = name,
@@ -31,7 +31,7 @@ class PlayerLocalDataSource(
         name: String,
         position: Int?,
         level: Int?,
-        group: Group?
+        group: Int?
     ) {
         val player = PlayerEntity(
             id = id,
@@ -55,7 +55,7 @@ class PlayerLocalDataSource(
         return playerDao.getPlayerByName(name)
     }
 
-    override fun getAllPlayers(): Flow<List<PlayerEntity>> {
+    override suspend fun getAllPlayers(): LiveData<List<PlayerEntity>> {
         return playerDao.getAllPlayers()
     }
 

@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MeuApp"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.drawTeams.home.view.HomeDrawTeamsActivity"
+            android:name=".presentation.drawTeams.home.HomeDrawTeamsActivity"
             android:parentActivityName=".presentation.main.MainActivity"
             android:exported="false" />
         <activity

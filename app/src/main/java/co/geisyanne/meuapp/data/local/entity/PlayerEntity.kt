@@ -15,7 +15,7 @@ data class PlayerEntity(
 
     @ColumnInfo(name = "level") val level: Int?,
 
-    @ColumnInfo(name = "group") val group: Group?,
+    @ColumnInfo(name = "group") val group: Int?,
 
 
     )

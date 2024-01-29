@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -29,6 +31,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/player_register_edit_name"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     style="@style/Theme.MeuApp.FormEditText" />
 
             </com.google.android.material.textfield.TextInputLayout>

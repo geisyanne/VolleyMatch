@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MeuApp</string>
+
     <string name="draw_teams">Sortear times</string>
     <string name="draw">Sortear</string>
     <string name="btn_scoreboard">Placar</string>
@@ -35,20 +36,27 @@
     <string name="skill_level_drawTeam">Considerar habilidade dos jogadores:</string>
     <string name="result">Resultado</string>
     <string name="team">Time</string>
+
     <string name="toolbar_title_players">Jogadores</string>
     <string name="toolbar_title_drawTeams">Sortear Times</string>
     <string name="toolbar_title_groups">Grupos</string>
+
     <string name="search">Pesquisar</string>
     <string name="desc_name">Escreva o nome do jogador</string>
     <string name="desc_group">Selecione o grupo do qual o jogador faz parte</string>
     <string name="name_group">Nome do grupo</string>
+
     <string name="cancel">Cancelar</string>
     <string name="create">Criar</string>
+
     <string name="edit">Editar</string>
     <string name="delete">Deletar</string>
     <string name="confirm_player_deletion">Excluir este jogador?</string>
     <string name="confirm_group_deletion">Excluir este grupo?</string>
+
     <string name="yes">SIM</string>
     <string name="no">NÃO</string>
+    <string name="player_inserted_successfully">Jogador Registrado</string>
+    <string name="player_error_to_insert">Jogador não registrado</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package co.geisyanne.meuapp.data.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -27,7 +28,7 @@ interface PlayerDao {
     suspend fun getPlayerByName(name: String): List<PlayerEntity?>
 
     @Query("SELECT * FROM player ORDER BY name ASC")
-    fun getAllPlayers(): Flow<List<PlayerEntity>>
+    fun getAllPlayers(): LiveData<List<PlayerEntity>>
 
 
 

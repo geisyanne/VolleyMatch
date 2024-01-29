@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.presentation.drawTeams
+package co.geisyanne.meuapp.presentation.drawTeams.draw
 
 import android.os.Bundle
 import android.view.Menu

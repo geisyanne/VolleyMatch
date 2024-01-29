@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.presentation.drawTeams.player.view
+package co.geisyanne.meuapp.presentation.drawTeams.player.list
 
 import android.annotation.SuppressLint
 import android.graphics.Color

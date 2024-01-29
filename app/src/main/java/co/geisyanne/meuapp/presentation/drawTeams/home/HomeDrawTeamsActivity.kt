@@ -1,4 +1,4 @@
-package co.geisyanne.meuapp.presentation.drawTeams.home.view
+package co.geisyanne.meuapp.presentation.drawTeams.home
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,18 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
-import co.geisyanne.meuapp.presentation.drawTeams.DrawFragment
-import co.geisyanne.meuapp.presentation.drawTeams.GroupListFragment
-import co.geisyanne.meuapp.presentation.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.presentation.drawTeams.player.view.PlayerListFragment
-import co.geisyanne.meuapp.presentation.drawTeams.player.view.RegisterPlayerFragment
+import co.geisyanne.meuapp.presentation.drawTeams.draw.DrawFragment
+import co.geisyanne.meuapp.presentation.drawTeams.group.GroupListFragment
+import co.geisyanne.meuapp.presentation.drawTeams.player.list.PlayerListFragment
+import co.geisyanne.meuapp.presentation.drawTeams.player.register.RegisterPlayerFragment
 
 class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     private var binding: ActivityDrawTeamsBinding? = null
 
     private lateinit var playerListFragment: PlayerListFragment
-
     private lateinit var drawFragment: DrawFragment
     private lateinit var groupListFragment: GroupListFragment
     private lateinit var homeDrawTeamsFragment: HomeDrawTeamsFragment
@@ -89,15 +87,18 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.drawTeam_container_fragment, fragment)
-            .commit()
+    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false) {
+        val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.drawTeam_container_fragment, fragment)
+            if (addToBackStack) {
+                transaction.addToBackStack(null)
+            }
+            transaction.commit()
     }
 
     override fun goToRegisterPlayer() {
         val fragment = RegisterPlayerFragment()
-        replaceFragment(fragment)
+        replaceFragment(fragment, addToBackStack = true)
         binding?.drawTeamBottomNav?.visibility = View.GONE
     }
 
