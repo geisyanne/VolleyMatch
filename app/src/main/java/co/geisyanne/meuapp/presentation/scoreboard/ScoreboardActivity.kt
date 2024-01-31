@@ -23,48 +23,44 @@ class ScoreboardActivity : AppCompatActivity() {
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
 
         binding = ActivityScoreboardBinding.inflate(layoutInflater)
-
         setContentView(binding?.root)
 
         viewModel = ViewModelProvider(this)[ScoreboardViewModel::class.java]
 
-        binding?.let {
-            with(it) {
+        setListeners()
 
-                scoreboardTxtScore1.setOnClickListener {
-                    viewModel.increaseScore(1)
-                    updateScore(1)
-                }
+    }
 
-                scoreboardTxtScore2.setOnClickListener {
-                    viewModel.increaseScore(2)
-                    updateScore(2)
-                }
+    private fun setListeners() {
+        binding?.apply {
 
-                scoreboardTxtScore1.setOnLongClickListener {
-                    viewModel.decreaseScore(1)
-                    updateScore(1)
-                    true
-                }
+            scoreboardTxtScore1.setOnClickListener { handlerIncreaseScore(1) }
+            scoreboardTxtScore2.setOnClickListener { handlerIncreaseScore(2) }
 
-                scoreboardTxtScore2.setOnLongClickListener {
-                    viewModel.decreaseScore(2)
-                    updateScore(2)
-                    true
-                }
+            scoreboardTxtScore1.setOnLongClickListener { handlerDecreaseScore(1) }
+            scoreboardTxtScore2.setOnLongClickListener { handlerDecreaseScore(2) }
 
-                scoreboardBtnRestart.setOnClickListener {
-                    viewModel.restartScore()
-                    restartScore()
+            scoreboardBtnRestart.setOnClickListener { handlerRestartScore() }
 
-                }
-
-                scoreboardBtnHelp.setOnClickListener {
-                    displayHelp()
-                }
-            }
+            scoreboardBtnHelp.setOnClickListener { displayHelp() }
         }
+    }
 
+    private fun handlerIncreaseScore(team: Int) {
+        viewModel.increaseScore(team)
+        updateScore(team)
+    }
+
+    private fun handlerDecreaseScore(team: Int): Boolean {
+        viewModel.decreaseScore(team)
+        updateScore(team)
+        return true
+    }
+
+    private fun handlerRestartScore() {
+        viewModel.restartScore()
+        binding?.scoreboardTxtScore1?.text = getString(R.string.txt_score, 0)
+        binding?.scoreboardTxtScore2?.text = getString(R.string.txt_score, 0)
     }
 
     private fun updateScore(team: Int) {
@@ -79,20 +75,16 @@ class ScoreboardActivity : AppCompatActivity() {
             2 -> binding?.scoreboardTxtScore2
             else -> throw IllegalArgumentException("Invalid team: $team")
         }
+
         textView?.text = getString(R.string.txt_score, score)
     }
 
-    private fun restartScore() {
-        binding?.scoreboardTxtScore1?.text = getString(R.string.txt_score, 0)
-        binding?.scoreboardTxtScore2?.text = getString(R.string.txt_score, 0)
-    }
-
     private fun displayHelp() {
-        val builder = MaterialAlertDialogBuilder(this@ScoreboardActivity)
-
-        builder.setMessage(R.string.txt_help)
+        MaterialAlertDialogBuilder(this@ScoreboardActivity)
+            .setMessage(R.string.txt_help)
             .setNeutralButton(android.R.string.ok, null)
-        builder.create().show()
+            .create()
+            .show()
     }
 
     @Suppress("DEPRECATION")

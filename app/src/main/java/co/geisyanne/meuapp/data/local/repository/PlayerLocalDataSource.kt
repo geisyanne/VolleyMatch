@@ -55,7 +55,7 @@ class PlayerLocalDataSource(
         return playerDao.getPlayerByName(name)
     }
 
-    override suspend fun getAllPlayers(): LiveData<List<PlayerEntity>> {
+    override fun getAllPlayers(): LiveData<List<PlayerEntity>> {
         return playerDao.getAllPlayers()
     }
 

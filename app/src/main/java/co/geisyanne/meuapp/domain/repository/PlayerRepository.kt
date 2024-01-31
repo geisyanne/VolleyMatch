@@ -17,6 +17,6 @@ interface PlayerRepository {
 
     suspend fun getPlayerByName(name: String): List<PlayerEntity?>
 
-    suspend fun getAllPlayers(): LiveData<List<PlayerEntity>>
+    fun getAllPlayers(): LiveData<List<PlayerEntity>>
 
 }

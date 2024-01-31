@@ -33,5 +33,4 @@ class ScoreboardViewModel : ViewModel() {
         currentScore2 = 0
     }
 
-
 }

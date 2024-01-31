@@ -52,6 +52,10 @@ class LoadingButton : FrameLayout {
         button.setOnClickListener(l) // RUN BUTTON, NOT FRAME LAYOUT
     }
 
+    public fun setText(text: String) {
+        button.text = text
+    }
+
     public fun showProgress(enabled: Boolean) {
         if (enabled) {
             button.text = ""

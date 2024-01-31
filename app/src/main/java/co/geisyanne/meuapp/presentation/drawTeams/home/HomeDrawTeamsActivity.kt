@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
+import co.geisyanne.meuapp.data.local.entity.PlayerEntity
 import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
 import co.geisyanne.meuapp.presentation.drawTeams.draw.DrawFragment
 import co.geisyanne.meuapp.presentation.drawTeams.group.GroupListFragment
@@ -87,20 +88,34 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false) {
+    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false, tag: String? = null) {
         val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.drawTeam_container_fragment, fragment)
-            if (addToBackStack) {
-                transaction.addToBackStack(null)
-            }
-            transaction.commit()
+
+        transaction.replace(R.id.drawTeam_container_fragment, fragment, tag)
+
+        if (addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+
+        transaction.commit()
     }
 
     override fun goToRegisterPlayer() {
         val fragment = RegisterPlayerFragment()
-        replaceFragment(fragment, addToBackStack = true)
+        replaceFragment(fragment, addToBackStack = true, "RegisterPlayerTag")
         binding?.drawTeamBottomNav?.visibility = View.GONE
     }
+
+    override fun goToUpdatePlayer(player: PlayerEntity?) {
+        val bundle = Bundle().apply {
+            putParcelable("KEY_PLAYER", player)
+        }
+        val fragment = RegisterPlayerFragment()
+        fragment.arguments = bundle
+        replaceFragment(fragment, addToBackStack = true, "UpdatePlayerTag")
+        binding?.drawTeamBottomNav?.visibility = View.GONE
+    }
+
 
     override fun onDestroy() {
         binding = null

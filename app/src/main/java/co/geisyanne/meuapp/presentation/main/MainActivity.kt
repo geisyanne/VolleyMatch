@@ -26,8 +26,5 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(baseContext, HomeDrawTeamsActivity::class.java))
             }
         }
-
     }
-
-
 }

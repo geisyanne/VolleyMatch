@@ -9,25 +9,6 @@ class PlayerListViewModel(
     private val repository: PlayerRepository
 ) : ViewModel() {
 
-    fun deletePlayer(id: Long) {
-
-    }
-
-    fun deleteSelectedPlayers(ids: List<Long>) {
-
-    }
-
-    /*fun getPlayerByName(name: String): List<PlayerEntity?> {
-
-    }
-
-    fun getAllPlayers(): LiveData<List<PlayerEntity>> {
-
-    }*/
-
-
-
-
-
+    val allPlayersEvent = repository.getAllPlayers()
 
 }

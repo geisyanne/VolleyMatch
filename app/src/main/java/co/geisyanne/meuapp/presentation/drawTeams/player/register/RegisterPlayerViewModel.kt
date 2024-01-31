@@ -18,16 +18,23 @@ class RegisterPlayerViewModel(
 
     // NOTIFICAR QUANDO UM USER FOR INSERIDO
     private val _playerStateEventData = MutableLiveData<PlayerState>()
-    val playerStateEventData: LiveData<PlayerState>
-        get() = _playerStateEventData
+    val playerStateEventData: LiveData<PlayerState> get() = _playerStateEventData
 
     // NOTIFICAR ERRO NO CATCH
     private val _messageEventData = MutableLiveData<Int>()
-    val messageEventData: LiveData<Int>
-        get() = _messageEventData
+    val messageEventData: LiveData<Int> get() = _messageEventData
 
 
-    fun addPlayer(name: String, position: Int?, level: Int?, group: Int?) =
+    fun addOrUpdatePlayer(name: String, position: Int?, level: Int?, group: Int?, id: Long = 0) {
+        if (id > 0) {
+            updatePlayer(id, name, position, level, group)
+        } else {
+            insertPlayer(name, position, level, group)
+        }
+
+    }
+
+     private fun insertPlayer(name: String, position: Int?, level: Int?, group: Int?) =
         viewModelScope.launch {
             try {
                 val id = repository.insertPlayer(name, position, level, group)
@@ -38,23 +45,45 @@ class RegisterPlayerViewModel(
 
             } catch (e: Exception) {
                 _messageEventData.value = R.string.player_error_to_insert
-                Log.e(TAG, e.toString())
+                Log.e(TAG, "Erro ao inserir jogador", e)
             }
         }
 
-    fun updatePlayer(id: Long, name: String, position: Int?, level: Int?, group: Int?) {
+    private fun updatePlayer(id: Long, name: String, position: Int?, level: Int?, group: Int?) =
+        viewModelScope.launch {
+            try {
+                repository.updatePlayer(id, name, position, level, group)
 
+                _playerStateEventData.value = PlayerState.Updated
+                _messageEventData.value = R.string.player_updated_successfully
+            } catch (e: Exception) {
+                _messageEventData.value = R.string.player_error_to_updated
+                Log.e(TAG, "Erro ao editar jogador", e)
+            }
+        }
+
+    fun deletePlayer(id: Long) = viewModelScope.launch {
+        try {
+            if (id > 0)
+            repository.deletePlayer(id)
+
+            _playerStateEventData.value = PlayerState.Deleted
+            _messageEventData.value = R.string.player_deleted_successfully
+        } catch (e: Exception) {
+            _messageEventData.value = R.string.player_error_to_delete
+            Log.e(TAG, e.toString())
+        }
     }
-
 
     // PARA REPRESENTAR UM CONJUNTO DE ESTADOS/TIPOS
     sealed class PlayerState {
-        object Inserted : PlayerState()
+        data object Inserted : PlayerState()
+        data object Updated : PlayerState()
+        data object Deleted : PlayerState()
     }
 
     companion object {
         private val TAG = RegisterPlayerViewModel::class.java.simpleName
     }
-
 
 }

@@ -30,8 +30,8 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
     private lateinit var viewModel: PlayerListViewModel
     private var binding: FragmentPlayerListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
-    private var adapter = PlayerListAdapter()
-    private var players = mutableListOf<Player>()
+    // private var adapter = PlayerListAdapter()
+    // private var players = mutableListOf<Player>()
     private var actionMode: ActionMode? = null
 
     @SuppressLint("NotifyDataSetChanged")
@@ -46,38 +46,55 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
         val factory = viewModelFactory { PlayerListViewModel(repository) }
         viewModel = ViewModelProvider(this, factory)[PlayerListViewModel::class.java]
 
+        observeViewModelEvents()
+
+
 
         binding?.run {
 
-            playerBtnRegister.setOnClickListener {
-                fragmentAttachListener?.goToRegisterPlayer()
-            }
+            playerBtnRegister.setOnClickListener { fragmentAttachListener?.goToRegisterPlayer() }
 
             playerRv.layoutManager = LinearLayoutManager(requireContext())
-            playerRv.adapter = adapter
+            // playerRv.adapter = PlayerListAdapter
+        //playerRv.adapter = adapter
 
-            playerRv.setListener(object : SwipeLeftRightCallback.Listener {
+            /*playerRv.setListener(object : SwipeLeftRightCallback.Listener {
                 override fun onSwipedLeft(position: Int) {
                     removeItem(position)
                 }
 
                 override fun onSwipedRight(position: Int) {
                 }
-            })
+            })*/
         }
 
-        // fakePlayers()
+      /*  // fakePlayers()
         adapter.apply {
             items = players
             notifyDataSetChanged()
 
             onItemClick = { enableActionMode(it) } // TOOLBAR WITH ACTION
             onItemLongClick = { enableActionMode(it) }
-        }
+        }*/
 
     }
 
-    private fun enableActionMode(position: Int) {
+    private fun observeViewModelEvents() {
+        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
+            val playerListAdapter = PlayerListAdapter(allPlayers).apply {
+                onItemClickUpdate = { player ->
+                    fragmentAttachListener?.goToUpdatePlayer(player)
+                }
+            }
+            binding?.playerRv?.adapter = playerListAdapter
+        }
+    }
+
+    private fun configureViewListeners() {
+
+    }
+
+    /*private fun enableActionMode(position: Int) {
         if (actionMode == null && activity is AppCompatActivity) {
             actionMode = (activity as AppCompatActivity).startSupportActionMode(object :
                 ActionMode.Callback {
@@ -141,7 +158,7 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
             builder.create().show()
         } ?: throw IllegalStateException("Activity cannot be null")
 
-    }
+    }*/
 
     // CHECK: IF THE ACTIVITY IMPLEMENTS AN INTERFACE
     override fun onAttach(context: Context) {

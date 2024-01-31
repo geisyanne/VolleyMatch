@@ -1,10 +1,13 @@
 package co.geisyanne.meuapp.data.local.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import co.geisyanne.meuapp.domain.model.Group
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "player")
 data class PlayerEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -15,7 +18,5 @@ data class PlayerEntity(
 
     @ColumnInfo(name = "level") val level: Int?,
 
-    @ColumnInfo(name = "group") val group: Int?,
-
-
-    )
+    @ColumnInfo(name = "group") val group: Int?
+) : Parcelable

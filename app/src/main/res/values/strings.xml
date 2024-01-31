@@ -58,5 +58,9 @@
     <string name="no">NÃO</string>
     <string name="player_inserted_successfully">Jogador Registrado</string>
     <string name="player_error_to_insert">Jogador não registrado</string>
+    <string name="player_updated_successfully">Jogador atualizado</string>
+    <string name="player_error_to_updated">Erro ao editar jogador</string>
+    <string name="player_deleted_successfully">Jogador deletado</string>
+    <string name="player_error_to_delete">Erro ao deletar jogador</string>
 
 </resources>
