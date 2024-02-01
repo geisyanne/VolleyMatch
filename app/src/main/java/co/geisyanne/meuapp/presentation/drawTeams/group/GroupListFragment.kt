@@ -158,7 +158,7 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
         players1.add(
             Player(
                 name = "Jogador1",
-                position = 1,
+                positionPlayer = 1,
                 level = 1,
                 group = null
             )
@@ -167,7 +167,7 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
         players2.add(
             Player(
                 name = "Jogador2",
-                position = 2,
+                positionPlayer = 2,
                 level = 3,
                 group = null
             )
@@ -175,7 +175,7 @@ class GroupListFragment : Fragment(R.layout.fragment_group_list) {
         players2.add(
             Player(
                 name = "Jogador3",
-                position = 3,
+                positionPlayer = 3,
                 level = 5,
                 group = null
             )

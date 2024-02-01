@@ -21,6 +21,7 @@ interface PlayerDao {
 
     @Query("DELETE FROM player WHERE id = :id")
     suspend fun deletePlayer(id: Long)
+
     @Query("DELETE FROM player WHERE id IN (:ids)")
     suspend fun deleteSelectedPlayers(ids: List<Long>)
 

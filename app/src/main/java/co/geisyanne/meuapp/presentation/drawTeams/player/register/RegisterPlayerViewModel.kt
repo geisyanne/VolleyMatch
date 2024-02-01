@@ -62,18 +62,7 @@ class RegisterPlayerViewModel(
             }
         }
 
-    fun deletePlayer(id: Long) = viewModelScope.launch {
-        try {
-            if (id > 0)
-            repository.deletePlayer(id)
 
-            _playerStateEventData.value = PlayerState.Deleted
-            _messageEventData.value = R.string.player_deleted_successfully
-        } catch (e: Exception) {
-            _messageEventData.value = R.string.player_error_to_delete
-            Log.e(TAG, e.toString())
-        }
-    }
 
     // PARA REPRESENTAR UM CONJUNTO DE ESTADOS/TIPOS
     sealed class PlayerState {

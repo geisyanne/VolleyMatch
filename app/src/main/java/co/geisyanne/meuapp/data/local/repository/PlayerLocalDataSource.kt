@@ -1,11 +1,9 @@
 package co.geisyanne.meuapp.data.local.repository
 
 import androidx.lifecycle.LiveData
-import co.geisyanne.meuapp.domain.model.Group
 import co.geisyanne.meuapp.data.local.dao.PlayerDao
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
 import co.geisyanne.meuapp.domain.repository.PlayerRepository
-import co.geisyanne.meuapp.presentation.common.base.RegisterCallback
 
 class PlayerLocalDataSource(
     private val playerDao: PlayerDao
@@ -13,13 +11,13 @@ class PlayerLocalDataSource(
 
     override suspend fun insertPlayer(
         name: String,
-        position: Int?,
+        positionPlayer: Int?,
         level: Int?,
         group: Int?,
     ): Long {
         val player = PlayerEntity(
             name = name,
-            position = position,
+            positionPlayer = positionPlayer,
             level = level,
             group = group
         )
@@ -29,14 +27,14 @@ class PlayerLocalDataSource(
     override suspend fun updatePlayer(
         id: Long,
         name: String,
-        position: Int?,
+        positionPlayer: Int?,
         level: Int?,
         group: Int?
     ) {
         val player = PlayerEntity(
             id = id,
             name = name,
-            position = position,
+            positionPlayer = positionPlayer,
             level = level,
             group = group
         )
