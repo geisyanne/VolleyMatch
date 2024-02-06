@@ -13,7 +13,7 @@ interface PlayerRepository {
 
     suspend fun deleteSelectedPlayers(ids: List<Long>)
 
-    suspend fun getPlayerByName(name: String): List<PlayerEntity?>
+    fun getPlayerByName(name: String): LiveData<List<PlayerEntity>>
 
     fun getAllPlayers(): LiveData<List<PlayerEntity>>
 

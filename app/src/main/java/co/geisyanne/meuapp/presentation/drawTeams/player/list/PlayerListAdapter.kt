@@ -16,8 +16,11 @@ import co.geisyanne.meuapp.domain.model.Player
 
 
 class PlayerListAdapter(
-    private val players: List<PlayerEntity>
+    val players: List<PlayerEntity>
 ) : RecyclerView.Adapter<PlayerListAdapter.PlayerListViewHolder>() {
+
+    val selectedItems = SparseBooleanArray()
+    private var currentSelectedPos: Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerListViewHolder {
         return PlayerListViewHolder(
@@ -29,14 +32,62 @@ class PlayerListAdapter(
 
     override fun onBindViewHolder(holder: PlayerListViewHolder, position: Int) {
         holder.bind(players[position])
+
+        // ACTIVATE CLICKS ON ITEMS
+        holder.itemView.setOnClickListener {
+            if (selectedItems.isNotEmpty()) { // IF AN ITEM ALREADY IS SELECTED
+                onItemClickSelect?.invoke(position)
+            }
+        }
+        holder.itemView.setOnLongClickListener {
+            onItemLongClick?.invoke(position)
+            return@setOnLongClickListener true
+        }
+        if (currentSelectedPos == position) currentSelectedPos = -1
+    }
+
+    // TOGGLE SELECTION OF ITEMS ACCORDING TO CLICK
+    fun toggleSelection(position: Int) {
+
+        currentSelectedPos = position
+
+        if (selectedItems[position, false]) {
+            selectedItems.delete(position) // REMOVED/UNCHECKED FROM SPARSEBOOLEANARRAY
+            players[position].selected = false
+        } else {
+            selectedItems.put(position, true) // INSERTED/MARKED IN SPARSEBOOLEANARRAY
+            players[position].selected = true
+        }
+        notifyItemChanged(position)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun getSelectedPlayers(): List<PlayerEntity>? {
+        val selectedPlayers =
+            players.filter { it.selected }  // CREATE NEW LIST WITH SELECTED PLAYERS
+        currentSelectedPos = -1
+        return selectedPlayers.takeIf { it.isNotEmpty() }
     }
 
     var onItemClickUpdate: ((entity: PlayerEntity) -> Unit)? = null
+    var onItemClickSelect: ((Int) -> Unit)? = null
+    var onItemLongClick: ((Int) -> Unit)? = null
 
     inner class PlayerListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(player: PlayerEntity) {
             itemView.findViewById<TextView>(R.id.item_player_txt_name).text = player.name
+
+            // CHANGE COLOR FOR SELECTED ITEM
+            if (player.selected) {
+                itemView.background = GradientDrawable().apply {
+                    setColor(Color.rgb(232, 240, 253))
+                }
+            } else {
+                itemView.background = GradientDrawable().apply {
+                    setColor(Color.WHITE)
+                }
+            }
 
             itemView.setOnClickListener {
                 onItemClickUpdate?.invoke(player)

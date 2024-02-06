@@ -1,14 +1,18 @@
 package co.geisyanne.meuapp.presentation.drawTeams.player.list
 
-import android.content.ClipData.Item
+
 import android.content.Context
-import android.icu.text.Transliterator.Position
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import androidx.core.view.get
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.data.local.AppDatabase
@@ -27,20 +31,20 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
     private lateinit var adapter: PlayerListAdapter
     private var binding: FragmentPlayerListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
+    private var actionMode: ActionMode? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentPlayerListBinding.bind(view)
 
         setupViewModel()
         setupUI()
         observeViewModelEvents()
-
-
-
-
-
 
     }
 
@@ -56,23 +60,26 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
             playerRv.layoutManager = LinearLayoutManager(requireContext())
             playerBtnRegister.setOnClickListener { fragmentAttachListener?.goToRegisterPlayer() }
 
-            playerRv.setListener(object  : SwipeLeftRightCallback.Listener {
-                override fun onSwipedLeft(position: Int) {
+            setupSwipeLeftRightDelete()
 
-
-                    deletePlayer(position)
-                }
-
-                override fun onSwipedRight(position: Int) {
-                }
-
-            })
         }
-
-
     }
 
-    private fun deletePlayer(position: Int) {
+    private fun setupSwipeLeftRightDelete() {
+        binding?.playerRv?.setListener(object : SwipeLeftRightCallback.Listener {
+            override fun onSwipedLeft(position: Int) {
+                deleteConfirmationDialog(position)
+            }
+
+            override fun onSwipedRight(position: Int) {
+            }
+        })
+    }
+
+
+
+
+    private fun deleteConfirmationDialog(position: Int) {
         activity?.apply {
             MaterialAlertDialogBuilder(this)
                 .setMessage(R.string.confirm_player_deletion)
@@ -88,8 +95,53 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
                 .create()
                 .show()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
 
+    private fun enableActionMode(position: Int) {
+        if (actionMode == null && activity is AppCompatActivity) {
+            actionMode = (activity as AppCompatActivity).startSupportActionMode(object :
+                ActionMode.Callback {
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    mode?.menuInflater?.inflate(R.menu.menu_delete, menu)
+                    return true
+                }
 
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    return false
+                }
+
+                override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                    if (item?.itemId == R.id.menu_action_delete) {
+                        val selectedPlayers = adapter.getSelectedPlayers()
+                        viewModel.deleteSelectedPlayers(selectedPlayers)
+                        mode?.finish()
+                        return true
+                    }
+                    return false
+                }
+
+                override fun onDestroyActionMode(mode: ActionMode?) {
+                    adapter.apply {
+                        selectedItems.clear()
+                        players
+                            .filter { it.selected }
+                            .forEach { it.selected = false }
+                        notifyDataSetChanged()
+                    }
+                    actionMode = null
+                }
+            })
+        }
+
+        // COUNT IN THE TOOLBAR
+        adapter.toggleSelection(position)
+        val size = adapter.selectedItems.size()
+        if (size == 0) {
+            actionMode?.finish()  // DISABLE TOOLBAR ACTION
+        } else {
+            actionMode?.title = "$size"
+            actionMode?.invalidate()
+        }
     }
 
     private fun observeViewModelEvents() {
@@ -100,8 +152,44 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
                 }
             }
             binding?.playerRv?.adapter = adapter
+            adapter.onItemClickSelect = { enableActionMode(it) }
+            adapter.onItemLongClick = { enableActionMode(it) }
+
         }
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        //inflater.inflate(R.menu.menu_toolbar, menu)
+        val searchItem = menu.findItem(R.id.menu_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                /*if (query != null) {
+                    searchDatabase(query)
+                }*/
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                /*if (newText != null) {
+                    searchDatabase(newText)
+                }*/
+                return false
+            }
+        })
+    }
+
+  /*  private fun searchDatabase(name: String) {
+        val searchName = "%$name%"
+        viewModel.searchPlayer(searchName).observe(this) { list ->
+            list.let {
+
+            }
+        }
+    }*/
+
 
     // CHECK: IF THE ACTIVITY IMPLEMENTS AN INTERFACE
     override fun onAttach(context: Context) {
@@ -113,7 +201,14 @@ class PlayerListFragment() : Fragment(R.layout.fragment_player_list) {
 
     override fun onDestroy() {
         binding = null
+
+        // DESTROY ACTION MODE
+        if (actionMode != null)
+            actionMode?.finish()
+
         super.onDestroy()
     }
 
 }
+
+

@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
@@ -73,7 +74,6 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
-
         return super.onCreateOptionsMenu(menu)
     }
 

@@ -2,7 +2,7 @@
     <string name="app_name">MeuApp</string>
 
     <string name="draw_teams">Sortear times</string>
-    <string name="draw">Sortear</string>
+
     <string name="btn_scoreboard">Placar</string>
     <string name="txt_score">%02d</string>
     <string name="txt_help">Click normal: +1 ponto\n\nClick longo: -1 ponto\n</string>
@@ -12,55 +12,72 @@
 
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
 
-    <string name="register_player">Cadastrar Jogador</string>
+
     <string name="create_group">Criar Grupo</string>
-    <string name="save">Salvar</string>
-    <string name="players">Jogadores</string>
-    <string name="empty_player_list">Nenhum jogador cadastrado</string>
+
     <string name="group_empty_player_list">Nenhum jogador no grupo</string>
     <string name="empty_groups_list">Nenhum grupo criado</string>
+
+    <!-- -->
     <string name="name">Nome</string>
     <string name="position">Posição</string>
     <string name="undefined_position">Não definida</string>
     <string name="skill_level">Nível de habilidade</string>
 
+    <!-- Screen: Player -->
+    <string name="register_player">Cadastrar Jogador</string>
+    <string name="save">Salvar</string>
+    <string name="players">Jogadores</string>
+
+    <string name="empty_player_list">Nenhum jogador cadastrado</string>
     <string name="no_player">Nenhum jogador</string>
     <string name="qtd_player">%d Jogador</string>
     <string name="qtd_players">%d Jogadores</string>
 
+    <!-- Screen: draw -->
+    <string name="draw">Sortear</string>
     <string name="select_players">Selecionar jogadores</string>
     <string name="select_group">Selecionar grupo</string>
     <string name="list">Lista</string>
     <string name="qtd_players_team">Quantos jogadores por time:</string>
     <string name="position_5x1">Considerar posicionamento 5x1:</string>
     <string name="skill_level_drawTeam">Considerar habilidade dos jogadores:</string>
+
+    <!-- Screen: result -->
     <string name="result">Resultado</string>
     <string name="team">Time</string>
 
+    <!-- toolbar -->
     <string name="toolbar_title_players">Jogadores</string>
     <string name="toolbar_title_drawTeams">Sortear Times</string>
     <string name="toolbar_title_groups">Grupos</string>
-
     <string name="search">Pesquisar</string>
+
+
+
     <string name="desc_name">Escreva o nome do jogador</string>
     <string name="desc_group">Selecione o grupo do qual o jogador faz parte</string>
     <string name="name_group">Nome do grupo</string>
 
-    <string name="cancel">Cancelar</string>
-    <string name="create">Criar</string>
 
+    <!-- dialogs -->
     <string name="edit">Editar</string>
     <string name="delete">Deletar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="create">Criar</string>
     <string name="confirm_player_deletion">Excluir este jogador?</string>
     <string name="confirm_group_deletion">Excluir este grupo?</string>
-
     <string name="yes">SIM</string>
     <string name="no">NÃO</string>
+
+    <!-- database operations -->
     <string name="player_inserted_successfully">Jogador Registrado</string>
     <string name="player_error_to_insert">Jogador não registrado</string>
     <string name="player_updated_successfully">Jogador atualizado</string>
     <string name="player_error_to_updated">Erro ao editar jogador</string>
     <string name="player_deleted_successfully">Jogador deletado</string>
     <string name="player_error_to_delete">Erro ao deletar jogador</string>
+    <string name="search_hint">Pesquisar jogador</string>
+    <string name="player_error_in_search">Erro ao pesquisar jogador</string>
 
 </resources>

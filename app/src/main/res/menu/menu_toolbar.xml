@@ -8,6 +8,6 @@
         android:icon="@drawable/baseline_search_24"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="com.google.android.material.search.SearchView"/>
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
 </menu>

@@ -22,7 +22,6 @@ class DrawFragment : Fragment(R.layout.fragment_draw_teams) {
 
         binding = FragmentDrawTeamsBinding.bind(view)
 
-
     }
 
 

@@ -2,6 +2,7 @@ package co.geisyanne.meuapp.presentation.drawTeams.player.register
 
 import android.os.Bundle
 import android.os.Looper
+import android.view.Menu
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.ArrayAdapter
@@ -55,6 +56,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         setListeners()
     }
 
+    @Suppress("DEPRECATION")
     private fun configureEditText() {
         when (tag) {
             "RegisterPlayerTag" -> {
@@ -151,6 +153,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
     private fun setListeners() {
         val btnSave = binding?.playerRegisterBtnSave
+
         btnSave?.setOnClickListener {
             val namePlayer = binding?.playerRegisterEditName?.text.toString()
             val positionPlayer =
@@ -160,6 +163,13 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
             viewModel?.addOrUpdatePlayer(namePlayer, positionPlayer, levelPlayer, groupPlayer, id)
         }
+    }
+
+    // HIDE THE SEARCH MENU
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val searchItem = menu.findItem(R.id.menu_search)
+        searchItem?.isVisible = false
+        super.onPrepareOptionsMenu(menu)
     }
 
     override fun onDestroy() {

@@ -16,13 +16,16 @@ class PlayerListViewModel(
     private val repository: PlayerRepository
 ) : ViewModel() {
 
-    // NOTIFICAR QUANDO UM USER FOR INSERIDO
+    // NOTIFICAR QUANDO UM USER FOR DELETADO
     private val _playerStateEventData = MutableLiveData<PlayerState>()
     val playerStateEventData: LiveData<PlayerState> get() = _playerStateEventData
 
     // NOTIFICAR ERRO NO CATCH
     private val _messageEventData = MutableLiveData<Int>()
     val messageEventData: LiveData<Int> get() = _messageEventData
+
+  /*  private val _searchResults = MutableLiveData<List<PlayerEntity>>()
+    val searchResults: LiveData<List<PlayerEntity>> = _searchResults*/
 
 
     val allPlayersEvent = repository.getAllPlayers()
@@ -48,6 +51,39 @@ class PlayerListViewModel(
         val player = allPlayersEvent.value
         return player?.getOrNull(position)
     }
+
+    fun deleteSelectedPlayers(players: List<PlayerEntity>?) = viewModelScope.launch {
+
+        try {
+            val ids = players?.map { it.id } ?: emptyList()
+            repository.deleteSelectedPlayers(ids)
+
+            _playerStateEventData.value = PlayerState.Deleted
+            _messageEventData.value = R.string.player_deleted_successfully
+        } catch (e: Exception) {
+            _messageEventData.value = R.string.player_error_to_delete
+            Log.e(TAG, e.toString())
+        }
+    }
+
+    /*fun searchPlayer(name: String): LiveData<List<PlayerEntity>> {
+        *//*viewModelScope.launch {
+
+            try {
+                val results = repository.getPlayerByName(name)
+                _searchResults.postValue(results)
+
+
+            } catch (e: Exception) {
+                _messageEventData.value = R.string.player_error_in_search
+                Log.e(TAG, "Error ao pesquisar jogador", e)
+            }
+        }*//*
+
+        return repository.getPlayerByName(name)
+    }*/
+
+
 
 
     sealed class PlayerState {

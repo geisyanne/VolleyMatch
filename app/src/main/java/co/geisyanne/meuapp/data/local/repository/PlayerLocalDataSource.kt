@@ -49,7 +49,7 @@ class PlayerLocalDataSource(
         playerDao.deleteSelectedPlayers(ids)
     }
 
-    override suspend fun getPlayerByName(name: String): List<PlayerEntity?> {
+    override fun getPlayerByName(name: String): LiveData<List<PlayerEntity>> {
         return playerDao.getPlayerByName(name)
     }
 

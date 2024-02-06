@@ -13,24 +13,26 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PlayerDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlayer(playerEntity: PlayerEntity): Long
 
     @Update
     suspend fun updatePlayer(playerEntity: PlayerEntity)
 
-    @Query("DELETE FROM player WHERE id = :id")
+    @Query("DELETE FROM player_table WHERE id = :id")
     suspend fun deletePlayer(id: Long)
 
-    @Query("DELETE FROM player WHERE id IN (:ids)")
+    @Query("DELETE FROM player_table WHERE id IN (:ids)")
     suspend fun deleteSelectedPlayers(ids: List<Long>)
 
-    @Query("SELECT * FROM player WHERE name = :name ORDER BY name ASC")
-    suspend fun getPlayerByName(name: String): List<PlayerEntity?>
+    @Query("SELECT * FROM player_table WHERE name = :name ORDER BY name ASC")
+    fun getPlayerByName(name: String): LiveData<List<PlayerEntity>>
 
-    @Query("SELECT * FROM player ORDER BY name ASC")
+    @Query("SELECT * FROM player_table ORDER BY name ASC")
     fun getAllPlayers(): LiveData<List<PlayerEntity>>
 
 
+    //@Query("SELECT * FROM player_table WHERE name = :name ORDER BY name ASC")
+    //@Query("SELECT * FROM player WHERE name LIKE :name || '%' ORDER BY name ASC")
 
 }
