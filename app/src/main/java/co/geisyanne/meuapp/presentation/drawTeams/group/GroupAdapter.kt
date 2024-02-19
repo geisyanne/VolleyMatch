@@ -11,12 +11,13 @@ import android.widget.TextView
 import androidx.core.util.isNotEmpty
 import androidx.recyclerview.widget.RecyclerView
 import co.geisyanne.meuapp.R
-import co.geisyanne.meuapp.domain.model.Group
+import co.geisyanne.meuapp.data.local.entity.GroupEntity
 
 
-class GroupAdapter : RecyclerView.Adapter<GroupAdapter.GroupsViewHolder>() {
+class GroupAdapter(
+    var groups: List<GroupEntity>
+) : RecyclerView.Adapter<GroupAdapter.GroupsViewHolder>() {
 
-    var items: MutableList<Group> = mutableListOf()
     val selectedItems = SparseBooleanArray()
     private var currentSelectedPos: Int = -1
 
@@ -26,17 +27,18 @@ class GroupAdapter : RecyclerView.Adapter<GroupAdapter.GroupsViewHolder>() {
         )
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount() = groups.size
 
     override fun onBindViewHolder(holder: GroupsViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(groups[position])
 
         // ACTIVATE CLICKS ON ITEMS
         holder.itemView.setOnClickListener {
+
             if (selectedItems.isNotEmpty()) { // IF AN ITEM ALREADY IS SELECTED
-                onItemClick?.invoke(position)
+                onItemClickSelect?.invoke(position)
+            } else {
+                onItemClickUpdate?.invoke(groups[position]) // TO EDIT GROUP
             }
         }
 
@@ -51,43 +53,48 @@ class GroupAdapter : RecyclerView.Adapter<GroupAdapter.GroupsViewHolder>() {
 
     // TOGGLE SELECTION OF ITEMS ACCORDING TO CLICK
     fun toggleSelection(position: Int) {
+
         currentSelectedPos = position
+
         if (selectedItems[position, false]) {
             selectedItems.delete(position) // REMOVED/UNCHECKED FROM SPARSEBOOLEANARRAY
-            items[position].selected = false
+            groups[position].selected = false
         } else {
             selectedItems.put(position, true) // INSERTED/MARKED IN SPARSEBOOLEANARRAY
-            items[position].selected = true
+            groups[position].selected = true
         }
         notifyItemChanged(position)
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun deleteGroups() {
-        val selectGroups = items.filter { it.selected }
-
-        if (selectGroups.isNotEmpty()) {
-            items.removeAll(selectGroups)
-            notifyDataSetChanged()
-            currentSelectedPos = -1
-        }
+    fun getSelectedGroups(): List<GroupEntity>? {
+        val selectedGroups =
+            groups.filter { it.selected }  // CREATE NEW LIST WITH SELECTED PLAYERS
+        currentSelectedPos = -1
+        return selectedGroups.takeIf { it.isNotEmpty() }
     }
 
-    var onItemClick: ((Int) -> Unit)? = null
+    fun submitList(newList: List<GroupEntity>) {
+        groups = newList
+        notifyDataSetChanged()
+    }
+
+    var onItemClickUpdate: ((entity: GroupEntity) -> Unit)? = null
+    var onItemClickSelect: ((Int) -> Unit)? = null
     var onItemLongClick: ((Int) -> Unit)? = null
 
     inner class GroupsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(group: Group) {
+        fun bind(group: GroupEntity) {
             itemView.findViewById<TextView>(R.id.item_group_txt_name).text = group.name
 
-            val groupSize = group.players?.size
-            val groupNumPlayerTxt = itemView.findViewById<TextView>(R.id.item_group_txt_players)
+            /*val groupSize =
+            val qtdPlayerTxt = itemView.findViewById<TextView>(R.id.item_group_txt_players)
 
-            groupNumPlayerTxt.text = when (groupSize) {
+            qtdPlayerTxt.text = when (groupSize) {
                 0 -> itemView.context.resources.getString(R.string.no_player)
                 1 -> itemView.context.resources.getString(R.string.qtd_player, groupSize)
                 else -> itemView.context.resources.getString(R.string.qtd_players, groupSize)
-            }
+            }*/
 
             // CHANGE COLOR FOR SELECTED ITEM
             if (group.selected) {

@@ -12,16 +12,13 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "player_table")
-data class PlayerEntity(
-    @PrimaryKey(autoGenerate = true) val playerId: Long = 0,
+@Entity(tableName = "group_table")
+data class GroupEntity(
+    @PrimaryKey(autoGenerate = true) val groupId: Long = 0,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "position") val positionPlayer: Int?,
-    @ColumnInfo(name = "level") val level: Int?,
 
     ) : Parcelable {
     @IgnoredOnParcel
     @Ignore var selected: Boolean = false
 }
-
 

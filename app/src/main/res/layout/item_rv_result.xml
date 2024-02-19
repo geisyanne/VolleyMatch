@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingHorizontal="16dp"
-    android:orientation="vertical"
-    android:paddingVertical="8dp"
+   android:layout_marginTop="5dp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/item_result_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/team"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="5dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/item_result_rv_players"
+    <LinearLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_rv_result_player" />
+        android:layout_marginStart="5dp"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="15dp"
-        android:background="@android:color/darker_gray" />
+        <TextView
+            android:id="@+id/item_result_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/team"
+            android:textSize="16sp"
+            android:textColor="@color/blue_medium"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/item_result_rv_players"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="6"
+            tools:listitem="@layout/item_rv_result_player" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

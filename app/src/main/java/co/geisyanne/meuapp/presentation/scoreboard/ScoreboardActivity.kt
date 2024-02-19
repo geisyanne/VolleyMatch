@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.databinding.ActivityScoreboardBinding
@@ -27,11 +28,11 @@ class ScoreboardActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[ScoreboardViewModel::class.java]
 
-        setListeners()
+        setupListeners()
 
     }
 
-    private fun setListeners() {
+    private fun setupListeners() {
         binding?.apply {
 
             scoreboardTxtScore1.setOnClickListener { handlerIncreaseScore(1) }
@@ -40,9 +41,7 @@ class ScoreboardActivity : AppCompatActivity() {
             scoreboardTxtScore1.setOnLongClickListener { handlerDecreaseScore(1) }
             scoreboardTxtScore2.setOnLongClickListener { handlerDecreaseScore(2) }
 
-            scoreboardBtnRestart.setOnClickListener { handlerRestartScore() }
-
-            scoreboardBtnHelp.setOnClickListener { displayHelp() }
+            scoreboardMenu.setOnClickListener { showPopupMenu(it) }
         }
     }
 
@@ -55,12 +54,6 @@ class ScoreboardActivity : AppCompatActivity() {
         viewModel.decreaseScore(team)
         updateScore(team)
         return true
-    }
-
-    private fun handlerRestartScore() {
-        viewModel.restartScore()
-        binding?.scoreboardTxtScore1?.text = getString(R.string.txt_score, 0)
-        binding?.scoreboardTxtScore2?.text = getString(R.string.txt_score, 0)
     }
 
     private fun updateScore(team: Int) {
@@ -77,6 +70,35 @@ class ScoreboardActivity : AppCompatActivity() {
         }
 
         textView?.text = getString(R.string.txt_score, score)
+    }
+
+
+    fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.inflate(R.menu.menu_popup_scoreboard)
+        popupMenu.setOnMenuItemClickListener { item ->
+
+            when (item.itemId) {
+                R.id.menu_restart -> {
+                    handlerRestartScore()
+                    true
+                }
+
+                R.id.menu_help -> {
+                    displayHelp()
+                    true
+                }
+
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
+
+    private fun handlerRestartScore() {
+        viewModel.restartScore()
+        binding?.scoreboardTxtScore1?.text = getString(R.string.txt_score, 0)
+        binding?.scoreboardTxtScore2?.text = getString(R.string.txt_score, 0)
     }
 
     private fun displayHelp() {
@@ -105,10 +127,12 @@ class ScoreboardActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onDestroy() {
         binding = null
         super.onDestroy()
     }
+
 
 }
 

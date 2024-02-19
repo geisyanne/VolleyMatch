@@ -5,9 +5,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
-import kotlinx.coroutines.flow.Flow
+import co.geisyanne.meuapp.data.local.relation.PlayerWithGroups
 
 
 @Dao
@@ -19,20 +20,20 @@ interface PlayerDao {
     @Update
     suspend fun updatePlayer(playerEntity: PlayerEntity)
 
-    @Query("DELETE FROM player_table WHERE id = :id")
+    @Query("DELETE FROM player_table WHERE playerId = :id")
     suspend fun deletePlayer(id: Long)
 
-    @Query("DELETE FROM player_table WHERE id IN (:ids)")
+    @Query("DELETE FROM player_table WHERE playerId IN (:ids)")
     suspend fun deleteSelectedPlayers(ids: List<Long>)
 
-    @Query("SELECT * FROM player_table WHERE name = :name ORDER BY name ASC")
+    @Query("SELECT * FROM player_table WHERE name LIKE :name || '%' ORDER BY name ASC")
     fun getPlayerByName(name: String): LiveData<List<PlayerEntity>>
 
     @Query("SELECT * FROM player_table ORDER BY name ASC")
     fun getAllPlayers(): LiveData<List<PlayerEntity>>
 
-
-    //@Query("SELECT * FROM player_table WHERE name = :name ORDER BY name ASC")
-    //@Query("SELECT * FROM player WHERE name LIKE :name || '%' ORDER BY name ASC")
+    @Transaction
+    @Query("SELECT * FROM player_table WHERE playerId = :playerId")
+    fun getGroupsForPlayer(playerId: Long): LiveData<List<PlayerWithGroups>>
 
 }

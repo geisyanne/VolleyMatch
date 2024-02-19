@@ -8,4 +8,6 @@ interface FragmentAttachListener {
 
     fun goToUpdatePlayer(player: PlayerEntity?)
 
+    //fun goToGroup(groupId: Long)
+
 }

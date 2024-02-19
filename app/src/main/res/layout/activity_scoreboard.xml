@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_bright"
+            android:background="@color/blue_primary"
             android:orientation="horizontal">
 
             <TextView
@@ -24,9 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center|top"
-                android:textColor="@color/black"
-                android:textSize="270sp"
-                android:text="00" />
+                android:text="@string/point"
+                android:textColor="@color/yellow_primary"
+                android:textSize="280sp" />
 
         </LinearLayout>
 
@@ -35,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_green_light"
+            android:background="@color/yellow_primary"
             android:orientation="horizontal">
 
             <TextView
@@ -43,29 +44,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center|top"
-                android:textColor="@color/black"
-                android:textSize="270sp"
-                android:text="00" />
+                android:text="@string/point"
+                android:textColor="@color/blue_primary"
+                android:textSize="280sp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/scoreboard_btn_restart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:src="@drawable/baseline_refresh_24" />
-
-    <ImageButton
-        android:id="@+id/scoreboard_btn_help"
+        android:id="@+id/scoreboard_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/baseline_help_outline_24" />
+        android:onClick="showPopupMenu"
+        android:src="@drawable/baseline_more_vert_24" />
 
 
 </FrameLayout>

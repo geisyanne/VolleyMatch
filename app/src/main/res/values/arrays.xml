@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="positions">
-        <item>Não definida</item>
+    <string-array name="positionsPlayer">
+        <item>Sem posição</item>
         <item>Levantador(a)</item>
         <item>Ponteiro(a)</item>
         <item>Oposto(a)</item>

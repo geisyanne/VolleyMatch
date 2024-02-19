@@ -1,58 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingVertical="24dp">
 
-        <Button
-            android:id="@+id/drawTeam_btn_select_players"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/draw_txt_1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="30dp"
-            android:drawablePadding="4dp"
-            android:text="@string/select_players"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:icon="@drawable/baseline_person_add_alt_1_24"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white"
+            android:layout_marginTop="10dp"
+            android:text="@string/params"
+            android:textAllCaps="true"
+            android:textColor="@color/blue_dark"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/draw_view"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/yellow_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/draw_txt_1" />
+
 
         <TextView
-            android:id="@+id/drawTeam_txt_2"
+            android:id="@+id/draw_txt_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="32dp"
             android:text="@string/qtd_players_team"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drawTeam_btn_select_players" />
+            app:layout_constraintTop_toBottomOf="@id/draw_view"
+            tools:layout_editor_absoluteY="60dp" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/draw_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             app:hintEnabled="false"
-            app:layout_constraintBottom_toBottomOf="@id/drawTeam_txt_2"
-            app:layout_constraintStart_toEndOf="@id/drawTeam_txt_2"
-            app:layout_constraintTop_toTopOf="@id/drawTeam_txt_2">
+            app:layout_constraintBottom_toBottomOf="@id/draw_txt_2"
+            app:layout_constraintStart_toEndOf="@id/draw_txt_2"
+            app:layout_constraintTop_toTopOf="@id/draw_txt_2">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/drawTeam__txt_dropdown_numbers"
+                android:id="@+id/draw_dropdown_num"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:dropDownSelector="@android:color/holo_green_light"
+                android:dropDownSelector="@color/yellow_light"
                 android:entries="@array/numbers"
                 android:inputType="none"
                 android:paddingTop="8dp"
@@ -61,7 +73,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/drawTeam_txt_3"
+            android:id="@+id/draw_txt_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -69,23 +81,23 @@
             android:text="@string/position_5x1"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drawTeam_txt_2" />
+            app:layout_constraintTop_toBottomOf="@id/draw_txt_2" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/drawTeam_switch_position"
+            android:id="@+id/draw_switch_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:checked="false"
-            app:layout_constraintBottom_toBottomOf="@id/drawTeam_txt_3"
-            app:layout_constraintStart_toEndOf="@id/drawTeam_txt_3"
-            app:layout_constraintTop_toTopOf="@id/drawTeam_txt_3"
-            app:thumbTint="#858585"
-            app:trackDecorationTint="#858585"
-            app:trackTint="@color/yellow" />
+            app:layout_constraintBottom_toBottomOf="@id/draw_txt_3"
+            app:layout_constraintStart_toEndOf="@id/draw_txt_3"
+            app:layout_constraintTop_toTopOf="@id/draw_txt_3"
+            app:thumbTint="@color/blue_primary"
+            app:trackDecorationTint="@color/yellow_primary"
+            app:trackTint="@color/yellow_primary" />
 
         <TextView
-            android:id="@+id/drawTeam_txt_4"
+            android:id="@+id/draw_txt_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -94,36 +106,36 @@
             android:text="@string/skill_level_drawTeam"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drawTeam_txt_3" />
+            app:layout_constraintTop_toBottomOf="@id/draw_txt_3" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/drawTeam_switch_level"
+            android:id="@+id/draw_switch_lvl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:checked="false"
-            app:layout_constraintBottom_toBottomOf="@id/drawTeam_txt_4"
-            app:layout_constraintStart_toEndOf="@id/drawTeam_txt_4"
-            app:layout_constraintTop_toTopOf="@id/drawTeam_txt_4"
-            app:thumbTint="#858585"
-            app:trackDecorationTint="#858585"
-            app:trackTint="@color/yellow" />
+            app:layout_constraintBottom_toBottomOf="@id/draw_txt_4"
+            app:layout_constraintStart_toEndOf="@id/draw_txt_4"
+            app:layout_constraintTop_toTopOf="@id/draw_txt_4"
+            app:thumbTint="@color/blue_primary"
+            app:trackDecorationTint="@color/yellow_primary"
+            app:trackTint="@color/yellow_primary" />
 
         <Button
-            android:id="@+id/drawTeam_btn_draw"
+            android:id="@+id/draw_btn_go_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="35dp"
             android:drawablePadding="4dp"
             android:text="@string/draw"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drawTeam_txt_4" />
-        fcç
+            app:layout_constraintTop_toBottomOf="@id/draw_txt_4" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</LinearLayout>

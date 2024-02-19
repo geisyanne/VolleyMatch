@@ -2,7 +2,9 @@ package co.geisyanne.meuapp.presentation.drawTeams.player.register
 
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.ArrayAdapter
@@ -23,11 +25,12 @@ import com.google.android.material.snackbar.Snackbar
 
 class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
-    private var binding: FragmentPlayerRegisterBinding? = null
     private var viewModel: RegisterPlayerViewModel? = null
+    private var binding: FragmentPlayerRegisterBinding? = null
 
     private var id: Long = 0
-    private val positionsAdapter: ArrayAdapter<String>? = null
+    private var positionsAdapter: ArrayAdapter<String>? = null
+    private var selectedPosition: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +39,11 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentPlayerRegisterBinding.bind(view)
+
         setupViewModel()
         setupUI()
+
     }
 
     private fun setupViewModel() {
@@ -50,10 +54,35 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
     }
 
     private fun setupUI() {
-        configureEditText()
         configureDropdown()
+        configureEditText()
         observeEvents()
         setListeners()
+    }
+
+    private fun configureDropdown() {
+
+        // SET ARRAY POSITIONS
+        val positions = resources.getStringArray(R.array.positionsPlayer)
+        positionsAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown, positions)
+
+        binding?.playerRegisterTxtDropdownPositions?.apply {
+            setAdapter(positionsAdapter)
+            setText(positionsAdapter?.getItem(0), false)
+            setOnClickListener {
+                showDropDown()
+            }
+            binding?.playerRegisterTxtDropdownPositions?.setOnItemClickListener { adapter, _, position, _ ->
+                selectedPosition = adapter.getItemIdAtPosition(position).toInt()
+            }
+
+            binding?.playerRegisterTxtDropdownPositions?.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    hideKeyboard()
+                }
+            }
+
+        }
     }
 
     @Suppress("DEPRECATION")
@@ -67,35 +96,26 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
             "UpdatePlayerTag" -> {
                 arguments?.getParcelable<PlayerEntity>("KEY_PLAYER")?.let { player ->
+                    id = player.playerId
+                    val posPlayer = player.positionPlayer ?: 0
+
+                    binding?.playerRegisterBtnSave?.apply {
+                        setText(getString(R.string.edit))
+                        isEnabled = true
+                    }
+
                     binding?.run {
                         playerRegisterEditName.setText(player.name)
-                        playerRegisterBtnSave.setText("Editar")
+                        playerRegisterTxtDropdownPositions.setText(
+                            positionsAdapter?.getItem(
+                                posPlayer
+                            ), false
+                        )
+                        playerRegisterRatingbar.rating = player.level?.toFloat() ?: 0f
                     }
-                    id = player.id
                 }
             }
         }
-    }
-
-    private fun configureDropdown() {
-
-        // SET ARRAY POSITIONS
-        val positions = resources.getStringArray(R.array.positions)
-        val positionsAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown, positions)
-
-        binding?.playerRegisterTxtDropdownPositions?.apply {
-            setAdapter(positionsAdapter)
-            setText(positionsAdapter.getItem(0), false)
-            setOnClickListener {
-                showDropDown()
-            }
-        }
-
-        // SET ARRAY GROUPS TODO: to implement
-        /*private fun setArrayGroups() {
-        // binding?.containerDropdownGroups?.visibility = View.GONE
-         }*/
-
     }
 
     private fun observeEvents() {
@@ -103,7 +123,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
             when (playerState) {
                 is RegisterPlayerViewModel.PlayerState.Inserted,
                 is RegisterPlayerViewModel.PlayerState.Updated -> {
-                    clearFields()
+                    //clearFields()
                     hideKeyboard()
                     startDelayToClose()
                 }
@@ -119,12 +139,12 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         }
     }
 
-    private fun clearFields() {
+    /*private fun clearFields() {
         binding?.playerRegisterEditName?.text?.clear()
         binding?.playerRegisterRatingbar?.rating = 0f
         // zerar positions TODO
         // zerar groups
-    }
+    }*/
 
     private fun hideKeyboard() {
         val parentActivity = requireActivity()
@@ -136,12 +156,12 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
     private fun startDelayToClose() {
         android.os.Handler(Looper.getMainLooper()).postDelayed({
             closeWithAnimation(requireView())
-        }, 1000.toLong())
+        }, 200.toLong())
     }
 
     private fun closeWithAnimation(view: View) {
         val fadeOut = AlphaAnimation(1f, 0f)
-        fadeOut.duration = 500
+        fadeOut.duration = 200
         fadeOut.fillAfter = true
 
         view.startAnimation(fadeOut)
@@ -156,13 +176,25 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
         btnSave?.setOnClickListener {
             val namePlayer = binding?.playerRegisterEditName?.text.toString()
-            val positionPlayer =
-                positionsAdapter?.getPosition(binding?.playerRegisterTxtDropdownPositions?.text.toString())
-            val levelPlayer = binding?.playerRegisterRatingbar?.rating?.toInt()
-            val groupPlayer = null
 
-            viewModel?.addOrUpdatePlayer(namePlayer, positionPlayer, levelPlayer, groupPlayer, id)
+            val positionPlayer = if (selectedPosition == null) 0 else selectedPosition
+
+
+            val levelPlayer = binding?.playerRegisterRatingbar?.rating?.toInt()
+            viewModel?.addOrUpdatePlayer(namePlayer, positionPlayer, levelPlayer, id)
         }
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // HIDE THE SEARCH MENU

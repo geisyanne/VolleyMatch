@@ -12,11 +12,9 @@ import androidx.core.util.isNotEmpty
 import androidx.recyclerview.widget.RecyclerView
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
-import co.geisyanne.meuapp.domain.model.Player
-
 
 class PlayerListAdapter(
-    val players: List<PlayerEntity>
+    var players: List<PlayerEntity>
 ) : RecyclerView.Adapter<PlayerListAdapter.PlayerListViewHolder>() {
 
     val selectedItems = SparseBooleanArray()
@@ -35,14 +33,19 @@ class PlayerListAdapter(
 
         // ACTIVATE CLICKS ON ITEMS
         holder.itemView.setOnClickListener {
+
             if (selectedItems.isNotEmpty()) { // IF AN ITEM ALREADY IS SELECTED
                 onItemClickSelect?.invoke(position)
+            } else {
+                onItemClickUpdate?.invoke(players[position]) // TO EDIT PLAYER
             }
         }
+
         holder.itemView.setOnLongClickListener {
             onItemLongClick?.invoke(position)
             return@setOnLongClickListener true
         }
+
         if (currentSelectedPos == position) currentSelectedPos = -1
     }
 
@@ -69,6 +72,11 @@ class PlayerListAdapter(
         return selectedPlayers.takeIf { it.isNotEmpty() }
     }
 
+    fun submitList(newList: List<PlayerEntity>) {
+        players = newList
+        notifyDataSetChanged()
+    }
+
     var onItemClickUpdate: ((entity: PlayerEntity) -> Unit)? = null
     var onItemClickSelect: ((Int) -> Unit)? = null
     var onItemLongClick: ((Int) -> Unit)? = null
@@ -76,7 +84,7 @@ class PlayerListAdapter(
     inner class PlayerListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(player: PlayerEntity) {
-            itemView.findViewById<TextView>(R.id.item_player_txt_name).text = player.name
+            itemView.findViewById<TextView>(R.id.txt_name).text = player.name
 
             // CHANGE COLOR FOR SELECTED ITEM
             if (player.selected) {
@@ -89,9 +97,7 @@ class PlayerListAdapter(
                 }
             }
 
-            itemView.setOnClickListener {
-                onItemClickUpdate?.invoke(player)
-            }
+
 
         }
     }

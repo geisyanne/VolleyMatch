@@ -3,6 +3,8 @@ package co.geisyanne.meuapp.data.local.repository
 import androidx.lifecycle.LiveData
 import co.geisyanne.meuapp.data.local.dao.PlayerDao
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
+import co.geisyanne.meuapp.data.local.relation.GroupWithPlayers
+import co.geisyanne.meuapp.data.local.relation.PlayerWithGroups
 import co.geisyanne.meuapp.domain.repository.PlayerRepository
 
 class PlayerLocalDataSource(
@@ -13,13 +15,11 @@ class PlayerLocalDataSource(
         name: String,
         positionPlayer: Int?,
         level: Int?,
-        group: Int?,
     ): Long {
         val player = PlayerEntity(
             name = name,
             positionPlayer = positionPlayer,
-            level = level,
-            group = group
+            level = level
         )
         return playerDao.insertPlayer(player)
     }
@@ -28,15 +28,13 @@ class PlayerLocalDataSource(
         id: Long,
         name: String,
         positionPlayer: Int?,
-        level: Int?,
-        group: Int?
+        level: Int?
     ) {
         val player = PlayerEntity(
-            id = id,
+            playerId = id,
             name = name,
             positionPlayer = positionPlayer,
-            level = level,
-            group = group
+            level = level
         )
 
         playerDao.updatePlayer(player)
@@ -55,6 +53,10 @@ class PlayerLocalDataSource(
 
     override fun getAllPlayers(): LiveData<List<PlayerEntity>> {
         return playerDao.getAllPlayers()
+    }
+
+    override fun getGroupsForPlayer(playerId: Long): LiveData<List<PlayerWithGroups>> {
+        return playerDao.getGroupsForPlayer(playerId)
     }
 
 

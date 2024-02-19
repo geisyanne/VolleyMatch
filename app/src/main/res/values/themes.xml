@@ -2,11 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.MeuApp" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#CCB914</item>
+        <item name="colorPrimary">@color/blue_primary</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/yellow</item>
+        <item name="colorSecondary">@color/yellow_primary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/blue</item>
+        <item name="android:statusBarColor">@color/blue_primary</item>
+        <!-- Toolbar. -->
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24</item>
         <!-- ActionMode. -->
         <item name="actionModeStyle">@style/actionModeTheme</item>

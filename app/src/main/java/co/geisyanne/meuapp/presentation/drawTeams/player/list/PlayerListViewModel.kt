@@ -1,6 +1,5 @@
 package co.geisyanne.meuapp.presentation.drawTeams.player.list
 
-import android.icu.text.Transliterator.Position
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
 import co.geisyanne.meuapp.domain.repository.PlayerRepository
-import co.geisyanne.meuapp.presentation.drawTeams.player.register.RegisterPlayerViewModel
 import kotlinx.coroutines.launch
 
 class PlayerListViewModel(
@@ -24,8 +22,8 @@ class PlayerListViewModel(
     private val _messageEventData = MutableLiveData<Int>()
     val messageEventData: LiveData<Int> get() = _messageEventData
 
-  /*  private val _searchResults = MutableLiveData<List<PlayerEntity>>()
-    val searchResults: LiveData<List<PlayerEntity>> = _searchResults*/
+    /*  private val _searchResults = MutableLiveData<List<PlayerEntity>>()
+      val searchResults: LiveData<List<PlayerEntity>> = _searchResults*/
 
 
     val allPlayersEvent = repository.getAllPlayers()
@@ -36,8 +34,8 @@ class PlayerListViewModel(
         val player = getPlayerByPosition(position)
 
         try {
-            if (player != null && player.id > 0)
-                repository.deletePlayer(player.id)
+            if (player != null && player.playerId > 0)
+                repository.deletePlayer(player.playerId)
 
             _playerStateEventData.value = PlayerState.Deleted
             _messageEventData.value = R.string.player_deleted_successfully
@@ -55,7 +53,7 @@ class PlayerListViewModel(
     fun deleteSelectedPlayers(players: List<PlayerEntity>?) = viewModelScope.launch {
 
         try {
-            val ids = players?.map { it.id } ?: emptyList()
+            val ids = players?.map { it.playerId } ?: emptyList()
             repository.deleteSelectedPlayers(ids)
 
             _playerStateEventData.value = PlayerState.Deleted
@@ -66,25 +64,9 @@ class PlayerListViewModel(
         }
     }
 
-    /*fun searchPlayer(name: String): LiveData<List<PlayerEntity>> {
-        *//*viewModelScope.launch {
-
-            try {
-                val results = repository.getPlayerByName(name)
-                _searchResults.postValue(results)
-
-
-            } catch (e: Exception) {
-                _messageEventData.value = R.string.player_error_in_search
-                Log.e(TAG, "Error ao pesquisar jogador", e)
-            }
-        }*//*
-
+    fun searchPlayer(name: String): LiveData<List<PlayerEntity>> {
         return repository.getPlayerByName(name)
-    }*/
-
-
-
+    }
 
     sealed class PlayerState {
         data object Deleted : PlayerState()

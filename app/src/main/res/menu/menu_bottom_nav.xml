@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <item android:id="@+id/menu_bottom_groups"
-        android:icon="@drawable/baseline_groups_24"
-        android:title="@string/groups" />
-
     <item android:id="@+id/menu_bottom_player"
         android:icon="@drawable/baseline_person_24"
-        android:title="@string/player" />
+        android:title="@string/players" />
 
     <item android:id="@+id/menu_bottom_draw_times"
         android:icon="@drawable/baseline_shuffle_24"
         android:title="@string/draw_teams" />
 
-    <!-- Our invisible item -->
+    <!-- Our invisible item
+
+    <item android:id="@+id/menu_bottom_groups"
+        android:icon="@drawable/baseline_groups_24"
+        android:title="@string/groups"
+        android:visible="false"/>
+
     <item
         android:id="@+id/invisible"
         android:visible="false" />
+
+        -->
 
 </menu>

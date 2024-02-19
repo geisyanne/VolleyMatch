@@ -25,19 +25,18 @@ class RegisterPlayerViewModel(
     val messageEventData: LiveData<Int> get() = _messageEventData
 
 
-    fun addOrUpdatePlayer(name: String, position: Int?, level: Int?, group: Int?, id: Long = 0) {
+    fun addOrUpdatePlayer(name: String, position: Int?, level: Int?, id: Long = 0) {
         if (id > 0) {
-            updatePlayer(id, name, position, level, group)
+            updatePlayer(id, name, position, level)
         } else {
-            insertPlayer(name, position, level, group)
+            insertPlayer(name, position, level)
         }
-
     }
 
-     private fun insertPlayer(name: String, position: Int?, level: Int?, group: Int?) =
+     private fun insertPlayer(name: String, position: Int?, level: Int?) =
         viewModelScope.launch {
             try {
-                val id = repository.insertPlayer(name, position, level, group)
+                val id = repository.insertPlayer(name, position, level)
                 if (id > 0) {
                     _playerStateEventData.value = PlayerState.Inserted
                     _messageEventData.value = R.string.player_inserted_successfully
@@ -49,10 +48,10 @@ class RegisterPlayerViewModel(
             }
         }
 
-    private fun updatePlayer(id: Long, name: String, position: Int?, level: Int?, group: Int?) =
+    private fun updatePlayer(id: Long, name: String, position: Int?, level: Int?) =
         viewModelScope.launch {
             try {
-                repository.updatePlayer(id, name, position, level, group)
+                repository.updatePlayer(id, name, position, level)
 
                 _playerStateEventData.value = PlayerState.Updated
                 _messageEventData.value = R.string.player_updated_successfully

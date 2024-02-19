@@ -1,13 +1,12 @@
-package co.geisyanne.meuapp.presentation.drawTeams.player.list
+package co.geisyanne.meuapp.presentation.drawTeams.group
 
-
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
@@ -16,23 +15,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.data.local.AppDatabase
-import co.geisyanne.meuapp.data.local.repository.PlayerLocalDataSource
-import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
-import co.geisyanne.meuapp.domain.repository.PlayerRepository
+import co.geisyanne.meuapp.data.local.repository.GroupLocalDataSource
+import co.geisyanne.meuapp.databinding.FragmentGroupListBinding
+import co.geisyanne.meuapp.domain.repository.GroupRepository
 import co.geisyanne.meuapp.presentation.common.util.viewModelFactory
 import co.geisyanne.meuapp.presentation.drawTeams.home.FragmentAttachListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 
-class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
+class GroupFragment : Fragment(R.layout.fragment_group_list) {
 
-    private lateinit var viewModel: PlayerListViewModel
-    private var binding: FragmentPlayerListBinding? = null
+    private lateinit var viewModel: GroupViewModel
+    private var binding: FragmentGroupListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
 
     private var actionMode: ActionMode? = null
-    private lateinit var adapter: PlayerListAdapter
-
+    private lateinit var adapter: GroupAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +39,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentPlayerListBinding.bind(view)
+        binding = FragmentGroupListBinding.bind(view)
 
         setupViewModel()
         setupUI()
@@ -50,23 +48,45 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     }
 
     private fun setupViewModel() {
-        val playerDao = AppDatabase.getInstance(requireContext()).playerDao
-        val repository: PlayerRepository = PlayerLocalDataSource(playerDao)
-        val factory = viewModelFactory { PlayerListViewModel(repository) }
-        viewModel = ViewModelProvider(this, factory)[PlayerListViewModel::class.java]
+        val groupDao = AppDatabase.getInstance(requireContext()).groupDao
+        val repository: GroupRepository = GroupLocalDataSource(groupDao)
+        val factory = viewModelFactory { GroupViewModel(repository) }
+        viewModel = ViewModelProvider(this, factory)[GroupViewModel::class.java]
     }
 
     private fun setupUI() {
         binding?.run {
-            playerRv.layoutManager = LinearLayoutManager(requireContext())
-            playerBtnRegister.setOnClickListener { fragmentAttachListener?.goToRegisterPlayer() }
+            groupRv.layoutManager = LinearLayoutManager(requireContext())
+            groupBtnCreate.setOnClickListener { createOrUpdateGroupDialog(0) }
         }
 
         setupSwipeLeftRightDelete()
     }
 
+    private fun createOrUpdateGroupDialog(id: Long) {
+        activity?.let {
+            val builder = MaterialAlertDialogBuilder(it)
+            val inflater = requireActivity().layoutInflater
+
+            val dialogView = inflater.inflate(R.layout.dialog_group, null)
+            val editText = dialogView.findViewById<EditText>(R.id.group_register_edit_name)
+            val string = getString(if (id > 0) R.string.edit else R.string.create)
+
+            builder.setView(dialogView)
+                .setPositiveButton(string) { _, _ ->
+                    val name = editText.text.toString()
+                    viewModel.addOrUpdateGroup(name, id)
+                }
+                .setNeutralButton(R.string.cancel) { dialog, _ ->
+                    dialog.cancel()
+                }
+            builder.create().show()
+
+        } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
     private fun setupSwipeLeftRightDelete() {
-        binding?.playerRv?.setListener(object : SwipeLeftRightCallback.Listener {
+        binding?.groupRv?.setListener(object : SwipeLeftRightCallback.Listener {
             override fun onSwipedLeft(position: Int) {
                 deleteConfirmationDialog(position)
             }
@@ -82,7 +102,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
                 .setMessage(R.string.confirm_player_deletion)
                 .setCancelable(false)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    viewModel.deletePlayer(position)
+                    viewModel.deleteGroup(position)
                     adapter.notifyItemRemoved(position)
                 }
                 .setNeutralButton(R.string.no) { dialog, _ ->
@@ -95,7 +115,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     }
 
     // ACTIVATE ACTION MODE
-    private fun enableActionMode(position: Int) {
+    private fun enabledActionMode(position: Int) {
         if (actionMode == null && activity is AppCompatActivity) {
             actionMode = (activity as AppCompatActivity).startSupportActionMode(object :
                 ActionMode.Callback {
@@ -110,20 +130,21 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     if (item?.itemId == R.id.menu_action_delete) {
-                        val selectedPlayers = adapter.getSelectedPlayers()
-                        viewModel.deleteSelectedPlayers(selectedPlayers)
+                        val selectedGroups = adapter.getSelectedGroups()
+                        viewModel.deleteSelectedGroups(selectedGroups)
                         mode?.finish()
                         return true
                     }
                     return false
                 }
 
+                @SuppressLint("NotifyDataSetChanged")
                 override fun onDestroyActionMode(mode: ActionMode?) {
                     adapter.apply {
                         selectedItems.clear()
-                        players
+                        groups
                             .filter { it.selected }
-                            .forEach { it.selected = false }
+                            .forEach { it.selected = false}
                         notifyDataSetChanged()
                     }
                     actionMode = null
@@ -135,23 +156,25 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         adapter.toggleSelection(position)
         val size = adapter.selectedItems.size()
         if (size == 0) {
-            actionMode?.finish()  // DISABLE TOOLBAR ACTION
+            actionMode?.finish() // DISABLE TOOLBAR ACTION
         } else {
             actionMode?.title = "$size"
             actionMode?.invalidate()
         }
+
     }
 
     private fun observeViewModelEvents() {
-        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
-            adapter = PlayerListAdapter(allPlayers).apply {
-                onItemClickUpdate = { player ->
-                    fragmentAttachListener?.goToUpdatePlayer(player)
+        viewModel.allGroupsEvent.observe(viewLifecycleOwner) { allGroups ->
+            adapter = GroupAdapter(allGroups).apply {
+                onItemClickUpdate = { group ->
+
+                    //createOrUpdateGroupDialog(group.groupId)
                 }
             }
-            binding?.playerRv?.adapter = adapter
-            adapter.onItemClickSelect = { enableActionMode(it) }
-            adapter.onItemLongClick = { enableActionMode(it) }
+            binding?.groupRv?.adapter = adapter
+            adapter.onItemClickSelect = { enabledActionMode(it) }
+            adapter.onItemLongClick = { enabledActionMode(it) }
         }
     }
 
@@ -159,9 +182,9 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         val searchItem = menu.findItem(R.id.menu_search)
         val searchView = searchItem?.actionView as SearchView
 
-        // HIDE REGISTER BTN DURING SEARCH
+        // HIDE CREATE BTN DURING SEARCH
         searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
-            binding?.playerBtnRegister?.visibility = if (hasFocus) {
+            binding?.groupBtnCreate?.visibility = if (hasFocus) {
                 View.GONE
             } else {
                 View.VISIBLE
@@ -190,22 +213,13 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         val searchName = "%$name%"
         view?.let {
             viewLifecycleOwnerLiveData.observe(viewLifecycleOwner) { viewLifecycleOwner ->
-                viewModel.searchPlayer(searchName).observe(viewLifecycleOwner) { list ->
+                viewModel.searchGroup(searchName).observe(viewLifecycleOwner) { list ->
                     list.let {
                         adapter.submitList(it)
-                        binding?.playerTxtEmpty?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+                        binding?.groupTxtEmpty?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
                     }
                 }
             }
-        }
-    }
-
-
-    // CHECK: IF THE ACTIVITY IMPLEMENTS AN INTERFACE
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is FragmentAttachListener) {
-            fragmentAttachListener = context
         }
     }
 
@@ -213,12 +227,11 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         binding = null
 
         // DESTROY ACTION MODE
-        if (actionMode != null)
+        if(actionMode != null)
             actionMode?.finish()
 
         super.onDestroy()
     }
 
+
 }
-
-

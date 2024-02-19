@@ -2,7 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="blue">#3C8DCD</color>
     <color name="blue2">#5499CF</color>
     <color name="yellow">#DFC904</color>
+    <color name="yellow2">#F8D112</color>
+
+    <color name="blue_primary">#3C8DCD</color>
+    <color name="blue_light">#629fD0</color>
+    <color name="blue_medium">#2A618D</color>
+    <color name="blue_dark">#214B6E</color>
+
+    <color name="yellow_primary">#F1d118</color>
+    <color name="yellow_light">#F7E226</color>
+    <color name="yellow_medium">#DFC904</color>
+
+    
+
 </resources>

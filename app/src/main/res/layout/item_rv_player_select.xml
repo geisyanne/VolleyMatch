@@ -1,28 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/item_select_players_checkbox"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checked="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/item_player_txt_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="@string/player"
-        app:layout_constraintTop_toTopOf="@+id/item_select_players_checkbox"
-        app:layout_constraintBottom_toBottomOf="@+id/item_select_players_checkbox"
-        app:layout_constraintStart_toEndOf="@+id/item_select_players_checkbox"
-        android:maxLines="1" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <CheckBox
+                android:id="@+id/item_rv_checkbox_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:checked="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_rv_txt_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:maxLines="1"
+                android:text="@string/player"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/item_rv_txt_pos"
+                app:layout_constraintStart_toEndOf="@id/item_rv_checkbox_player"
+                app:layout_constraintTop_toTopOf="@id/item_rv_checkbox_player" />
+
+            <TextView
+                android:id="@+id/item_rv_txt_pos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/position"
+                android:textColor="#434141"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/item_rv_checkbox_player"
+                app:layout_constraintStart_toStartOf="@id/item_rv_txt_name"
+                app:layout_constraintTop_toBottomOf="@id/item_rv_txt_name" />
+
+            <RatingBar
+                android:id="@+id/item_rv_ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="8dp"
+                android:numStars="5"
+                android:rating="0"
+                app:layout_constraintBottom_toBottomOf="@id/item_rv_txt_pos"
+                app:layout_constraintStart_toEndOf="@id/item_rv_txt_pos"
+                app:layout_constraintTop_toTopOf="@id/item_rv_txt_pos"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

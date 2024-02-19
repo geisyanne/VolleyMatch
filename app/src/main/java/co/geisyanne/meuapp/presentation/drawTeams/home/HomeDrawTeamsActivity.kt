@@ -1,17 +1,20 @@
 package co.geisyanne.meuapp.presentation.drawTeams.home
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import co.geisyanne.meuapp.R
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
 import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
 import co.geisyanne.meuapp.presentation.drawTeams.draw.DrawFragment
-import co.geisyanne.meuapp.presentation.drawTeams.group.GroupListFragment
 import co.geisyanne.meuapp.presentation.drawTeams.player.list.PlayerListFragment
 import co.geisyanne.meuapp.presentation.drawTeams.player.register.RegisterPlayerFragment
 
@@ -21,8 +24,8 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     private lateinit var playerListFragment: PlayerListFragment
     private lateinit var drawFragment: DrawFragment
-    private lateinit var groupListFragment: GroupListFragment
-    private lateinit var homeDrawTeamsFragment: HomeDrawTeamsFragment
+    //private lateinit var groupListFragment: GroupFragment
+    //private lateinit var homeDrawTeamsFragment: HomeDrawTeamsFragment
     private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,21 +40,21 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
         playerListFragment = PlayerListFragment()
         drawFragment = DrawFragment()
-        groupListFragment = GroupListFragment()
-        homeDrawTeamsFragment = HomeDrawTeamsFragment()
+        //groupListFragment = GroupFragment()
+        //homeDrawTeamsFragment = HomeDrawTeamsFragment()
 
-        replaceFragment(homeDrawTeamsFragment)
+        replaceFragment(playerListFragment)
         binding?.drawTeamBottomNav?.selectedItemId =
-            R.id.invisible // NO PRE-SELECTED BOTTOM NAVIGATION
+            R.id.menu_bottom_player // NO PRE-SELECTED BOTTOM NAVIGATION
 
         binding?.drawTeamBottomNav?.setOnItemSelectedListener { menuItem ->
 
             when (menuItem.itemId) {
-                R.id.menu_bottom_groups -> {
+                /*R.id.menu_bottom_groups -> {
                     showFragment(groupListFragment)
                     setToolbarTitle(R.string.toolbar_title_groups)
                     true
-                }
+                }*/
 
                 R.id.menu_bottom_player -> {
                     showFragment(playerListFragment)
@@ -74,7 +77,23 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
+
+        val searchItem = menu?.findItem(R.id.menu_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        setupSearchView(searchView)
+
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setupSearchView(searchView: SearchView) {
+        searchView.queryHint = getString(R.string.search_player)
+
+        val searchEditText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        searchEditText.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+        val closeIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+        closeIcon.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
     }
 
     private fun setToolbarTitle(@StringRes resId: Int) {
@@ -115,6 +134,12 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         replaceFragment(fragment, addToBackStack = true, "UpdatePlayerTag")
         binding?.drawTeamBottomNav?.visibility = View.GONE
     }
+
+    /*override fun goToGroup(groupId: Long) {
+       *//* val fragment = GroupWithPlayersFragment()
+        replaceFragment(fragment, addToBackStack = true)
+        binding?.drawTeamBottomNav?.visibility = View.GONE*//*
+    }*/
 
 
     override fun onDestroy() {

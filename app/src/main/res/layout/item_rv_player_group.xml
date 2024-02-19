@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/item_player_txt_name"
+        android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
@@ -20,10 +20,10 @@
         android:id="@+id/item_player_btn_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/item_player_txt_name"
+        app:layout_constraintTop_toTopOf="@id/txt_name"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/baseline_remove_circle_outline_24_black"
-        app:layout_constraintBottom_toBottomOf="@id/item_player_txt_name"
+        app:layout_constraintBottom_toBottomOf="@id/txt_name"
         app:layout_constraintEnd_toEndOf="parent" />
 
 
