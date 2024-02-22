@@ -12,10 +12,13 @@
     <color name="blue_light">#629fD0</color>
     <color name="blue_medium">#2A618D</color>
     <color name="blue_dark">#214B6E</color>
+    <color name="blue_transparent">#BBDEFB</color>
 
     <color name="yellow_primary">#F1d118</color>
     <color name="yellow_light">#F7E226</color>
     <color name="yellow_medium">#DFC904</color>
+    <color name="yellow_transparent">#FFECB3</color>
+
 
     
 

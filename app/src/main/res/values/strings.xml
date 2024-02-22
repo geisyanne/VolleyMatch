@@ -97,5 +97,7 @@
     <string name="params">  Critérios para o sorteio  </string>
     <string name="desc_next_screen">Avançar para a próxima tela</string>
     <string name="select_next">"Selecione os jogadores e avance"</string>
+    <string name="position_show">" - %s"</string>
+    <string name="num_team_show">TIME %s</string>
 
 </resources>

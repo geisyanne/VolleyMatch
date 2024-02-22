@@ -17,6 +17,7 @@ import co.geisyanne.meuapp.databinding.ActivityDrawTeamsBinding
 import co.geisyanne.meuapp.presentation.drawTeams.draw.DrawFragment
 import co.geisyanne.meuapp.presentation.drawTeams.player.list.PlayerListFragment
 import co.geisyanne.meuapp.presentation.drawTeams.player.register.RegisterPlayerFragment
+import co.geisyanne.meuapp.presentation.drawTeams.result.ResultFragment
 
 class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
@@ -134,6 +135,25 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         replaceFragment(fragment, addToBackStack = true, "UpdatePlayerTag")
         binding?.drawTeamBottomNav?.visibility = View.GONE
     }
+
+    override fun goToResult(
+        players: List<PlayerEntity>,
+        qtdPlayer: Int,
+        pos: Boolean,
+        lvl: Boolean
+    ) {
+        val bundle = Bundle().apply {
+            putParcelableArrayList("KEY_PLAYERS", ArrayList(players))
+            putInt("KEY_QTD", qtdPlayer)
+            putBoolean("KEY_POS", pos)
+            putBoolean("KEY_LVL", lvl)
+        }
+        val fragment = ResultFragment()
+        fragment.arguments = bundle
+        replaceFragment(fragment, addToBackStack = true)
+        binding?.drawTeamBottomNav?.visibility = View.GONE
+    }
+
 
     /*override fun goToGroup(groupId: Long) {
        *//* val fragment = GroupWithPlayersFragment()

@@ -8,6 +8,8 @@ interface FragmentAttachListener {
 
     fun goToUpdatePlayer(player: PlayerEntity?)
 
+    fun goToResult(players: List<PlayerEntity>, qtdPlayer: Int, pos: Boolean, lvl: Boolean)
+
     //fun goToGroup(groupId: Long)
 
 }
