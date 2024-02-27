@@ -43,7 +43,7 @@
         <item name="android:paddingBottom">8dp</item>
     </style>
 
-    <style name="Theme.MeuApp.FormLoadingButton">
+    <style name="Theme.MeuApp.FormLoadingButton" parent="Widget.Material3.Button.ElevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">20dp</item>

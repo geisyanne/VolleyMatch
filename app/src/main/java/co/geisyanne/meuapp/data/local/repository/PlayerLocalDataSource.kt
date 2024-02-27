@@ -13,8 +13,8 @@ class PlayerLocalDataSource(
 
     override suspend fun insertPlayer(
         name: String,
-        positionPlayer: Int?,
-        level: Int?,
+        positionPlayer: Int,
+        level: Int,
     ): Long {
         val player = PlayerEntity(
             name = name,
@@ -27,8 +27,8 @@ class PlayerLocalDataSource(
     override suspend fun updatePlayer(
         id: Long,
         name: String,
-        positionPlayer: Int?,
-        level: Int?
+        positionPlayer: Int,
+        level: Int
     ) {
         val player = PlayerEntity(
             playerId = id,

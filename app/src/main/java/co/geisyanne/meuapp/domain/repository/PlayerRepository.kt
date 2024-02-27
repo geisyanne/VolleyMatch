@@ -7,9 +7,9 @@ import co.geisyanne.meuapp.data.local.relation.PlayerWithGroups
 
 interface PlayerRepository {
 
-    suspend fun insertPlayer(name: String, positionPlayer: Int?, level: Int?): Long
+    suspend fun insertPlayer(name: String, positionPlayer: Int, level: Int): Long
 
-    suspend fun updatePlayer(id: Long, name: String, positionPlayer: Int?, level: Int?)
+    suspend fun updatePlayer(id: Long, name: String, positionPlayer: Int, level: Int)
 
     suspend fun deletePlayer(id: Long)
 

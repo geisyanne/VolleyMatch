@@ -18,8 +18,7 @@ class DrawAdapter(
     private var players: List<PlayerEntity>
 ) : RecyclerView.Adapter<DrawAdapter.ViewHolder>() {
 
-
-    private val selectedItems = mutableListOf<PlayerEntity>()
+    private val selectedItems = mutableSetOf<PlayerEntity>()  // SET PARA NÃO SER DUPLICADO
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -35,8 +34,18 @@ class DrawAdapter(
 
     }
 
-    fun getSelectedItems() : List<PlayerEntity> {
-        return selectedItems.toList()
+    fun selectAllItems() {
+        selectedItems.addAll(players)
+        notifyDataSetChanged()
+    }
+
+    fun deselectAllItems() {
+        selectedItems.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getSelectedItems() : Set<PlayerEntity> {
+        return selectedItems
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -57,13 +66,13 @@ class DrawAdapter(
         fun bind(player: PlayerEntity) {
 
             val positions = context.resources.getStringArray(R.array.positionsPlayer)
-            val positionPlayer = positions[player.positionPlayer ?: 0]
+            val positionPlayer = positions[player.positionPlayer]
 
             itemView.findViewById<TextView>(R.id.item_rv_txt_name).text = player.name
             itemView.findViewById<TextView>(R.id.item_rv_txt_pos).text = positionPlayer
-            itemView.findViewById<RatingBar>(R.id.item_rv_ratingBar).rating =
-                player.level?.toFloat() ?: 0f
+            itemView.findViewById<RatingBar>(R.id.item_rv_ratingBar).rating = player.level.toFloat()
 
+            checkBox.isChecked = selectedItems.contains(player)
         }
     }
 }

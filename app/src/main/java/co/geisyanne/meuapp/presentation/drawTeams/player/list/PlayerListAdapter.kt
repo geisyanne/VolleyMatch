@@ -84,21 +84,27 @@ class PlayerListAdapter(
     inner class PlayerListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(player: PlayerEntity) {
-            itemView.findViewById<TextView>(R.id.txt_name).text = player.name
+            itemView.findViewById<TextView>(R.id.item_rv_player_txt_name).text = player.name
 
-            // CHANGE COLOR FOR SELECTED ITEM
-            if (player.selected) {
-                itemView.background = GradientDrawable().apply {
-                    setColor(Color.rgb(232, 240, 253))
-                }
+            // CHANGE TXT POSITION PLAYER
+            val txtPos = itemView.findViewById<TextView>(R.id.item_rv_player_txt_pos)
+            if (player.positionPlayer == 0) {
+                txtPos.visibility = View.GONE
             } else {
-                itemView.background = GradientDrawable().apply {
-                    setColor(Color.WHITE)
+                txtPos.visibility = View.VISIBLE
+                val posText = when (player.positionPlayer) {
+                    1 -> "Levantador(a)"
+                    2 -> "Ponteiro(a)"
+                    3 -> "Oposto(a)"
+                    4 -> "Central"
+                    5 -> "Líbero"
+                    else -> throw IllegalArgumentException("Posição inválida")
                 }
+                txtPos.text = posText
             }
 
-
-
+            // CHANGE COLOR FOR SELECTED ITEM
+            itemView.isSelected = player.selected
         }
     }
 

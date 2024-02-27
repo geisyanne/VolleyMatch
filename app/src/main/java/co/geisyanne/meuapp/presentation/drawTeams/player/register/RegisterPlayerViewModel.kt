@@ -25,7 +25,7 @@ class RegisterPlayerViewModel(
     val messageEventData: LiveData<Int> get() = _messageEventData
 
 
-    fun addOrUpdatePlayer(name: String, position: Int?, level: Int?, id: Long = 0) {
+    fun addOrUpdatePlayer(name: String, position: Int, level: Int, id: Long = 0) {
         if (id > 0) {
             updatePlayer(id, name, position, level)
         } else {
@@ -33,7 +33,7 @@ class RegisterPlayerViewModel(
         }
     }
 
-     private fun insertPlayer(name: String, position: Int?, level: Int?) =
+     private fun insertPlayer(name: String, position: Int, level: Int) =
         viewModelScope.launch {
             try {
                 val id = repository.insertPlayer(name, position, level)
@@ -43,12 +43,12 @@ class RegisterPlayerViewModel(
                 }
 
             } catch (e: Exception) {
-                _messageEventData.value = R.string.player_error_to_insert
+                _messageEventData.value = R.string.player_error
                 Log.e(TAG, "Erro ao inserir jogador", e)
             }
         }
 
-    private fun updatePlayer(id: Long, name: String, position: Int?, level: Int?) =
+    private fun updatePlayer(id: Long, name: String, position: Int, level: Int) =
         viewModelScope.launch {
             try {
                 repository.updatePlayer(id, name, position, level)
@@ -56,18 +56,15 @@ class RegisterPlayerViewModel(
                 _playerStateEventData.value = PlayerState.Updated
                 _messageEventData.value = R.string.player_updated_successfully
             } catch (e: Exception) {
-                _messageEventData.value = R.string.player_error_to_updated
+                _messageEventData.value = R.string.player_error
                 Log.e(TAG, "Erro ao editar jogador", e)
             }
         }
-
-
 
     // PARA REPRESENTAR UM CONJUNTO DE ESTADOS/TIPOS
     sealed class PlayerState {
         data object Inserted : PlayerState()
         data object Updated : PlayerState()
-        data object Deleted : PlayerState()
     }
 
     companion object {

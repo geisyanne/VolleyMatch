@@ -20,6 +20,7 @@ import co.geisyanne.meuapp.domain.repository.PlayerRepository
 import co.geisyanne.meuapp.presentation.common.extension.hideKeyboard
 import co.geisyanne.meuapp.presentation.common.util.TxtWatcher
 import co.geisyanne.meuapp.presentation.common.util.viewModelFactory
+import co.geisyanne.meuapp.presentation.drawTeams.home.HomeDrawTeamsActivity
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -30,7 +31,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
     private var id: Long = 0
     private var positionsAdapter: ArrayAdapter<String>? = null
-    private var selectedPosition: Int? = null
+    private var selectedPosition: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +98,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
             "UpdatePlayerTag" -> {
                 arguments?.getParcelable<PlayerEntity>("KEY_PLAYER")?.let { player ->
                     id = player.playerId
-                    val posPlayer = player.positionPlayer ?: 0
+                    val posPlayer = player.positionPlayer
 
                     binding?.playerRegisterBtnSave?.apply {
                         setText(getString(R.string.edit))
@@ -111,7 +112,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
                                 posPlayer
                             ), false
                         )
-                        playerRegisterRatingbar.rating = player.level?.toFloat() ?: 0f
+                        playerRegisterRatingbar.rating = player.level.toFloat()
                     }
                 }
             }
@@ -123,28 +124,20 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
             when (playerState) {
                 is RegisterPlayerViewModel.PlayerState.Inserted,
                 is RegisterPlayerViewModel.PlayerState.Updated -> {
-                    //clearFields()
+                    binding?.playerRegisterBtnSave?.showProgress(false)
                     hideKeyboard()
                     startDelayToClose()
-                }
-
-                is RegisterPlayerViewModel.PlayerState.Deleted -> {
-                    // uq? TODO
                 }
             }
         }
 
         viewModel?.messageEventData?.observe(viewLifecycleOwner) { stringResId ->
-            Snackbar.make(requireView(), stringResId, Snackbar.LENGTH_LONG).show()
+            val alert =
+                Snackbar.make(requireView(), stringResId, Snackbar.LENGTH_LONG)
+            alert.setBackgroundTint(resources.getColor(R.color.blue_dark))
+            alert.show()
         }
     }
-
-    /*private fun clearFields() {
-        binding?.playerRegisterEditName?.text?.clear()
-        binding?.playerRegisterRatingbar?.rating = 0f
-        // zerar positions TODO
-        // zerar groups
-    }*/
 
     private fun hideKeyboard() {
         val parentActivity = requireActivity()
@@ -175,17 +168,16 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         val btnSave = binding?.playerRegisterBtnSave
 
         btnSave?.setOnClickListener {
+            btnSave.showProgress(true)
             val namePlayer = binding?.playerRegisterEditName?.text.toString()
 
-            val positionPlayer = if (selectedPosition == null) 0 else selectedPosition
+            val positionPlayer = selectedPosition
 
 
-            val levelPlayer = binding?.playerRegisterRatingbar?.rating?.toInt()
+            val levelPlayer = binding?.playerRegisterRatingbar?.rating?.toInt() ?: 0
             viewModel?.addOrUpdatePlayer(namePlayer, positionPlayer, levelPlayer, id)
         }
     }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -204,10 +196,11 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         super.onPrepareOptionsMenu(menu)
     }
 
+
     override fun onDestroy() {
         binding = null
         viewModel = null
         super.onDestroy()
     }
-
 }
+

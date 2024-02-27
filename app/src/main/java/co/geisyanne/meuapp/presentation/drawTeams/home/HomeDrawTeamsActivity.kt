@@ -59,12 +59,14 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
                 R.id.menu_bottom_player -> {
                     showFragment(playerListFragment)
+                    title = "Jogadores"
                     setToolbarTitle(R.string.toolbar_title_players)
                     true
                 }
 
                 R.id.menu_bottom_draw_times -> {
                     showFragment(drawFragment)
+                    title = "Sorteio"
                     setToolbarTitle(R.string.toolbar_title_drawTeams)
                     true
                 }
@@ -153,6 +155,8 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         replaceFragment(fragment, addToBackStack = true)
         binding?.drawTeamBottomNav?.visibility = View.GONE
     }
+
+
 
 
     /*override fun goToGroup(groupId: Long) {

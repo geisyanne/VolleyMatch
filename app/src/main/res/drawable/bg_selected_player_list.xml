@@ -1,0 +1,13 @@
+<!-- background_selected.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#D5E2F8" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FEFAFD" />
+        </shape>
+    </item>
+</selector>

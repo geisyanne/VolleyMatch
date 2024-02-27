@@ -1,6 +1,7 @@
 package co.geisyanne.meuapp.presentation.drawTeams.result
 
 import android.content.Context
+import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,8 @@ import co.geisyanne.meuapp.domain.model.Team
 
 class ResultAdapter(
     private val context: Context,
-    private val teams: List<Team>
+    private val teams: List<Team>,
+    private val showPosition: Boolean
 ) : RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
     private val cardColors = intArrayOf(R.color.yellow_transparent, R.color.blue_transparent)
@@ -39,7 +41,7 @@ class ResultAdapter(
 
         private val innerPlayersRv: RecyclerView =
             itemView.findViewById(R.id.item_result_rv_players)
-        private val innerPlayersAdapter = InnerPlayersAdapter(itemView.context)
+        private val innerPlayersAdapter = InnerPlayersAdapter(itemView.context, showPosition)
 
         init {
             innerPlayersRv.apply {
@@ -60,7 +62,7 @@ class ResultAdapter(
     }
 }
 
-class InnerPlayersAdapter(private val context: Context) :
+class InnerPlayersAdapter(private val context: Context, private val showPosition: Boolean) :
     RecyclerView.Adapter<InnerPlayersAdapter.PlayerViewHolder>() {
     private val players = mutableListOf<PlayerEntity>()
 
@@ -88,12 +90,23 @@ class InnerPlayersAdapter(private val context: Context) :
 
         fun bind(player: PlayerEntity) {
 
-            val positions = context.resources.getStringArray(R.array.positionsPlayer)
-            val positionPlayer = positions[player.positionPlayer ?: 0]
-            val positionShow = context.resources.getString(R.string.position_show, positionPlayer)
-
             itemView.findViewById<TextView>(R.id.item_result_txt_name).text = player.name
-            itemView.findViewById<TextView>(R.id.item_result_txt_position).text = positionShow
+
+            val txtPos = itemView.findViewById<TextView>(R.id.item_result_txt_position)
+
+            if (showPosition) {
+                val positions = context.resources.getStringArray(R.array.positionsPlayer)
+                val positionPlayer = positions[player.positionPlayer]
+                val positionShow = context.resources.getString(R.string.position_show, positionPlayer)
+                txtPos.text = positionShow
+            } else {
+                txtPos.visibility = View.GONE
+            }
+
+
+
+
+
 
         }
     }

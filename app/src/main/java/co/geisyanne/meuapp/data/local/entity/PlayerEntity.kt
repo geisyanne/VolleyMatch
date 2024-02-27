@@ -16,8 +16,8 @@ import kotlinx.parcelize.Parcelize
 data class PlayerEntity(
     @PrimaryKey(autoGenerate = true) val playerId: Long = 0,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "position") val positionPlayer: Int?,
-    @ColumnInfo(name = "level") val level: Int?,
+    @ColumnInfo(name = "position") val positionPlayer: Int =0,
+    @ColumnInfo(name = "level") val level: Int =0,
 
     ) : Parcelable {
     @IgnoredOnParcel

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingTop="8dp"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
@@ -21,7 +22,6 @@
                 android:id="@+id/player_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:rightBgColor="@color/red"
                 app:rightImage="@drawable/baseline_delete_24"
@@ -47,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/empty_player_list"
+        android:textColor="@color/blue_dark"
         android:visibility="gone"
         tools:visibility="visible" />
 

@@ -18,6 +18,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     private lateinit var adapter: ResultAdapter
     private var teams: MutableList<Team> = mutableListOf()
+    private var showPosition: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +38,12 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             val pos: Boolean = bundle.getBoolean("KEY_POS")
             val lvl: Boolean = bundle.getBoolean("KEY_LVL")
 
+            showPosition = pos
             teams = players?.let { viewModel.drawTeams(it, qtdPlayer, pos, lvl) } ?: mutableListOf()
         }
 
         binding?.resultRvTeams?.layoutManager = LinearLayoutManager(requireContext())
-        adapter = ResultAdapter(requireContext(), teams)
+        adapter = ResultAdapter(requireContext(), teams, showPosition)
         binding?.resultRvTeams?.adapter = adapter
 
     }

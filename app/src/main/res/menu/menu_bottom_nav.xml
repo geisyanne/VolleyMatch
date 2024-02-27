@@ -7,7 +7,7 @@
 
     <item android:id="@+id/menu_bottom_draw_times"
         android:icon="@drawable/baseline_shuffle_24"
-        android:title="@string/draw_teams" />
+        android:title="@string/draw_teams_menu" />
 
     <!-- Our invisible item
 

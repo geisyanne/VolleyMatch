@@ -2,6 +2,8 @@
     <string name="app_name">MeuApp</string>
 
     <string name="draw_teams">Sortear\n times</string>
+    <string name="draw_teams_menu">Sortear times</string>
+
 
     <string name="btn_scoreboard">Placar</string>
     <string name="txt_score">%02d</string>
@@ -73,7 +75,7 @@
 
     <!-- database operations -->
     <string name="player_inserted_successfully">Jogador Registrado</string>
-    <string name="player_error_to_insert">Jogador não registrado</string>
+    <string name="player_error">Erro! Tente novamente</string>
     <string name="player_updated_successfully">Jogador atualizado</string>
     <string name="player_error_to_updated">Erro ao editar jogador</string>
     <string name="player_deleted_successfully">Jogador deletado</string>
@@ -99,5 +101,7 @@
     <string name="select_next">"Selecione os jogadores e avance"</string>
     <string name="position_show">" - %s"</string>
     <string name="num_team_show">TIME %s</string>
+    <string name="selected">Selecionar todos</string>
+    <string name="clear_all">Desmarcar todos</string>
 
 </resources>

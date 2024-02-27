@@ -21,6 +21,7 @@ import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
 import co.geisyanne.meuapp.domain.repository.PlayerRepository
 import co.geisyanne.meuapp.presentation.common.util.viewModelFactory
 import co.geisyanne.meuapp.presentation.drawTeams.home.FragmentAttachListener
+import co.geisyanne.meuapp.presentation.drawTeams.home.HomeDrawTeamsActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 
@@ -46,7 +47,6 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         setupViewModel()
         setupUI()
         observeViewModelEvents()
-
     }
 
     private fun setupViewModel() {
@@ -143,7 +143,11 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     }
 
     private fun observeViewModelEvents() {
+        binding?.playerProgress?.visibility = View.VISIBLE
+
         viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
+            binding?.playerProgress?.visibility = View.GONE
+
             adapter = PlayerListAdapter(allPlayers).apply {
                 onItemClickUpdate = { player ->
                     fragmentAttachListener?.goToUpdatePlayer(player)
@@ -207,6 +211,11 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         if (context is FragmentAttachListener) {
             fragmentAttachListener = context
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {

@@ -33,13 +33,8 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     private var fragmentAttachListener: FragmentAttachListener? = null
 
     private lateinit var adapter: DrawAdapter
-
-    //private var qtdPlayersAdapter: ArrayAdapter<String>? = null
     private var selectedQtdAdapter: Int = 2
-
-
     private var selectedPlayer: List<PlayerEntity> = listOf()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +48,6 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
         setupViewModel()
         setupUI()
         observeViewModelEvents()
-
     }
 
     private fun setupViewModel() {
@@ -68,7 +62,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
             drawRv.layoutManager = LinearLayoutManager(requireContext())
 
             drawBtnNext.setOnClickListener {
-                selectedPlayer = adapter.getSelectedItems()
+                selectedPlayer = adapter.getSelectedItems().toList()
 
                 if (selectedPlayer.isEmpty()) {
                     val alert =
@@ -83,7 +77,11 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     }
 
     private fun observeViewModelEvents() {
+        binding?.drawSelectProgress?.visibility = View.VISIBLE
+
         viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
+            binding?.drawSelectProgress?.visibility = View.GONE
+
             adapter = DrawAdapter(requireContext(), allPlayers)
             binding?.drawRv?.adapter = adapter
         }
@@ -147,6 +145,11 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
         val searchItem = menu.findItem(R.id.menu_search)
         searchItem?.isVisible = false
         super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {
