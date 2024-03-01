@@ -119,13 +119,12 @@ class ResultViewModel : ViewModel() {
     private fun drawNoPosWithLvl(players: List<PlayerEntity>, qtdPlayer: Int) {
         val qtdTeams = players.windowed(qtdPlayer, qtdPlayer, true).count()
 
-        val allSetters = players.filter { it.positionPlayer == 1 }.shuffled().toMutableList()
-        val setters = allSetters.take(qtdTeams).toMutableList()
-        allSetters.removeAll(setters)
+        val setters = players.filter { it.positionPlayer == 1 }.shuffled().toMutableList()
+        val settersByTeam = setters.take(qtdTeams).toMutableList()
+        setters.removeAll(settersByTeam)
 
         val otherPlayers = players.filter { it.positionPlayer != 1 }.toMutableList()
-        otherPlayers.addAll(allSetters)
-        otherPlayers.shuffle()
+        otherPlayers.addAll(setters)
 
         val playersLow = otherPlayers.filter { it.level < 3 }.shuffled().toMutableList()
         val playersMed = otherPlayers.filter { it.level in 3..4 }.shuffled().toMutableList()
@@ -136,8 +135,8 @@ class ResultViewModel : ViewModel() {
             var qtdPlayerLoop = qtdPlayer
 
             // add levantador
-            if (setters.isNotEmpty()) {
-                playersList.add(setters.removeAt(setters.size - 1))
+            if (settersByTeam.isNotEmpty()) {
+                playersList.add(settersByTeam.removeAt(settersByTeam.size - 1))
                 qtdPlayerLoop -= 1
             }
 
