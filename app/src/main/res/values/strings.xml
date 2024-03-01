@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MeuApp</string>
+    <string name="app_name">VolleyMatch</string>
 
     <string name="draw_teams">Sortear\n times</string>
     <string name="draw_teams_menu">Sortear times</string>
@@ -101,7 +101,7 @@
     <string name="select_next">"Selecione os jogadores e avance"</string>
     <string name="position_show">" - %s"</string>
     <string name="num_team_show">TIME %s</string>
-    <string name="selected">Selecionar todos</string>
+    <string name="selected_all">Selecionar todos</string>
     <string name="clear_all">Desmarcar todos</string>
 
 </resources>

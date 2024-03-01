@@ -31,9 +31,8 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     private var binding: FragmentPlayerListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
 
-    private var actionMode: ActionMode? = null
     private lateinit var adapter: PlayerListAdapter
-
+    private var actionMode: ActionMode? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +93,23 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    private fun observeViewModelEvents() {
+        binding?.playerProgress?.visibility = View.VISIBLE
+
+        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
+            binding?.playerProgress?.visibility = View.GONE
+
+            adapter = PlayerListAdapter(allPlayers).apply {
+                onItemClickUpdate = { player ->
+                    fragmentAttachListener?.goToUpdatePlayer(player)
+                }
+            }
+            binding?.playerRv?.adapter = adapter
+            adapter.onItemClickSelect = { enableActionMode(it) }
+            adapter.onItemLongClick = { enableActionMode(it) }
+        }
+    }
+
     // ACTIVATE ACTION MODE
     private fun enableActionMode(position: Int) {
         if (actionMode == null && activity is AppCompatActivity) {
@@ -139,23 +155,6 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         } else {
             actionMode?.title = "$size"
             actionMode?.invalidate()
-        }
-    }
-
-    private fun observeViewModelEvents() {
-        binding?.playerProgress?.visibility = View.VISIBLE
-
-        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
-            binding?.playerProgress?.visibility = View.GONE
-
-            adapter = PlayerListAdapter(allPlayers).apply {
-                onItemClickUpdate = { player ->
-                    fragmentAttachListener?.goToUpdatePlayer(player)
-                }
-            }
-            binding?.playerRv?.adapter = adapter
-            adapter.onItemClickSelect = { enableActionMode(it) }
-            adapter.onItemLongClick = { enableActionMode(it) }
         }
     }
 

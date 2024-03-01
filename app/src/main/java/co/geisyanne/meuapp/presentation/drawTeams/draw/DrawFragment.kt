@@ -2,14 +2,15 @@ package co.geisyanne.meuapp.presentation.drawTeams.draw
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.Switch
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +35,9 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     private lateinit var adapter: DrawAdapter
     private var selectedQtdAdapter: Int = 2
-    private var selectedPlayer: List<PlayerEntity> = listOf()
+    private var selectedPlayer: List<PlayerEntity> = emptyList()
+
+    private var actionMode: ActionMode? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +66,8 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
             drawBtnNext.setOnClickListener {
                 selectedPlayer = adapter.getSelectedItems().toList()
-
                 if (selectedPlayer.isEmpty()) {
-                    val alert =
-                        Snackbar.make(requireView(), R.string.alert_selection, Snackbar.LENGTH_LONG)
-                    alert.setBackgroundTint(resources.getColor(R.color.blue_dark))
-                    alert.show()
+                    showSnackbar(R.string.alert_selection)
                 } else {
                     showDrawParamsDialog()
                 }
@@ -76,14 +75,11 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
         }
     }
 
-    private fun observeViewModelEvents() {
-        binding?.drawSelectProgress?.visibility = View.VISIBLE
-
-        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
-            binding?.drawSelectProgress?.visibility = View.GONE
-
-            adapter = DrawAdapter(requireContext(), allPlayers)
-            binding?.drawRv?.adapter = adapter
+    private fun showSnackbar(messageResId: Int) {
+        binding?.let {
+            Snackbar.make(it.root, messageResId, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(resources.getColor(R.color.blue_dark))
+                .show()
         }
     }
 
@@ -114,8 +110,8 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
             // SET CLICK BTN FOR RESULT
             dialogView.findViewById<Button>(R.id.draw_btn_go_result)?.setOnClickListener {
-                val paramList = selectedPlayer
-                val paramQtd = selectedQtdAdapter
+                val playerList = selectedPlayer
+                val qtdPlayer = selectedQtdAdapter
                 val switchPosition =
                     dialogView.findViewById<MaterialSwitch>(R.id.draw_switch_position)?.isChecked
                         ?: false
@@ -123,14 +119,83 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
                     dialogView.findViewById<MaterialSwitch>(R.id.draw_switch_lvl)?.isChecked
                         ?: false
 
-                fragmentAttachListener?.goToResult(paramList, paramQtd, switchPosition, switchLevel)
-                Log.i("DrawParamsDialog", "paramList: $paramList, paramQtd: $paramQtd, switchPosition: $switchPosition, switchLevel: $switchLevel")
+                fragmentAttachListener?.goToResult(playerList, qtdPlayer, switchPosition, switchLevel)
 
                 dialog.dismiss()
             }
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    private fun observeViewModelEvents() {
+        binding?.drawSelectProgress?.visibility = View.VISIBLE
+        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
+            binding?.drawSelectProgress?.visibility = View.GONE
+            adapter = DrawAdapter(requireContext(), allPlayers)
+            binding?.drawRv?.adapter = adapter
+            adapter.onItemSelect = { enableActionMode() }
+        }
+    }
+
+    // ACTIVATE ACTION MODE
+    private fun enableActionMode() {
+        if (actionMode == null && activity is AppCompatActivity) {
+            actionMode = (activity as AppCompatActivity).startSupportActionMode(object :
+                ActionMode.Callback {
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    mode?.menuInflater?.inflate(R.menu.menu_draw, menu)
+                    return true
+                }
+
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
+
+                override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                    val menuSelectAll = R.id.action_selected_all
+                    val menuClearAll = R.id.action_clear_all
+
+                    when (item?.itemId) {
+                        menuSelectAll -> {
+                            adapter.selectAllItems()
+                            toggleMenuItemVisibility(mode, menuSelectAll, false)
+                            toggleMenuItemVisibility(mode, menuClearAll, true)
+                            setTitleActionMode(adapter.listSelectedPlayers.size)
+                            return true
+                        }
+
+                        menuClearAll -> {
+                            adapter.deselectAllItems()
+                            toggleMenuItemVisibility(mode, menuClearAll, false)
+                            toggleMenuItemVisibility(mode, menuSelectAll, true)
+                            setTitleActionMode(adapter.listSelectedPlayers.size)
+                            return true
+                        }
+                    }
+                    return false
+                }
+
+                override fun onDestroyActionMode(mode: ActionMode?) {
+                    actionMode = null
+                }
+            })
+        }
+
+        val size = adapter.listSelectedPlayers.size
+        setTitleActionMode(size)
+    }
+
+    private fun setTitleActionMode(size: Int) {
+        actionMode?.apply {
+            if (size == 0) {
+                finish() // DISABLE TOOLBAR ACTION
+            } else {
+                title = size.toString()
+                invalidate()
+            }
+        }
+    }
+
+    private fun toggleMenuItemVisibility(mode: ActionMode?, itemId: Int, isVisible: Boolean) {
+        mode?.menu?.findItem(itemId)?.isVisible = isVisible
+    }
 
     // CHECK: IF THE ACTIVITY IMPLEMENTS AN INTERFACE
     override fun onAttach(context: Context) {
@@ -142,9 +207,8 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     // HIDE THE SEARCH MENU
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val searchItem = menu.findItem(R.id.menu_search)
-        searchItem?.isVisible = false
         super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.menu_search)?.isVisible = false
     }
 
     override fun onResume() {
@@ -154,7 +218,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     override fun onDestroy() {
         binding = null
+        actionMode?.finish()
         super.onDestroy()
     }
-
 }

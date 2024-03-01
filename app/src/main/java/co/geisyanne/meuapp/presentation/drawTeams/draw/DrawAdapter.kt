@@ -1,7 +1,6 @@
 package co.geisyanne.meuapp.presentation.drawTeams.draw
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ class DrawAdapter(
     private var players: List<PlayerEntity>
 ) : RecyclerView.Adapter<DrawAdapter.ViewHolder>() {
 
-    private val selectedItems = mutableSetOf<PlayerEntity>()  // SET PARA NÃO SER DUPLICADO
+    val listSelectedPlayers = mutableSetOf<PlayerEntity>()  // SET PARA NÃO SER DUPLICADO
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -31,22 +30,23 @@ class DrawAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(players[position])
-
     }
 
     fun selectAllItems() {
-        selectedItems.addAll(players)
+        listSelectedPlayers.addAll(players)
         notifyDataSetChanged()
     }
 
     fun deselectAllItems() {
-        selectedItems.clear()
+        listSelectedPlayers.clear()
         notifyDataSetChanged()
     }
 
-    fun getSelectedItems() : Set<PlayerEntity> {
-        return selectedItems
+    fun getSelectedItems(): Set<PlayerEntity> {
+        return listSelectedPlayers
     }
+
+    var onItemSelect: ((Boolean) -> Unit)? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -54,12 +54,13 @@ class DrawAdapter(
 
         init {
             checkBox.setOnClickListener {
-                val selectedItem = players[adapterPosition]
+                val player = players[adapterPosition]
                 if (checkBox.isChecked) {
-                    selectedItems.add(selectedItem)
+                    listSelectedPlayers.add(player)
                 } else {
-                    selectedItems.remove(selectedItem)
+                    listSelectedPlayers.remove(player)
                 }
+                onItemSelect?.invoke(listSelectedPlayers.isEmpty())
             }
         }
 
@@ -72,7 +73,7 @@ class DrawAdapter(
             itemView.findViewById<TextView>(R.id.item_rv_txt_pos).text = positionPlayer
             itemView.findViewById<RatingBar>(R.id.item_rv_ratingBar).rating = player.level.toFloat()
 
-            checkBox.isChecked = selectedItems.contains(player)
+            checkBox.isChecked = listSelectedPlayers.contains(player)
         }
     }
 }

@@ -12,8 +12,7 @@
         <!-- ActionMode. -->
         <item name="actionModeStyle">@style/actionModeTheme</item>
         <item name="windowActionModeOverlay">true</item>
-
-
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
 
 </resources>
