@@ -3,7 +3,6 @@ package co.geisyanne.meuapp.presentation.drawTeams.player.list
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -21,9 +20,10 @@ import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
 import co.geisyanne.meuapp.domain.repository.PlayerRepository
 import co.geisyanne.meuapp.presentation.common.util.viewModelFactory
 import co.geisyanne.meuapp.presentation.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.presentation.drawTeams.home.HomeDrawTeamsActivity
+import co.geisyanne.meuapp.presentation.main.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
+
 
 class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
@@ -215,6 +215,11 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     override fun onResume() {
         super.onResume()
         activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_title_players)
+    }
+
+    interface ActionBarTitleUpdater {
+        fun updateActionBarTitle(title: String)
     }
 
     override fun onDestroy() {

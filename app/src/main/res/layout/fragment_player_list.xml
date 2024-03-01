@@ -47,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/empty_player_list"
-        android:textColor="@color/blue_dark"
         android:visibility="gone"
         tools:visibility="visible" />
 

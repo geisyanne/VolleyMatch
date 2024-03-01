@@ -173,6 +173,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
                 }
 
                 override fun onDestroyActionMode(mode: ActionMode?) {
+                    adapter.deselectAllItems()
                     actionMode = null
                 }
             })
@@ -214,6 +215,12 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     override fun onResume() {
         super.onResume()
         activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_title_drawTeams)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        actionMode?.finish()
     }
 
     override fun onDestroy() {

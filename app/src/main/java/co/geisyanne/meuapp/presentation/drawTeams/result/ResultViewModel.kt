@@ -127,9 +127,9 @@ class ResultViewModel : ViewModel() {
         otherPlayers.addAll(allSetters)
         otherPlayers.shuffle()
 
-        val playersLow = otherPlayers.filter { (it.level ?: 0) < 3 }.toMutableList()
-        val playersMed = otherPlayers.filter { it.level in 3..4 }.toMutableList()
-        val playersHigh = otherPlayers.filter { it.level == 5 }.toMutableList()
+        val playersLow = otherPlayers.filter { it.level < 3 }.shuffled().toMutableList()
+        val playersMed = otherPlayers.filter { it.level in 3..4 }.shuffled().toMutableList()
+        val playersHigh = otherPlayers.filter { it.level == 5 }.shuffled().toMutableList()
 
         for (i in 0 until qtdTeams) {
             val playersList = mutableListOf<PlayerEntity>()

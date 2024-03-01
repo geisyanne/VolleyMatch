@@ -19,12 +19,14 @@ import co.geisyanne.meuapp.presentation.drawTeams.player.list.PlayerListFragment
 import co.geisyanne.meuapp.presentation.drawTeams.player.register.RegisterPlayerFragment
 import co.geisyanne.meuapp.presentation.drawTeams.result.ResultFragment
 
-class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
+class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
+    PlayerListFragment.ActionBarTitleUpdater {
 
     private var binding: ActivityDrawTeamsBinding? = null
 
     private lateinit var playerListFragment: PlayerListFragment
     private lateinit var drawFragment: DrawFragment
+
     //private lateinit var groupListFragment: GroupFragment
     //private lateinit var homeDrawTeamsFragment: HomeDrawTeamsFragment
     private var currentFragment: Fragment? = null
@@ -36,6 +38,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         setContentView(binding?.root)
 
         setSupportActionBar(binding?.mainToolbar)
+        supportActionBar?.title = "Jogadores"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
@@ -59,15 +62,13 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
 
                 R.id.menu_bottom_player -> {
                     showFragment(playerListFragment)
-                    title = "Jogadores"
-                    setToolbarTitle(R.string.toolbar_title_players)
+                    supportActionBar?.title = getString(R.string.toolbar_title_players)
                     true
                 }
 
                 R.id.menu_bottom_draw_times -> {
                     showFragment(drawFragment)
-                    title = "Sorteio"
-                    setToolbarTitle(R.string.toolbar_title_drawTeams)
+                    supportActionBar?.title = getString(R.string.toolbar_title_drawTeams)
                     true
                 }
 
@@ -92,15 +93,23 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
     private fun setupSearchView(searchView: SearchView) {
         searchView.queryHint = getString(R.string.search_player)
 
-        val searchEditText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        val searchEditText =
+            searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         searchEditText.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         val closeIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-        closeIcon.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        closeIcon.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_IN
+        )
     }
 
     private fun setToolbarTitle(@StringRes resId: Int) {
         binding?.mainToolbar?.setTitle(resId)
+    }
+
+    override fun updateActionBarTitle(title: String) {
+        supportActionBar?.title = title
     }
 
     private fun showFragment(fragment: Fragment) {
@@ -110,7 +119,11 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false, tag: String? = null) {
+    private fun replaceFragment(
+        fragment: Fragment,
+        addToBackStack: Boolean = false,
+        tag: String? = null
+    ) {
         val transaction = supportFragmentManager.beginTransaction()
 
         transaction.replace(R.id.drawTeam_container_fragment, fragment, tag)
@@ -126,6 +139,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         val fragment = RegisterPlayerFragment()
         replaceFragment(fragment, addToBackStack = true, "RegisterPlayerTag")
         binding?.drawTeamBottomNav?.visibility = View.GONE
+        supportActionBar?.title = getString(R.string.toolbar_title_register)
     }
 
     override fun goToUpdatePlayer(player: PlayerEntity?) {
@@ -136,6 +150,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         fragment.arguments = bundle
         replaceFragment(fragment, addToBackStack = true, "UpdatePlayerTag")
         binding?.drawTeamBottomNav?.visibility = View.GONE
+        supportActionBar?.title = getString(R.string.toolbar_title_edit)
     }
 
     override fun goToResult(
@@ -154,6 +169,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener {
         fragment.arguments = bundle
         replaceFragment(fragment, addToBackStack = true)
         binding?.drawTeamBottomNav?.visibility = View.GONE
+        supportActionBar?.title = getString(R.string.toolbar_title_result)
     }
 
 

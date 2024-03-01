@@ -28,7 +28,6 @@
                 android:maxLines="1"
                 android:padding="16dp"
                 android:text="@string/player"
-                android:textColor="@color/blue_dark"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

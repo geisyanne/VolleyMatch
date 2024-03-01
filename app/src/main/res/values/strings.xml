@@ -49,9 +49,13 @@
     <string name="result">Resultado</string>
     <string name="team">Time</string>
 
+
     <!-- toolbar -->
     <string name="toolbar_title_players">Jogadores</string>
-    <string name="toolbar_title_drawTeams">Sortear Times</string>
+    <string name="toolbar_title_drawTeams">Sortear times</string>
+    <string name="toolbar_title_register">Registrar jogador</string>
+    <string name="toolbar_title_edit">Editar jogador</string>
+    <string name="toolbar_title_result">Times sorteados</string>
     <string name="toolbar_title_groups">Grupos</string>
     <string name="search">Pesquisar</string>
 
