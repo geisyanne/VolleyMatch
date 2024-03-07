@@ -100,12 +100,13 @@
     <string name="restart">Reiniciar placar</string>
     <string name="point">00</string>
     <string name="empty_player_register">Nenhum jogador cadastrado</string>
-    <string name="params">  Critérios para o sorteio  </string>
+    <string name="params">  Critérios para o sorteio  </string>m
     <string name="desc_next_screen">Avançar para a próxima tela</string>
     <string name="select_next">"Selecione os jogadores e avance"</string>
     <string name="position_show">" - %s"</string>
     <string name="num_team_show">TIME %s</string>
     <string name="selected_all">Selecionar todos</string>
     <string name="clear_all">Desmarcar todos</string>
+    <string name="app_desc">Para suas partidas de voleibol</string>
 
 </resources>
