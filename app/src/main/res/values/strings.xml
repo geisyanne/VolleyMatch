@@ -42,7 +42,7 @@
     <string name="select_group">Selecionar grupo</string>
     <string name="list">Lista</string>
     <string name="qtd_players_team">Jogadores por time</string>
-    <string name="position_5x1">Posicionamento 5x1</string>
+    <string name="position_5x1">Sistema tático 5x1</string>
     <string name="skill_level_drawTeam">Habilidade</string>
 
     <!-- Screen: result -->
@@ -108,5 +108,17 @@
     <string name="selected_all">Selecionar todos</string>
     <string name="clear_all">Desmarcar todos</string>
     <string name="app_desc">Para suas partidas de voleibol</string>
+    <string name="share">Compartilhar</string>
+
+    <!-- Result Text -->
+    <string name="share_txt">Compartilhar via</string>
+    <string name="team_txt">"TIME "</string>
+    <string name="setter_txt">Levantador(a)</string>
+    <string name="outside_txt">Ponteiro(a)</string>
+    <string name="opposite_txt">Oposto(a)</string>
+    <string name="middle_txt">Central</string>
+    <string name="libero_txt">Líbero</string>
+    <string name="info_app_txt">"Sorteio gerado no app VolleyMatch.\n%s"</string>
+    <string name="not_enought_players">Não há jogadores com posições definidas em número suficiente para o 5x1</string>
 
 </resources>

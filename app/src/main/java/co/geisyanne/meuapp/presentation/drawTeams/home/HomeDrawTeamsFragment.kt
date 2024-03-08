@@ -26,7 +26,7 @@ class HomeDrawTeamsFragment: Fragment(R.layout.fragment_initial_sort_draw_teams)
 
     // HIDE THE SEARCH MENU
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val searchItem = menu.findItem(R.id.menu_search)
+        val searchItem = menu.findItem(R.id.action_search)
         searchItem?.isVisible = false
         super.onPrepareOptionsMenu(menu)
     }

@@ -20,7 +20,6 @@ import co.geisyanne.meuapp.databinding.FragmentPlayerListBinding
 import co.geisyanne.meuapp.domain.repository.PlayerRepository
 import co.geisyanne.meuapp.presentation.common.util.viewModelFactory
 import co.geisyanne.meuapp.presentation.drawTeams.home.FragmentAttachListener
-import co.geisyanne.meuapp.presentation.main.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 
@@ -159,7 +158,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        val searchItem = menu.findItem(R.id.menu_search)
+        val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
 
         // HIDE REGISTER BTN DURING SEARCH

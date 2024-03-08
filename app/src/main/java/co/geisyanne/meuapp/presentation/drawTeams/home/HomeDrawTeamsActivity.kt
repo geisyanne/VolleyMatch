@@ -80,9 +80,9 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        menuInflater.inflate(R.menu.menu_search, menu)
 
-        val searchItem = menu?.findItem(R.id.menu_search)
+        val searchItem = menu?.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
 
         setupSearchView(searchView)

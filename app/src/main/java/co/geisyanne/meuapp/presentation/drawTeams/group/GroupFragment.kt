@@ -179,7 +179,7 @@ class GroupFragment : Fragment(R.layout.fragment_group_list) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        val searchItem = menu.findItem(R.id.menu_search)
+        val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
 
         // HIDE CREATE BTN DURING SEARCH

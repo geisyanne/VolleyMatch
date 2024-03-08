@@ -1,14 +1,15 @@
 package co.geisyanne.meuapp.presentation.drawTeams.player.register
 
+import android.health.connect.datatypes.units.Length
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.geisyanne.meuapp.R
@@ -20,7 +21,6 @@ import co.geisyanne.meuapp.domain.repository.PlayerRepository
 import co.geisyanne.meuapp.presentation.common.extension.hideKeyboard
 import co.geisyanne.meuapp.presentation.common.util.TxtWatcher
 import co.geisyanne.meuapp.presentation.common.util.viewModelFactory
-import co.geisyanne.meuapp.presentation.drawTeams.home.HomeDrawTeamsActivity
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -132,10 +132,9 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         }
 
         viewModel?.messageEventData?.observe(viewLifecycleOwner) { stringResId ->
-            val alert =
-                Snackbar.make(requireView(), stringResId, Snackbar.LENGTH_LONG)
-            alert.setBackgroundTint(resources.getColor(R.color.blue_dark))
-            alert.show()
+            Snackbar.make(requireView(), stringResId, 500)
+                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.blue_dark))
+                .show()
         }
     }
 
@@ -191,7 +190,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
     // HIDE THE SEARCH MENU
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val searchItem = menu.findItem(R.id.menu_search)
+        val searchItem = menu.findItem(R.id.action_search)
         searchItem?.isVisible = false
         super.onPrepareOptionsMenu(menu)
     }

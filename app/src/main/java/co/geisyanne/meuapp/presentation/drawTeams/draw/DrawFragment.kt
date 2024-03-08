@@ -77,7 +77,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     private fun showSnackbar(messageResId: Int) {
         binding?.let {
-            Snackbar.make(it.root, messageResId, Snackbar.LENGTH_LONG)
+            Snackbar.make(it.root, messageResId, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(resources.getColor(R.color.blue_dark))
                 .show()
         }
@@ -209,7 +209,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     // HIDE THE SEARCH MENU
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.menu_search)?.isVisible = false
+        menu.findItem(R.id.action_search)?.isVisible = false
     }
 
     override fun onResume() {
