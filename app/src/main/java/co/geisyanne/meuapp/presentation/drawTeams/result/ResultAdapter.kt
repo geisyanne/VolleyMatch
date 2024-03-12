@@ -1,7 +1,6 @@
 package co.geisyanne.meuapp.presentation.drawTeams.result
 
 import android.content.Context
-import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import co.geisyanne.meuapp.domain.model.Team
 
 class ResultAdapter(
     private val context: Context,
-    private val teams: List<Team>,
+    private var teams: MutableList<Team>,
     private val showPosition: Boolean
 ) : RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
@@ -35,6 +34,12 @@ class ResultAdapter(
         holder.itemView.findViewById<CardView>(R.id.item_cad_result).setCardBackgroundColor(color)
 
         holder.bind(teams[position])
+    }
+
+    fun updateTeams(newTeams: MutableList<Team>) {
+        teams.clear()
+        teams.addAll(newTeams)
+        notifyDataSetChanged()
     }
 
     inner class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -57,7 +62,6 @@ class ResultAdapter(
 
             itemView.findViewById<TextView>(R.id.item_result_txt).text = numTeamShow
             innerPlayersAdapter.setItems(team.playerList)
-
         }
     }
 }
@@ -87,13 +91,10 @@ class InnerPlayersAdapter(private val context: Context, private val showPosition
 
     inner class PlayerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
         fun bind(player: PlayerEntity) {
 
             itemView.findViewById<TextView>(R.id.item_result_txt_name).text = player.name
-
             val txtPos = itemView.findViewById<TextView>(R.id.item_result_txt_position)
-
             if (showPosition) {
                 val positions = context.resources.getStringArray(R.array.positionsPlayer)
                 val positionPlayer = positions[player.positionPlayer]
@@ -102,12 +103,6 @@ class InnerPlayersAdapter(private val context: Context, private val showPosition
             } else {
                 txtPos.visibility = View.GONE
             }
-
-
-
-
-
-
         }
     }
 }

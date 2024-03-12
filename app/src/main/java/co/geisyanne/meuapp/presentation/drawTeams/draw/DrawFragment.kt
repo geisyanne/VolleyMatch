@@ -77,7 +77,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     private fun showSnackbar(messageResId: Int) {
         binding?.let {
-            Snackbar.make(it.root, messageResId, Snackbar.LENGTH_SHORT)
+            Snackbar.make(it.root, messageResId, 300)
                 .setBackgroundTint(resources.getColor(R.color.blue_dark))
                 .show()
         }
@@ -133,6 +133,9 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
             adapter = DrawAdapter(requireContext(), allPlayers)
             binding?.drawRv?.adapter = adapter
             adapter.onItemSelect = { enableActionMode() }
+
+            binding?.drawTxtEmpty?.visibility = if (allPlayers.isEmpty()) View.VISIBLE else View.GONE
+
         }
     }
 

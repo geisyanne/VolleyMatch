@@ -4,7 +4,6 @@
     <string name="draw_teams">Sortear\n times</string>
     <string name="draw_teams_menu">Sortear times</string>
 
-
     <string name="btn_scoreboard">Placar</string>
     <string name="txt_score">%02d</string>
     <string name="txt_help"><b>Click normal:</b> +1 ponto\n<b>Click longo:</b> -1 ponto</string>
@@ -13,7 +12,6 @@
     <string name="group">Grupo</string>
 
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
-
 
     <string name="create_group">Criar Grupo</string>
 
@@ -60,7 +58,6 @@
     <string name="search">Pesquisar</string>
 
 
-
     <string name="desc_name">Escreva o nome do jogador</string>
     <string name="desc_group">Selecione o grupo do qual o jogador faz parte</string>
     <string name="name_group">Nome do grupo</string>
@@ -78,7 +75,7 @@
     <string name="no">NÃO</string>
 
     <!-- database operations -->
-    <string name="player_inserted_successfully">Jogador Registrado</string>
+    <string name="player_inserted_successfully">Jogador registrado</string>
     <string name="player_error">Erro! Tente novamente</string>
     <string name="player_updated_successfully">Jogador atualizado</string>
     <string name="player_error_to_updated">Erro ao editar jogador</string>
@@ -119,6 +116,6 @@
     <string name="middle_txt">Central</string>
     <string name="libero_txt">Líbero</string>
     <string name="info_app_txt">"Sorteio gerado no app VolleyMatch.\n%s"</string>
-    <string name="not_enought_players">Não há jogadores com posições definidas em número suficiente para o 5x1</string>
+    <string name="not_enought_players">Não há jogadores com posições definidas em número suficiente para todos os times</string>
 
 </resources>

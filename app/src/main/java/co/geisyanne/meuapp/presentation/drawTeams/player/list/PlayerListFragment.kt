@@ -26,7 +26,7 @@ import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 
 class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
-    private lateinit var viewModel: PlayerListViewModel
+    private var viewModel: PlayerListViewModel? = null
     private var binding: FragmentPlayerListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
 
@@ -80,7 +80,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
                 .setMessage(R.string.confirm_player_deletion)
                 .setCancelable(false)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    viewModel.deletePlayer(position)
+                    viewModel?.deletePlayer(position)
                     adapter.notifyItemRemoved(position)
                 }
                 .setNeutralButton(R.string.no) { dialog, _ ->
@@ -95,7 +95,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     private fun observeViewModelEvents() {
         binding?.playerProgress?.visibility = View.VISIBLE
 
-        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
+        viewModel?.allPlayersEvent?.observe(viewLifecycleOwner) { allPlayers ->
             binding?.playerProgress?.visibility = View.GONE
 
             adapter = PlayerListAdapter(allPlayers).apply {
@@ -106,6 +106,8 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
             binding?.playerRv?.adapter = adapter
             adapter.onItemClickSelect = { enableActionMode(it) }
             adapter.onItemLongClick = { enableActionMode(it) }
+
+            binding?.playerTxtEmpty?.visibility = if (allPlayers.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -126,7 +128,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     if (item?.itemId == R.id.menu_action_delete) {
                         val selectedPlayers = adapter.getSelectedPlayers()
-                        viewModel.deleteSelectedPlayers(selectedPlayers)
+                        viewModel?.deleteSelectedPlayers(selectedPlayers)
                         mode?.finish()
                         return true
                     }
@@ -192,7 +194,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         val searchName = "%$name%"
         view?.let {
             viewLifecycleOwnerLiveData.observe(viewLifecycleOwner) { viewLifecycleOwner ->
-                viewModel.searchPlayer(searchName).observe(viewLifecycleOwner) { list ->
+                viewModel?.searchPlayer(searchName)?.observe(viewLifecycleOwner) { list ->
                     list.let {
                         adapter.submitList(it)
                         binding?.playerTxtEmpty?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
@@ -223,6 +225,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
     override fun onDestroy() {
         binding = null
+        viewModel = null
 
         // DESTROY ACTION MODE
         if (actionMode != null)

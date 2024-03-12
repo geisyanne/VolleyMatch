@@ -1,6 +1,5 @@
 package co.geisyanne.meuapp.presentation.drawTeams.player.register
 
-import android.health.connect.datatypes.units.Length
 import android.os.Bundle
 import android.os.Looper
 import android.view.Menu
@@ -44,7 +43,6 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
         setupViewModel()
         setupUI()
-
     }
 
     private fun setupViewModel() {
@@ -55,13 +53,42 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
     }
 
     private fun setupUI() {
-        configureDropdown()
-        configureEditText()
+        configureForm()
         observeEvents()
         setListeners()
     }
 
-    private fun configureDropdown() {
+    private fun configureForm() {
+        when (tag) {
+            "RegisterPlayerTag" -> registerPlayerForm()
+            "UpdatePlayerTag" -> updatePlayerForm()
+        }
+    }
+
+
+    private fun registerPlayerForm() {
+        binding?.playerRegisterEditName?.addTextChangedListener(TxtWatcher {
+            binding?.playerRegisterBtnSave?.isEnabled = it.isNotEmpty()
+        })
+        configureDropdown(0)
+    }
+
+    private fun updatePlayerForm() {
+        val player = arguments?.getParcelable<PlayerEntity>("KEY_PLAYER") ?: return
+        selectedPosition = player.positionPlayer
+        id = player.playerId
+
+        binding?.playerRegisterBtnSave?.apply {
+            setText(getString(R.string.edit))
+            isEnabled = true
+        }
+
+        binding?.playerRegisterEditName?.setText(player.name)
+        configureDropdown(selectedPosition)
+        binding?.playerRegisterRatingbar?.rating = player.level.toFloat()
+    }
+
+    private fun configureDropdown(pos: Int) {
 
         // SET ARRAY POSITIONS
         val positions = resources.getStringArray(R.array.positionsPlayer)
@@ -69,53 +96,21 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
         binding?.playerRegisterTxtDropdownPositions?.apply {
             setAdapter(positionsAdapter)
-            setText(positionsAdapter?.getItem(0), false)
+            setText(positionsAdapter?.getItem(pos), false)
             setOnClickListener {
                 showDropDown()
             }
-            binding?.playerRegisterTxtDropdownPositions?.setOnItemClickListener { adapter, _, position, _ ->
+
+            setOnItemClickListener { adapter, _, position, _ ->
                 selectedPosition = adapter.getItemIdAtPosition(position).toInt()
             }
 
-            binding?.playerRegisterTxtDropdownPositions?.setOnFocusChangeListener { _, hasFocus ->
+            setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     hideKeyboard()
                 }
             }
 
-        }
-    }
-
-    @Suppress("DEPRECATION")
-    private fun configureEditText() {
-        when (tag) {
-            "RegisterPlayerTag" -> {
-                binding?.playerRegisterEditName?.addTextChangedListener(TxtWatcher {
-                    binding?.playerRegisterBtnSave?.isEnabled = it.isNotEmpty()
-                })
-            }
-
-            "UpdatePlayerTag" -> {
-                arguments?.getParcelable<PlayerEntity>("KEY_PLAYER")?.let { player ->
-                    id = player.playerId
-                    val posPlayer = player.positionPlayer
-
-                    binding?.playerRegisterBtnSave?.apply {
-                        setText(getString(R.string.edit))
-                        isEnabled = true
-                    }
-
-                    binding?.run {
-                        playerRegisterEditName.setText(player.name)
-                        playerRegisterTxtDropdownPositions.setText(
-                            positionsAdapter?.getItem(
-                                posPlayer
-                            ), false
-                        )
-                        playerRegisterRatingbar.rating = player.level.toFloat()
-                    }
-                }
-            }
         }
     }
 
@@ -126,7 +121,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
                 is RegisterPlayerViewModel.PlayerState.Updated -> {
                     binding?.playerRegisterBtnSave?.showProgress(false)
                     hideKeyboard()
-                    startDelayToClose()
+                    activity?.supportFragmentManager?.popBackStack()
                 }
             }
         }
@@ -145,34 +140,13 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         }
     }
 
-    private fun startDelayToClose() {
-        android.os.Handler(Looper.getMainLooper()).postDelayed({
-            closeWithAnimation(requireView())
-        }, 200.toLong())
-    }
-
-    private fun closeWithAnimation(view: View) {
-        val fadeOut = AlphaAnimation(1f, 0f)
-        fadeOut.duration = 200
-        fadeOut.fillAfter = true
-
-        view.startAnimation(fadeOut)
-
-        android.os.Handler(Looper.getMainLooper()).postDelayed({
-            activity?.supportFragmentManager?.popBackStack()
-        }, fadeOut.duration)
-    }
-
     private fun setListeners() {
         val btnSave = binding?.playerRegisterBtnSave
 
         btnSave?.setOnClickListener {
             btnSave.showProgress(true)
             val namePlayer = binding?.playerRegisterEditName?.text.toString()
-
             val positionPlayer = selectedPosition
-
-
             val levelPlayer = binding?.playerRegisterRatingbar?.rating?.toInt() ?: 0
             viewModel?.addOrUpdatePlayer(namePlayer, positionPlayer, levelPlayer, id)
         }
@@ -194,7 +168,6 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         searchItem?.isVisible = false
         super.onPrepareOptionsMenu(menu)
     }
-
 
     override fun onDestroy() {
         binding = null

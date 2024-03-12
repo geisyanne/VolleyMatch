@@ -3,12 +3,12 @@ package co.geisyanne.meuapp.presentation.drawTeams.result
 import androidx.lifecycle.ViewModel
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
 import co.geisyanne.meuapp.domain.model.Team
-import kotlin.random.Random
 
 class ResultViewModel : ViewModel() {
 
     private var teamsList: MutableList<Team> = mutableListOf()
     private var remaining: MutableList<PlayerEntity> = mutableListOf()
+    private var startingTeam: Int = 0
 
     fun drawTeams(
         players: List<PlayerEntity>,
@@ -16,14 +16,17 @@ class ResultViewModel : ViewModel() {
         pos: Boolean,
         lvl: Boolean
     ): MutableList<Team> {
+
+        teamsList.clear()
+        remaining.clear()
+
         if (qtdPlayer < 1) {
             throw IllegalArgumentException("Número inválido de jogadores por time")
         }
 
-        val startingTeamOrder = Random.nextInt(1,4)
 
         when {
-            pos && lvl -> drawWithPosWithLvl(players, qtdPlayer, startingTeamOrder)
+            pos && lvl -> drawWithPosWithLvl(players, qtdPlayer)
             !pos && lvl -> drawNoPosWithLvl(players, qtdPlayer)
             pos && !lvl -> drawWithPosNoLvl(players, qtdPlayer)
             else -> drawNoPosNoLvl(players, qtdPlayer)
@@ -32,11 +35,11 @@ class ResultViewModel : ViewModel() {
     }
 
     // sorteio com posição e com nível
-    private fun drawWithPosWithLvl(players: List<PlayerEntity>, qtdPlayer: Int, startingTeamOrder: Int) {
+    private fun drawWithPosWithLvl(players: List<PlayerEntity>, qtdPlayer: Int) {
 
         val qtdTeams = players.windowed(qtdPlayer, qtdPlayer, true).count()
-        val lastTeam = players.windowed(qtdPlayer, qtdPlayer, true).last().size
-        val teams = MutableList(qtdTeams) { mutableListOf<PlayerEntity>() }
+        //val lastTeam = players.windowed(qtdPlayer, qtdPlayer, true).last().size
+        //val teams = MutableList(qtdTeams) { mutableListOf<PlayerEntity>() }
 
         val setters =
             players.filter { it.positionPlayer == 1 }.shuffled().toMutableList() //  1/TEAM
@@ -51,61 +54,124 @@ class ResultViewModel : ViewModel() {
 
         val noPosition = players.filter { it.positionPlayer == 0 }.toMutableList()
 
-        // Ordem dos times para distribuição dos jogadores
-        val orders = when (startingTeamOrder) {
-            1 -> listOf(1, 2, 3, 1, 2)
-            2 -> listOf(2, 3, 1, 2, 3)
-            3 -> listOf(3, 1, 2, 1, 2)
-            else -> listOf(1, 2, 3, 1, 2) // Como padrão
+        val settersCount = setters.size
+        val outsidesCount = outsides.size
+        val oppositesCount = opposites.size
+        val middlesCount = middles.size
+
+        // Qtd de times completos
+        val completeTeams = minOf(
+            settersCount,
+            outsidesCount / 2,
+            oppositesCount,
+            middlesCount / 2
+        )
+
+        val listCompTeams = MutableList(completeTeams) { mutableListOf<PlayerEntity>() }
+
+        // Distribuição para times completos
+        distributePlayersWithPosWithLvl(completeTeams, 1, setters, listCompTeams, "dec")
+        distributePlayersWithPosWithLvl(completeTeams, 2, outsides, listCompTeams, "dec")
+        distributePlayersWithPosWithLvl(completeTeams, 2, middles, listCompTeams, "asc")
+        distributePlayersWithPosWithLvl(completeTeams, 1, opposites, listCompTeams, "asc")
+        distributePlayersWithPosWithLvl(completeTeams, 1, liberos, listCompTeams, "dec")
+
+        // Qtd de times incompletos
+        val incompleteTeams = qtdTeams - completeTeams
+        val listIncomTeams = MutableList(incompleteTeams) { mutableListOf<PlayerEntity>() }
+        if (incompleteTeams > 0) {
+            distributeRemainingWithPosWithLvl(
+                incompleteTeams,
+                noPosition,
+                listIncomTeams,
+                qtdPlayer
+            )
         }
 
-        distributePlayersWithPosWithLvlDec(qtdTeams, 1, setters, teams, orders[0])
-        distributePlayersWithPosWithLvlDec(qtdTeams, 2, outsides, teams, orders[1])
-        distributePlayersWithPosWithLvlDec(qtdTeams, 2, middles, teams, orders[2])
-        distributePlayersWithPosWithLvlDec(qtdTeams, 1, opposites, teams, orders[3])
-        distributePlayersWithPosWithLvlDec(qtdTeams, 1, liberos, teams, orders[4])
-
-
-        distributeRemainingWithPosWithLvl(qtdTeams, noPosition, teams, qtdPlayer, lastTeam)
+        val teams = (listCompTeams + listIncomTeams).toMutableList()
         saveTeams(teams)
     }
 
-    private fun distributePlayersWithPosWithLvlDec(
+    private fun distributePlayersWithPosWithLvl(
         qtdTeams: Int,
         qtdPlayerPos: Int,
         players: MutableList<PlayerEntity>,
         teams: MutableList<MutableList<PlayerEntity>>,
-        startingTeam: Int
+        order: String
     ) {
         if (players.isEmpty()) return  // se não tiver a posição de jogador
 
         repeat(qtdPlayerPos) {
-            for (i in startingTeam until startingTeam + qtdTeams) {
-                val teamIndex = (i - 1) % qtdTeams // Calculando o índice real do time
+            when (order) {
+                "dec" -> distributeLvlDec(qtdTeams, players, teams)
+                "asc" -> distributeLvlAsc(qtdTeams, players, teams)
+            }
+            startingTeam += 1
+            if (startingTeam >= qtdTeams) {
+                startingTeam = 0
+            }
+        }
+        remaining.addAll(players)
+    }
 
-                if (players.isEmpty()) return
 
-                val playerHigh = findPlayerWithLevel(players, 5..5)
-                if (playerHigh != null) {
-                    val player = players.removeAt(players.size - 1)
-                    teams[teamIndex].add(player)
+    private fun distributeLvlDec(
+        qtdTeams: Int, players: MutableList<PlayerEntity>,
+        teams: MutableList<MutableList<PlayerEntity>>
+    ) {
+        for (i in startingTeam until startingTeam + qtdTeams) {
+            val teamIndex = i % qtdTeams // Calculando o índice real do time
+
+            if (players.isEmpty()) return
+
+            val playerHigh = findPlayerWithLevel(players, 5..5)
+            if (playerHigh != null) {
+                teams[teamIndex].add(playerHigh)
+                players.remove(playerHigh)
+            } else {
+                val playerMed = findPlayerWithLevel(players, 3..4)
+                if (playerMed != null) {
+                    teams[teamIndex].add(playerMed)
+                    players.remove(playerMed)
                 } else {
-                    val playerMed = findPlayerWithLevel(players, 3..4)
-                    if (playerMed != null) {
-                        val player = players.removeAt(players.size - 1)
-                        teams[teamIndex].add(player)
-                    } else {
-                        val playerLow = findPlayerWithLevel(players, 0..3)
-                        if (playerLow != null) {
-                            val player = players.removeAt(players.size - 1)
-                            teams[teamIndex].add(player)
-                        }
+                    val playerLow = findPlayerWithLevel(players, 0..3)
+                    if (playerLow != null) {
+                        teams[teamIndex].add(playerLow)
+                        players.remove(playerLow)
                     }
                 }
             }
         }
+    }
 
-        remaining.addAll(players)
+    private fun distributeLvlAsc(
+        qtdTeams: Int, players: MutableList<PlayerEntity>,
+        teams: MutableList<MutableList<PlayerEntity>>
+    ) {
+        for (i in startingTeam until startingTeam + qtdTeams) {
+            val teamIndex = i % qtdTeams // Calculando o índice real do time
+
+            if (players.isEmpty()) return
+
+            val playerLow = findPlayerWithLevel(players, 0..3)
+            if (playerLow != null) {
+                teams[teamIndex].add(playerLow)
+                players.remove(playerLow)
+            } else {
+                val playerMed = findPlayerWithLevel(players, 3..4)
+                if (playerMed != null) {
+                    teams[teamIndex].add(playerMed)
+                    players.remove(playerMed)
+                } else {
+                    val playerHigh = findPlayerWithLevel(players, 5..5)
+                    if (playerHigh != null) {
+                        teams[teamIndex].add(playerHigh)
+                        players.remove(playerHigh)
+                    }
+
+                }
+            }
+        }
     }
 
     private fun findPlayerWithLevel(
@@ -120,26 +186,17 @@ class ResultViewModel : ViewModel() {
         qtdTeams: Int,
         playersNoPos: MutableList<PlayerEntity>,
         teams: MutableList<MutableList<PlayerEntity>>,
-        qtdPlayer: Int,
-        lastTeam: Int,
+        qtdPlayer: Int
     ) {
         remaining.addAll(playersNoPos)
-        remaining.sortedBy { it.level }
+        remaining = remaining.sortedBy { it.level }.toMutableList()
 
-        for (i in remaining) {
-
-            for (indexTeam in 0 until qtdTeams) {
-
-                if (indexTeam == qtdTeams - 1) {
-                    if (teams[indexTeam].size > lastTeam) {
-                        return
-                    }
+        for (player in remaining) {
+            for (team in teams) {
+                if (team.size < qtdPlayer) {
+                    team.add(player)
+                    break
                 }
-
-                if (teams[indexTeam].size < qtdPlayer && remaining.isNotEmpty()) {
-                    teams[indexTeam].add(remaining.removeAt(remaining.size - 1))
-                }
-
             }
         }
     }

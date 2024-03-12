@@ -17,7 +17,7 @@ class DrawAdapter(
     private var players: List<PlayerEntity>
 ) : RecyclerView.Adapter<DrawAdapter.ViewHolder>() {
 
-    val listSelectedPlayers = mutableSetOf<PlayerEntity>()  // SET PARA NÃO SER DUPLICADO
+    var listSelectedPlayers = mutableSetOf<PlayerEntity>()  // SET PARA NÃO SER DUPLICADO
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

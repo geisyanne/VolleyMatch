@@ -20,14 +20,17 @@ import java.util.Locale
 
 class ResultFragment : Fragment(R.layout.fragment_result) {
 
+    private var viewModel: ResultViewModel? = null
     private var binding: FragmentResultBinding? = null
-    private lateinit var viewModel: ResultViewModel
 
-    private lateinit var adapter: ResultAdapter
-    private var teams: MutableList<Team> = mutableListOf()
-
-    private var showPosition: Boolean = false
+    //private lateinit var adapter: ResultAdapter
     private var snackbar: Snackbar? = null
+
+    private var players: ArrayList<PlayerEntity>? = null
+    private var qtdPlayer: Int = 0
+    private var lvl: Boolean = false
+    private var teams: MutableList<Team> = mutableListOf()
+    private var showPosition: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,25 +43,45 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
         viewModel = ViewModelProvider(this)[ResultViewModel::class.java]
 
+        setupArguments()
+        setupView()
+    }
 
+    private fun setupArguments() {
         arguments?.let { bundle ->
-            val players: ArrayList<PlayerEntity>? = bundle.getParcelableArrayList("KEY_PLAYERS")
-            val qtdPlayer: Int = bundle.getInt("KEY_QTD")
-            val pos: Boolean = bundle.getBoolean("KEY_POS")
-            val lvl: Boolean = bundle.getBoolean("KEY_LVL")
-
-            showPosition = pos
-            teams = players?.let { viewModel.drawTeams(it, qtdPlayer, pos, lvl) } ?: mutableListOf()
+            players = bundle.getParcelableArrayList("KEY_PLAYERS")
+            qtdPlayer = bundle.getInt("KEY_QTD")
+            showPosition = bundle.getBoolean("KEY_POS")
+            lvl = bundle.getBoolean("KEY_LVL")
         }
+    }
 
-        binding?.resultRvTeams?.layoutManager = LinearLayoutManager(requireContext())
-        adapter = ResultAdapter(requireContext(), teams, showPosition)
-        binding?.resultRvTeams?.adapter = adapter
-
+    private fun setupView() {
+        drawAndDisplayTeams()
         if (showPosition) {
             checkCompleteTeams()
         }
 
+        binding?.resultBtnDrawAgain?.setOnClickListener {
+            drawAndDisplayTeams()
+        }
+    }
+
+    private fun drawAndDisplayTeams() {
+        teams = drawTeams(players, qtdPlayer, showPosition, lvl)
+        binding?.resultRvTeams?.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = ResultAdapter(requireContext(), teams, showPosition)
+        }
+    }
+
+    private fun drawTeams(
+        players: ArrayList<PlayerEntity>?,
+        qtdPlayer: Int,
+        pos: Boolean,
+        lvl: Boolean
+    ): MutableList<Team> {
+        return players?.let { viewModel?.drawTeams(it, qtdPlayer, pos, lvl) } ?: mutableListOf()
     }
 
     private fun checkCompleteTeams() {
@@ -69,8 +92,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
                     binding?.root ?: return,
                     R.string.not_enought_players,
                     5000
-                )
-                    .setBackgroundTint(resources.getColor(R.color.blue_dark))
+                ).setBackgroundTint(resources.getColor(R.color.blue_dark))
             snackbar?.show()
         }
     }
@@ -83,6 +105,11 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().supportFragmentManager.popBackStack()
+                true
+            }
+
             R.id.action_share -> {
                 shareResult()
                 true
@@ -149,4 +176,11 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         super.onPause()
         snackbar?.dismiss()
     }
+
+    override fun onDestroy() {
+        binding = null
+        viewModel = null
+        super.onDestroy()
+    }
+
 }
