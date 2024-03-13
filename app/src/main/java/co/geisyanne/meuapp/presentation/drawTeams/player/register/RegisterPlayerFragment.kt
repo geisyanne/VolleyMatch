@@ -97,10 +97,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         binding?.playerRegisterTxtDropdownPositions?.apply {
             setAdapter(positionsAdapter)
             setText(positionsAdapter?.getItem(pos), false)
-            setOnClickListener {
-                showDropDown()
-            }
-
+            setOnClickListener { showDropDown() }
             setOnItemClickListener { adapter, _, position, _ ->
                 selectedPosition = adapter.getItemIdAtPosition(position).toInt()
             }

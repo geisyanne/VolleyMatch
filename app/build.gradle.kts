@@ -57,7 +57,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
 
-
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Customizable Swipeable
     implementation("com.github.tsuryo:Swipeable-RecyclerView:1.1")

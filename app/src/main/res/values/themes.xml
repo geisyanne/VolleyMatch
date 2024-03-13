@@ -15,4 +15,11 @@
         <item name="android:actionMenuTextColor">@color/white</item>
     </style>
 
+    <style name="Theme.MeuApp.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/blue_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ball_blue</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/Theme.MeuApp</item>
+    </style>
+
 </resources>

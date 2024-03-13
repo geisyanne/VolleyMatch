@@ -3,6 +3,8 @@ package co.geisyanne.meuapp.presentation.drawTeams.result
 import androidx.lifecycle.ViewModel
 import co.geisyanne.meuapp.data.local.entity.PlayerEntity
 import co.geisyanne.meuapp.domain.model.Team
+import kotlin.random.Random
+
 
 class ResultViewModel : ViewModel() {
 
@@ -23,7 +25,6 @@ class ResultViewModel : ViewModel() {
         if (qtdPlayer < 1) {
             throw IllegalArgumentException("Número inválido de jogadores por time")
         }
-
 
         when {
             pos && lvl -> drawWithPosWithLvl(players, qtdPlayer)
@@ -67,14 +68,23 @@ class ResultViewModel : ViewModel() {
             middlesCount / 2
         )
 
+        // Distribuição aletória em ordem decrescente/crescente
+        val order = when (Random.nextInt(1, 5)) {
+            1 -> listOf(1, 1, 2, 2, 1)
+            2 -> listOf(1, 1, 2, 1, 2)
+            3 -> listOf(2, 2, 1, 1, 2)
+            4 -> listOf(2, 2, 1, 2, 1)
+            else -> listOf(1, 1, 2, 2, 1)
+        }
+
         val listCompTeams = MutableList(completeTeams) { mutableListOf<PlayerEntity>() }
 
         // Distribuição para times completos
-        distributePlayersWithPosWithLvl(completeTeams, 1, setters, listCompTeams, "dec")
-        distributePlayersWithPosWithLvl(completeTeams, 2, outsides, listCompTeams, "dec")
-        distributePlayersWithPosWithLvl(completeTeams, 2, middles, listCompTeams, "asc")
-        distributePlayersWithPosWithLvl(completeTeams, 1, opposites, listCompTeams, "asc")
-        distributePlayersWithPosWithLvl(completeTeams, 1, liberos, listCompTeams, "dec")
+        distributePlayersWithPosWithLvl(completeTeams, 1, setters, listCompTeams, order[0])
+        distributePlayersWithPosWithLvl(completeTeams, 2, outsides, listCompTeams, order[1])
+        distributePlayersWithPosWithLvl(completeTeams, 2, middles, listCompTeams, order[2])
+        distributePlayersWithPosWithLvl(completeTeams, 1, opposites, listCompTeams, order[3])
+        distributePlayersWithPosWithLvl(completeTeams, 1, liberos, listCompTeams, order[4])
 
         // Qtd de times incompletos
         val incompleteTeams = qtdTeams - completeTeams
@@ -88,6 +98,7 @@ class ResultViewModel : ViewModel() {
             )
         }
 
+        if (listCompTeams.size > 1) listCompTeams.shuffle()
         val teams = (listCompTeams + listIncomTeams).toMutableList()
         saveTeams(teams)
     }
@@ -97,14 +108,14 @@ class ResultViewModel : ViewModel() {
         qtdPlayerPos: Int,
         players: MutableList<PlayerEntity>,
         teams: MutableList<MutableList<PlayerEntity>>,
-        order: String
+        order: Int
     ) {
         if (players.isEmpty()) return  // se não tiver a posição de jogador
 
         repeat(qtdPlayerPos) {
             when (order) {
-                "dec" -> distributeLvlDec(qtdTeams, players, teams)
-                "asc" -> distributeLvlAsc(qtdTeams, players, teams)
+                1 -> distributeLvlDec(qtdTeams, players, teams)
+                2 -> distributeLvlAsc(qtdTeams, players, teams)
             }
             startingTeam += 1
             if (startingTeam >= qtdTeams) {
@@ -113,7 +124,6 @@ class ResultViewModel : ViewModel() {
         }
         remaining.addAll(players)
     }
-
 
     private fun distributeLvlDec(
         qtdTeams: Int, players: MutableList<PlayerEntity>,
@@ -178,9 +188,12 @@ class ResultViewModel : ViewModel() {
         players: List<PlayerEntity>,
         levelRange: IntRange
     ): PlayerEntity? {
-        return players.firstOrNull { it.level in levelRange }
+        return if (Random.nextBoolean()) {
+            players.firstOrNull { it.level in levelRange }
+        } else {
+            players.lastOrNull { it.level in levelRange }
+        }
     }
-
 
     private fun distributeRemainingWithPosWithLvl(
         qtdTeams: Int,
