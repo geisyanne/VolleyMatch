@@ -7,17 +7,17 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/Theme.MeuApp.FormTextTitle"
+        style="@style/Theme.VolleyMatch.FormTextTitle"
         android:layout_marginTop="16dp"
         android:text="@string/name_group" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/group_register_input_name"
-        style="@style/Theme.MeuApp.FormInputLayout_EditText">
+        style="@style/Theme.VolleyMatch.FormInputLayout_EditText">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/group_register_edit_name"
-            style="@style/Theme.MeuApp.FormEditText" />
+            style="@style/Theme.VolleyMatch.FormEditText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -11,16 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MeuApp.Starting"
+        android:theme="@style/Theme.VolleyMatch.Starting"
         tools:targetApi="31">
         <activity
             android:name=".presentation.drawTeams.home.HomeDrawTeamsActivity"
-            android:theme="@style/Theme.MeuApp"
+            android:theme="@style/Theme.VolleyMatch"
             android:exported="false"
             android:parentActivityName=".presentation.main.MainActivity" />
         <activity
             android:name=".presentation.scoreboard.ScoreboardActivity"
-            android:theme="@style/Theme.MeuApp"
+            android:theme="@style/Theme.VolleyMatch"
             android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"

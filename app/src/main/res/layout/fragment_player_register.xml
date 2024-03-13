@@ -23,36 +23,36 @@
             android:paddingVertical="30dp">
 
             <TextView
-                style="@style/Theme.MeuApp.FormTextTitle"
+                style="@style/Theme.VolleyMatch.FormTextTitle"
                 android:text="@string/name" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/player_register_input_name"
-                style="@style/Theme.MeuApp.FormInputLayout_EditText">
+                style="@style/Theme.VolleyMatch.FormInputLayout_EditText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/player_register_edit_name"
-                    style="@style/Theme.MeuApp.FormEditText"
+                    style="@style/Theme.VolleyMatch.FormEditText"
                     android:focusable="true"
                     android:focusableInTouchMode="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                style="@style/Theme.MeuApp.FormTextTitle"
+                style="@style/Theme.VolleyMatch.FormTextTitle"
                 android:text="@string/position" />
 
-            <com.google.android.material.textfield.TextInputLayout style="@style/Theme.MeuApp.FormInputLayout_DropDown">
+            <com.google.android.material.textfield.TextInputLayout style="@style/Theme.VolleyMatch.FormInputLayout_DropDown">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/player_register_txt_dropdown_positions"
-                    style="@style/Theme.MeuApp.FormAutoComplete_DropDown"
+                    style="@style/Theme.VolleyMatch.FormAutoComplete_DropDown"
                     android:entries="@array/positionsPlayer" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                style="@style/Theme.MeuApp.FormTextTitle"
+                style="@style/Theme.VolleyMatch.FormTextTitle"
                 android:text="@string/skill_level" />
 
             <RatingBar
@@ -66,9 +66,9 @@
                 android:stepSize="1.0" />
 
 
-            <co.geisyanne.meuapp.presentation.common.util.LoadingButton
+            <co.geisyanne.volleymatch.presentation.common.util.LoadingButton
                 android:id="@+id/player_register_btn_save"
-                style="@style/Theme.MeuApp.FormLoadingButton"
+                style="@style/Theme.VolleyMatch.FormLoadingButton"
                 app:text="@string/save" />
 
         </LinearLayout>

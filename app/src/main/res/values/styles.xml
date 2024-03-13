@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MeuApp.FormTextTitle">
+    <style name="Theme.VolleyMatch.FormTextTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">7dp</item>
@@ -9,14 +9,14 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="Theme.MeuApp.FormInputLayout_EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="Theme.VolleyMatch.FormInputLayout_EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">20dp</item>
         <item name="android:layout_marginHorizontal">16dp</item>
     </style>
 
-    <style name="Theme.MeuApp.FormEditText">
+    <style name="Theme.VolleyMatch.FormEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:maxLines">1</item>
@@ -25,7 +25,7 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="Theme.MeuApp.FormInputLayout_DropDown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+    <style name="Theme.VolleyMatch.FormInputLayout_DropDown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">20dp</item>
@@ -33,7 +33,7 @@
         <item name="android:layout_marginHorizontal">16dp</item>
     </style>
 
-    <style name="Theme.MeuApp.FormAutoComplete_DropDown">
+    <style name="Theme.VolleyMatch.FormAutoComplete_DropDown">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:layout_marginBottom">10dp</item>
@@ -43,7 +43,7 @@
         <item name="android:paddingBottom">8dp</item>
     </style>
 
-    <style name="Theme.MeuApp.FormLoadingButton" parent="Widget.Material3.Button.ElevatedButton">
+    <style name="Theme.VolleyMatch.FormLoadingButton" parent="Widget.Material3.Button.ElevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">20dp</item>

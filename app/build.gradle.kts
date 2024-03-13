@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "co.geisyanne.meuapp"
+    namespace = "co.geisyanne.volleymatch"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "co.geisyanne.meuapp"
+        applicationId = "co.geisyanne.volleymatch"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
