@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1011107860753",
+    "project_id": "appvolleymatch",
+    "storage_bucket": "appvolleymatch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011107860753:android:132980fa45decce773bcb0",
+        "android_client_info": {
+          "package_name": "co.geisyanne.volleymatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIyFY99NeD_BmbWpcGD8Ei6alnxWn2KDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

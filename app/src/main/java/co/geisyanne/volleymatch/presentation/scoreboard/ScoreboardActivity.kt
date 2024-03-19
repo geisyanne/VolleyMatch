@@ -1,12 +1,16 @@
 package co.geisyanne.volleymatch.presentation.scoreboard
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.view.View
 import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.databinding.ActivityScoreboardBinding
@@ -18,6 +22,9 @@ class ScoreboardActivity : AppCompatActivity() {
 
     private var binding: ActivityScoreboardBinding? = null
     private lateinit var viewModel: ScoreboardViewModel
+    private lateinit var powerManager: PowerManager
+    private var wakeLock: PowerManager.WakeLock? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +32,15 @@ class ScoreboardActivity : AppCompatActivity() {
 
         binding = ActivityScoreboardBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        // MATER TELA LIGADA
+        powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = powerManager.newWakeLock(
+            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE,
+            "VolleyMatch:WakeLock"
+        )
+        wakeLock?.acquire()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         viewModel = ViewModelProvider(this)[ScoreboardViewModel::class.java]
 
@@ -127,12 +143,11 @@ class ScoreboardActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onDestroy() {
         binding = null
+        wakeLock?.release()
         super.onDestroy()
     }
-
 
 }
 
