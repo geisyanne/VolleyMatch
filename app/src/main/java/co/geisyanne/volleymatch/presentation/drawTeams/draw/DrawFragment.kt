@@ -29,7 +29,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class DrawFragment : Fragment(R.layout.fragment_draw) {
 
-    private lateinit var viewModel: DrawViewModel
+    private var viewModel: DrawViewModel? = null
     private var binding: FragmentDrawBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
 
@@ -128,7 +128,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     private fun observeViewModelEvents() {
         binding?.drawSelectProgress?.visibility = View.VISIBLE
-        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
+        viewModel?.allPlayersEvent?.observe(viewLifecycleOwner) { allPlayers ->
             binding?.drawSelectProgress?.visibility = View.GONE
             adapter = DrawAdapter(requireContext(), allPlayers)
             binding?.drawRv?.adapter = adapter
@@ -224,12 +224,19 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     override fun onPause() {
         super.onPause()
-        actionMode?.finish()
+
+        if (actionMode != null)
+            actionMode?.finish()
     }
 
     override fun onDestroy() {
         binding = null
-        actionMode?.finish()
+        viewModel = null
+
+        if (actionMode != null)
+            actionMode?.finish()
+
         super.onDestroy()
     }
+
 }

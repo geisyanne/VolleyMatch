@@ -28,7 +28,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
     private lateinit var drawFragment: DrawFragment
 
     //private lateinit var groupListFragment: GroupFragment
-    //private lateinit var homeDrawTeamsFragment: HomeDrawTeamsFragment
+
     private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,6 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         playerListFragment = PlayerListFragment()
         drawFragment = DrawFragment()
         //groupListFragment = GroupFragment()
-        //homeDrawTeamsFragment = HomeDrawTeamsFragment()
 
         replaceFragment(playerListFragment)
         binding?.drawTeamBottomNav?.selectedItemId =
@@ -102,10 +101,6 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
-    }
-
-    private fun setToolbarTitle(@StringRes resId: Int) {
-        binding?.mainToolbar?.setTitle(resId)
     }
 
     override fun updateActionBarTitle(title: String) {
@@ -172,15 +167,11 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         supportActionBar?.title = getString(R.string.toolbar_title_result)
     }
 
-
-
-
     /*override fun goToGroup(groupId: Long) {
        *//* val fragment = GroupWithPlayersFragment()
         replaceFragment(fragment, addToBackStack = true)
         binding?.drawTeamBottomNav?.visibility = View.GONE*//*
     }*/
-
 
     override fun onDestroy() {
         binding = null

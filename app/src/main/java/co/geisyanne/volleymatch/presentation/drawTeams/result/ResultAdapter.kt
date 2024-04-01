@@ -36,12 +36,6 @@ class ResultAdapter(
         holder.bind(teams[position])
     }
 
-    fun updateTeams(newTeams: MutableList<Team>) {
-        teams.clear()
-        teams.addAll(newTeams)
-        notifyDataSetChanged()
-    }
-
     inner class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val innerPlayersRv: RecyclerView =
@@ -105,5 +99,6 @@ class InnerPlayersAdapter(private val context: Context, private val showPosition
             }
         }
     }
+
 }
 

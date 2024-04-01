@@ -28,7 +28,6 @@ class ScoreboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
 
         binding = ActivityScoreboardBinding.inflate(layoutInflater)
         setContentView(binding?.root)

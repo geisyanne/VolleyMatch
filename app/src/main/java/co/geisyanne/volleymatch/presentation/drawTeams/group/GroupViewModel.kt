@@ -15,8 +15,6 @@ class GroupViewModel(
     private val repository: GroupRepository
 ) : ViewModel() {
 
-    // TODO: USAR EVENT PARA PROGRESS
-
     // NOTIFICAR QUANDO UM USER FOR DELETADO
     private val _groupStateEventData = MutableLiveData<GroupState>()
     val groupStateEventData: LiveData<GroupState> get() = _groupStateEventData

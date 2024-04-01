@@ -6,7 +6,8 @@ import android.os.Build
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import android.view.WindowManager.LayoutParams.*
+import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 
@@ -21,37 +22,7 @@ fun AppCompatActivity.hideKeyboard() {
 }
 
 
-fun Activity.hideSystemBars() {
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        window.insetsController?.apply {
-            systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            hide(WindowInsets.Type.systemBars())
-        }
-    } else {
-        @Suppress("DEPRECATION")
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)
-
-        @Suppress("DEPRECATION")
-        window.setFlags(
-            FLAG_FULLSCREEN,
-            FLAG_FULLSCREEN
-        )
 
 
 
-    }
-}
-
-fun Activity.showSystemBars() {
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        window.insetsController?.show(WindowInsets.Type.systemBars())
-    } else {
-        @Suppress("DEPRECATION")
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_VISIBLE)
-    }
-}
 

@@ -25,7 +25,6 @@ class ScoreboardViewModel : ViewModel() {
             2 -> if (currentScore2 > 0) --currentScore2
             else -> throw IllegalArgumentException("Invalid team: $team")
         }
-
     }
 
     fun restartScore() {

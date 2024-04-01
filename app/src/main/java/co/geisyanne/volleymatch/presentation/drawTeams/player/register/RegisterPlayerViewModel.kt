@@ -14,7 +14,7 @@ class RegisterPlayerViewModel(
     private val repository: PlayerRepository
 ) : ViewModel() {
 
-    // NOTIFICAR QUANDO UM USER FOR INSERIDO
+    // NOTIFICAR QUANDO USER FOR INSERIDO
     private val _playerStateEventData = MutableLiveData<PlayerState>()
     val playerStateEventData: LiveData<PlayerState> get() = _playerStateEventData
 
@@ -59,7 +59,7 @@ class RegisterPlayerViewModel(
             }
         }
 
-    // PARA REPRESENTAR UM CONJUNTO DE ESTADOS/TIPOS
+    // REPRESENTAR CONJUNTO DE ESTADOS/TIPOS
     sealed class PlayerState {
         data object Inserted : PlayerState()
         data object Updated : PlayerState()

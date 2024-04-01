@@ -22,7 +22,6 @@ class PlayerListViewModel(
     private val _messageEventData = MutableLiveData<Int>()
     val messageEventData: LiveData<Int> get() = _messageEventData
 
-
     val allPlayersEvent = repository.getAllPlayers()
 
 
