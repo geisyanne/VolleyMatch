@@ -5,7 +5,7 @@ Funcionalidades: cadastro de jogadores, sorteio de times e placar.
 
 Para fazer o download na Google Play Store, [clique aqui](https://play.google.com/store/apps/details?id=co.geisyanne.volleymatch&hl=pt_PT&gl=US).
 
-## Tecnologias Utilizadas
+## Tecnologias utilizadas
 
 - **Linguagem**: Kotlin.
 - **Arquitetura**: MVVM (Model-View-ViewModel) com Repositories para abstração da comunicação com a camada de dados.
