@@ -11,22 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.volleymatch.R
-import co.geisyanne.volleymatch.data.local.AppDatabase
-import co.geisyanne.volleymatch.data.local.repository.PlayerLocalDataSource
 import co.geisyanne.volleymatch.databinding.FragmentPlayerListBinding
-import co.geisyanne.volleymatch.domain.repository.PlayerRepository
-import co.geisyanne.volleymatch.presentation.common.util.viewModelFactory
 import co.geisyanne.volleymatch.presentation.drawTeams.home.FragmentAttachListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
-    private var viewModel: PlayerListViewModel? = null
+    private val viewModel: PlayerListViewModel by viewModel()
     private var binding: FragmentPlayerListBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
 
@@ -42,16 +38,8 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPlayerListBinding.bind(view)
 
-        setupViewModel()
         setupUI()
         observeViewModelEvents()
-    }
-
-    private fun setupViewModel() {
-        val playerDao = AppDatabase.getInstance(requireContext()).playerDao
-        val repository: PlayerRepository = PlayerLocalDataSource(playerDao)
-        val factory = viewModelFactory { PlayerListViewModel(repository) }
-        viewModel = ViewModelProvider(this, factory)[PlayerListViewModel::class.java]
     }
 
     private fun setupUI() {
@@ -95,7 +83,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     private fun observeViewModelEvents() {
         binding?.playerProgress?.visibility = View.VISIBLE
 
-        viewModel?.allPlayersEvent?.observe(viewLifecycleOwner) { allPlayers ->
+        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
             binding?.playerProgress?.visibility = View.GONE
 
             adapter = PlayerListAdapter(allPlayers).apply {
@@ -128,7 +116,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     if (item?.itemId == R.id.menu_action_delete) {
                         val selectedPlayers = adapter.getSelectedPlayers()
-                        viewModel?.deleteSelectedPlayers(selectedPlayers)
+                        viewModel.deleteSelectedPlayers(selectedPlayers)
                         mode?.finish()
                         return true
                     }
@@ -194,7 +182,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         val searchName = "%$name%"
         view?.let {
             viewLifecycleOwnerLiveData.observe(viewLifecycleOwner) { viewLifecycleOwner ->
-                viewModel?.searchPlayer(searchName)?.observe(viewLifecycleOwner) { list ->
+                viewModel.searchPlayer(searchName).observe(viewLifecycleOwner) { list ->
                     list.let {
                         adapter.submitList(it)
                         binding?.playerTxtEmpty?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
@@ -225,7 +213,6 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
     override fun onDestroy() {
         binding = null
-        viewModel = null
 
         // DESTROY ACTION MODE
         if (actionMode != null)

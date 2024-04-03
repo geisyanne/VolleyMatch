@@ -1,4 +1,4 @@
-package co.geisyanne.volleymatch.data.local.repository
+package co.geisyanne.volleymatch.data.local.repositoryImpl
 
 import androidx.lifecycle.LiveData
 import co.geisyanne.volleymatch.data.local.dao.PlayerDao

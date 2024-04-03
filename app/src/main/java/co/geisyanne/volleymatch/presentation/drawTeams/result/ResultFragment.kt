@@ -7,20 +7,20 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
 import co.geisyanne.volleymatch.databinding.FragmentResultBinding
 import co.geisyanne.volleymatch.domain.model.Team
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class ResultFragment : Fragment(R.layout.fragment_result) {
 
-    private var viewModel: ResultViewModel? = null
+    private val viewModel: ResultViewModel by viewModel()
     private var binding: FragmentResultBinding? = null
 
     //private lateinit var adapter: ResultAdapter
@@ -40,8 +40,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentResultBinding.bind(view)
-
-        viewModel = ViewModelProvider(this)[ResultViewModel::class.java]
 
         setupArguments()
         setupView()
@@ -81,7 +79,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         pos: Boolean,
         lvl: Boolean
     ): MutableList<Team> {
-        return players?.let { viewModel?.drawTeams(it, qtdPlayer, pos, lvl) } ?: mutableListOf()
+        return players?.let { viewModel.drawTeams(it, qtdPlayer, pos, lvl) } ?: mutableListOf()
     }
 
     private fun checkCompleteTeams() {
@@ -179,7 +177,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     override fun onDestroy() {
         binding = null
-        viewModel = null
         super.onDestroy()
     }
 

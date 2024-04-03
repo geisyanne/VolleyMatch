@@ -1,7 +1,6 @@
 package co.geisyanne.volleymatch.presentation.scoreboard
 
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
@@ -10,21 +9,18 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.getSystemService
-import androidx.lifecycle.ViewModelProvider
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.databinding.ActivityScoreboardBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ScoreboardActivity : AppCompatActivity() {
 
-
     private var binding: ActivityScoreboardBinding? = null
-    private lateinit var viewModel: ScoreboardViewModel
+    private val viewModel: ScoreboardViewModel by viewModel()
     private lateinit var powerManager: PowerManager
     private var wakeLock: PowerManager.WakeLock? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +36,6 @@ class ScoreboardActivity : AppCompatActivity() {
         )
         wakeLock?.acquire()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
-        viewModel = ViewModelProvider(this)[ScoreboardViewModel::class.java]
 
         setupListeners()
 

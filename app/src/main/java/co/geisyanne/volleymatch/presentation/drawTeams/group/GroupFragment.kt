@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.AppDatabase
-import co.geisyanne.volleymatch.data.local.repository.GroupLocalDataSource
+import co.geisyanne.volleymatch.data.local.repositoryImpl.GroupLocalDataSource
 import co.geisyanne.volleymatch.databinding.FragmentGroupListBinding
 import co.geisyanne.volleymatch.domain.repository.GroupRepository
 import co.geisyanne.volleymatch.presentation.common.util.viewModelFactory

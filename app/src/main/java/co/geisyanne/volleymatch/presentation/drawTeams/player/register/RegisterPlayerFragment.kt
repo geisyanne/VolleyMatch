@@ -8,22 +8,18 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import co.geisyanne.volleymatch.R
-import co.geisyanne.volleymatch.data.local.AppDatabase
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
-import co.geisyanne.volleymatch.data.local.repository.PlayerLocalDataSource
 import co.geisyanne.volleymatch.databinding.FragmentPlayerRegisterBinding
-import co.geisyanne.volleymatch.domain.repository.PlayerRepository
 import co.geisyanne.volleymatch.presentation.common.extension.hideKeyboard
 import co.geisyanne.volleymatch.presentation.common.util.TxtWatcher
-import co.geisyanne.volleymatch.presentation.common.util.viewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
-    private var viewModel: RegisterPlayerViewModel? = null
+    private val viewModel: RegisterPlayerViewModel by viewModel()
     private var binding: FragmentPlayerRegisterBinding? = null
 
     private var id: Long = 0
@@ -39,15 +35,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPlayerRegisterBinding.bind(view)
 
-        setupViewModel()
         setupUI()
-    }
-
-    private fun setupViewModel() {
-        val playerDao = AppDatabase.getInstance(requireContext()).playerDao
-        val repository: PlayerRepository = PlayerLocalDataSource(playerDao)
-        val factory = viewModelFactory { RegisterPlayerViewModel(repository) }
-        viewModel = ViewModelProvider(this, factory)[RegisterPlayerViewModel::class.java]
     }
 
     private fun setupUI() {
@@ -62,7 +50,6 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
             "UpdatePlayerTag" -> updatePlayerForm()
         }
     }
-
 
     private fun registerPlayerForm() {
         binding?.playerRegisterEditName?.addTextChangedListener(TxtWatcher {
@@ -110,7 +97,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
     }
 
     private fun observeEvents() {
-        viewModel?.playerStateEventData?.observe(viewLifecycleOwner) { playerState ->
+        viewModel.playerStateEventData.observe(viewLifecycleOwner) { playerState ->
             when (playerState) {
                 is RegisterPlayerViewModel.PlayerState.Inserted,
                 is RegisterPlayerViewModel.PlayerState.Updated -> {
@@ -121,7 +108,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
             }
         }
 
-        viewModel?.messageEventData?.observe(viewLifecycleOwner) { stringResId ->
+        viewModel.messageEventData.observe(viewLifecycleOwner) { stringResId ->
             Snackbar.make(requireView(), stringResId, 500)
                 .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.blue_dark))
                 .show()
@@ -143,7 +130,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
             val namePlayer = binding?.playerRegisterEditName?.text.toString()
             val positionPlayer = selectedPosition
             val levelPlayer = binding?.playerRegisterRatingbar?.rating?.toInt() ?: 0
-            viewModel?.addOrUpdatePlayer(namePlayer, positionPlayer, levelPlayer, id)
+            viewModel.addOrUpdatePlayer(namePlayer, positionPlayer, levelPlayer, id)
         }
     }
 
@@ -166,7 +153,6 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
     override fun onDestroy() {
         binding = null
-        viewModel = null
         super.onDestroy()
     }
 }

@@ -73,7 +73,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
-    // Room
+    // room
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
@@ -82,8 +82,11 @@ dependencies {
     // splash
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-    // Customizable Swipeable
+    // customizable swipeable
     implementation("com.github.tsuryo:Swipeable-RecyclerView:1.1")
+
+    // koin
+    implementation("io.insert-koin:koin-android:3.5.0")
 
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))

@@ -12,24 +12,20 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.volleymatch.R
-import co.geisyanne.volleymatch.data.local.AppDatabase
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
-import co.geisyanne.volleymatch.data.local.repository.PlayerLocalDataSource
 import co.geisyanne.volleymatch.databinding.FragmentDrawBinding
-import co.geisyanne.volleymatch.domain.repository.PlayerRepository
-import co.geisyanne.volleymatch.presentation.common.util.viewModelFactory
 import co.geisyanne.volleymatch.presentation.drawTeams.home.FragmentAttachListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class DrawFragment : Fragment(R.layout.fragment_draw) {
 
-    private var viewModel: DrawViewModel? = null
+    private val viewModel: DrawViewModel by viewModel()
     private var binding: FragmentDrawBinding? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
 
@@ -48,16 +44,8 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDrawBinding.bind(view)
 
-        setupViewModel()
         setupUI()
         observeViewModelEvents()
-    }
-
-    private fun setupViewModel() {
-        val playerDao = AppDatabase.getInstance(requireContext()).playerDao
-        val repository: PlayerRepository = PlayerLocalDataSource(playerDao)
-        val factory = viewModelFactory { DrawViewModel(repository) }
-        viewModel = ViewModelProvider(this, factory)[DrawViewModel::class.java]
     }
 
     private fun setupUI() {
@@ -128,7 +116,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     private fun observeViewModelEvents() {
         binding?.drawSelectProgress?.visibility = View.VISIBLE
-        viewModel?.allPlayersEvent?.observe(viewLifecycleOwner) { allPlayers ->
+        viewModel.allPlayersEvent.observe(viewLifecycleOwner) { allPlayers ->
             binding?.drawSelectProgress?.visibility = View.GONE
             adapter = DrawAdapter(requireContext(), allPlayers)
             binding?.drawRv?.adapter = adapter
@@ -231,7 +219,6 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     override fun onDestroy() {
         binding = null
-        viewModel = null
 
         if (actionMode != null)
             actionMode?.finish()
