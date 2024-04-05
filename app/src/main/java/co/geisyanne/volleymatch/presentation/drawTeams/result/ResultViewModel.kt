@@ -2,6 +2,8 @@ package co.geisyanne.volleymatch.presentation.drawTeams.result
 
 import androidx.lifecycle.ViewModel
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
+import co.geisyanne.volleymatch.domain.model.PlayerListWithCount
+import co.geisyanne.volleymatch.domain.model.PlayerPositions
 import co.geisyanne.volleymatch.domain.model.Team
 import kotlin.random.Random
 
@@ -9,7 +11,7 @@ import kotlin.random.Random
 class ResultViewModel : ViewModel() {
 
     private var teamsList: MutableList<Team> = mutableListOf()
-    private var remaining: MutableList<PlayerEntity> = mutableListOf()
+    private var remainingPlayers: MutableList<PlayerEntity> = mutableListOf()
     private var startingTeam: Int = 0
 
     fun drawTeams(
@@ -20,7 +22,7 @@ class ResultViewModel : ViewModel() {
     ): MutableList<Team> {
 
         teamsList.clear()
-        remaining.clear()
+        remainingPlayers.clear()
 
         if (qtdPlayer < 1) {
             throw IllegalArgumentException("Número inválido de jogadores por time")
@@ -35,40 +37,15 @@ class ResultViewModel : ViewModel() {
         return teamsList
     }
 
-    // sorteio com posição e com nível
+    // # SORTEIO COM POSIÇÃO E COM NÍVEL
     private fun drawWithPosWithLvl(players: List<PlayerEntity>, qtdPlayer: Int) {
 
         val qtdTeams = players.windowed(qtdPlayer, qtdPlayer, true).count()
-        //val lastTeam = players.windowed(qtdPlayer, qtdPlayer, true).last().size
-        //val teams = MutableList(qtdTeams) { mutableListOf<PlayerEntity>() }
 
-        val setters =
-            players.filter { it.positionPlayer == 1 }.shuffled().toMutableList() //  1/TEAM
-        val outsides =
-            players.filter { it.positionPlayer == 2 }.shuffled().toMutableList()  // 2/TEAM
-        val opposites =
-            players.filter { it.positionPlayer == 3 }.shuffled().toMutableList() // 1/TEAM
-        val middles = players.filter { it.positionPlayer == 4 }.shuffled().toMutableList() // 2/TEAM
+        // filtrar posições dos jogadores
+        val (positionsList, noPosition, qtdCompleteTeams) = getPlayersByPosition(players)
 
-        val liberos =
-            players.filter { it.positionPlayer == 5 }.shuffled().toMutableList() // 0 OU 1/TEAM
-
-        val noPosition = players.filter { it.positionPlayer == 0 }.toMutableList()
-
-        val settersCount = setters.size
-        val outsidesCount = outsides.size
-        val oppositesCount = opposites.size
-        val middlesCount = middles.size
-
-        // Qtd de times completos
-        val completeTeams = minOf(
-            settersCount,
-            outsidesCount / 2,
-            oppositesCount,
-            middlesCount / 2
-        )
-
-        // Distribuição aletória em ordem decrescente/crescente
+        // ordem para distribuir em os jogadores por nível: decrescente (1) e crescente (2)
         val order = when (Random.nextInt(1, 5)) {
             1 -> listOf(1, 1, 2, 2, 1)
             2 -> listOf(1, 1, 2, 1, 2)
@@ -77,34 +54,38 @@ class ResultViewModel : ViewModel() {
             else -> listOf(1, 1, 2, 2, 1)
         }
 
-        val listCompTeams = MutableList(completeTeams) { mutableListOf<PlayerEntity>() }
+        val listCompleteTeams = MutableList(qtdCompleteTeams) { mutableListOf<PlayerEntity>() }
 
-        // Distribuição para times completos
-        distributePlayersWithPosWithLvl(completeTeams, 1, setters, listCompTeams, order[0])
-        distributePlayersWithPosWithLvl(completeTeams, 2, outsides, listCompTeams, order[1])
-        distributePlayersWithPosWithLvl(completeTeams, 2, middles, listCompTeams, order[2])
-        distributePlayersWithPosWithLvl(completeTeams, 1, opposites, listCompTeams, order[3])
-        distributePlayersWithPosWithLvl(completeTeams, 1, liberos, listCompTeams, order[4])
+        // distribuição do jogadores com posições definidas
+        positionsList.forEachIndexed { i, position ->
+            distributePlayersWithPosWithLvl(
+                qtdCompleteTeams,
+                position.count,
+                position.players,
+                listCompleteTeams,
+                order[i]
+            )
+        }
 
-        // Qtd de times incompletos
-        val incompleteTeams = qtdTeams - completeTeams
+        // qtd de times incompletos e distribuir jogadores sem posição
+        val incompleteTeams = qtdTeams - qtdCompleteTeams
         val listIncomTeams = MutableList(incompleteTeams) { mutableListOf<PlayerEntity>() }
         if (incompleteTeams > 0) {
             distributeRemainingWithPosWithLvl(
-                incompleteTeams,
                 noPosition,
                 listIncomTeams,
                 qtdPlayer
             )
         }
 
-        if (listCompTeams.size > 1) listCompTeams.shuffle()
-        val teams = (listCompTeams + listIncomTeams).toMutableList()
+        // embaralhar os times
+        if (listCompleteTeams.size > 1) listCompleteTeams.shuffle()
+        val teams = (listCompleteTeams + listIncomTeams).toMutableList()
         saveTeams(teams)
     }
 
     private fun distributePlayersWithPosWithLvl(
-        qtdTeams: Int,
+        qtdCompleteTeams: Int,
         qtdPlayerPos: Int,
         players: MutableList<PlayerEntity>,
         teams: MutableList<MutableList<PlayerEntity>>,
@@ -114,23 +95,28 @@ class ResultViewModel : ViewModel() {
 
         repeat(qtdPlayerPos) {
             when (order) {
-                1 -> distributeLvlDec(qtdTeams, players, teams)
-                2 -> distributeLvlAsc(qtdTeams, players, teams)
+                1 -> distributeLvlDec(qtdCompleteTeams, players, teams)
+                2 -> distributeLvlAsc(qtdCompleteTeams, players, teams)
             }
+
+            // garantir distribuição cíclica entre os times
             startingTeam += 1
-            if (startingTeam >= qtdTeams) {
+            if (startingTeam >= qtdCompleteTeams) {
                 startingTeam = 0
             }
         }
-        remaining.addAll(players)
+        remainingPlayers.addAll(players)
     }
 
+    // distribuir os jogadores em nível decrescente
     private fun distributeLvlDec(
-        qtdTeams: Int, players: MutableList<PlayerEntity>,
+        qtdCompleteTeams: Int,
+        players: MutableList<PlayerEntity>,
         teams: MutableList<MutableList<PlayerEntity>>
     ) {
-        for (i in startingTeam until startingTeam + qtdTeams) {
-            val teamIndex = i % qtdTeams // Calculando o índice real do time
+        for (i in startingTeam until startingTeam + qtdCompleteTeams) {
+            val teamIndex =
+                i % qtdCompleteTeams //  índice real do time
 
             if (players.isEmpty()) return
 
@@ -154,6 +140,7 @@ class ResultViewModel : ViewModel() {
         }
     }
 
+    // distribuir os jogadores em nível crescente
     private fun distributeLvlAsc(
         qtdTeams: Int, players: MutableList<PlayerEntity>,
         teams: MutableList<MutableList<PlayerEntity>>
@@ -184,6 +171,7 @@ class ResultViewModel : ViewModel() {
         }
     }
 
+    // buscar um jogador de acordo com o nível, a partir do início ou fim da lista - aleatoriamente
     private fun findPlayerWithLevel(
         players: List<PlayerEntity>,
         levelRange: IntRange
@@ -195,16 +183,16 @@ class ResultViewModel : ViewModel() {
         }
     }
 
+    // distribuir os jogadores restantes
     private fun distributeRemainingWithPosWithLvl(
-        qtdTeams: Int,
         playersNoPos: MutableList<PlayerEntity>,
         teams: MutableList<MutableList<PlayerEntity>>,
         qtdPlayer: Int
     ) {
-        remaining.addAll(playersNoPos)
-        remaining = remaining.sortedBy { it.level }.toMutableList()
+        remainingPlayers.addAll(playersNoPos)
+        remainingPlayers = remainingPlayers.sortedBy { it.level }.toMutableList()
 
-        for (player in remaining) {
+        for (player in remainingPlayers) {
             for (team in teams) {
                 if (team.size < qtdPlayer) {
                     team.add(player)
@@ -215,7 +203,7 @@ class ResultViewModel : ViewModel() {
     }
 
 
-    // sorteio sem posição e com nível
+    // # SORTEIO SEM POSIÇÃO E COM NÍVEL
     private fun drawNoPosWithLvl(players: List<PlayerEntity>, qtdPlayer: Int) {
         val qtdTeams = players.windowed(qtdPlayer, qtdPlayer, true).count()
 
@@ -278,7 +266,7 @@ class ResultViewModel : ViewModel() {
     }
 
 
-    // sorteio com posição e sem nível
+    //  # SORTEIO COM POSIÇÃO E SEM NÍVEL
     private fun drawWithPosNoLvl(players: List<PlayerEntity>, qtdPlayer: Int) {
 
         val qtdTeams = players.windowed(qtdPlayer, qtdPlayer, true).count()
@@ -296,6 +284,9 @@ class ResultViewModel : ViewModel() {
             players.filter { it.positionPlayer == 5 }.shuffled().toMutableList() // 0 OU 1/TEAM
 
         val noPosition = players.filter { it.positionPlayer == 0 }.shuffled().toMutableList()
+
+
+        // Qtd de times completos
 
         distributePlayersWithPosNoLvl(qtdTeams, 1, setters, teams)
         distributePlayersWithPosNoLvl(qtdTeams, 2, outsides, teams)
@@ -325,21 +316,21 @@ class ResultViewModel : ViewModel() {
                 }
             }
         }
-        remaining.addAll(players)
+        remainingPlayers.addAll(players)
     }
 
     private fun distributeRemaining(
         qtdTeams: Int,
-        players: MutableList<PlayerEntity>,
+        players: MutableList<PlayerEntity>, // list noPosition
         teams: MutableList<MutableList<PlayerEntity>>,
         qtdPlayer: Int
     ) {
-        remaining.addAll(players)
-        remaining.shuffle()
+        remainingPlayers.addAll(players)
+        remainingPlayers.shuffle()
 
         for (i in 0 until qtdTeams) {
-            while (teams[i].size < qtdPlayer && remaining.isNotEmpty()) {
-                teams[i].add(remaining.removeAt(remaining.size - 1))
+            while (teams[i].size < qtdPlayer && remainingPlayers.isNotEmpty()) {
+                teams[i].add(remainingPlayers.removeAt(remainingPlayers.size - 1))
             }
         }
     }
@@ -349,17 +340,18 @@ class ResultViewModel : ViewModel() {
     private fun drawNoPosNoLvl(players: List<PlayerEntity>, qtdPlayer: Int) {
 
         val qtdTeams = players.windowed(qtdPlayer, qtdPlayer, true).count()
+        val completeTeams = mutableListOf<MutableList<PlayerEntity>>()
+        val incompleteTeams = mutableListOf<MutableList<PlayerEntity>>()
+        val allTeams = mutableListOf<MutableList<PlayerEntity>>()
 
-        val setters =
-            players.filter { it.positionPlayer == 1 }.shuffled()
-                .toMutableList() // filtrando levantadores
+        val setters = players.filter { it.positionPlayer == 1 }.shuffled().toMutableList()
         val otherPlayers = players.filter { it.positionPlayer != 1 }.shuffled().toMutableList()
 
         for (i in 0 until qtdTeams) {
             val playersList = mutableListOf<PlayerEntity>()
 
             if (setters.isNotEmpty()) {
-                // add o último levantador a playerList e já remove o mesmo de lifters
+                //  remove o último setter da sua lista e o adc a playersList
                 // a partir do final da lista (ordem inversa) pra não afetar os indices dos elementos restantes
                 playersList.add(setters.removeAt(setters.size - 1))
 
@@ -367,7 +359,7 @@ class ResultViewModel : ViewModel() {
                 for (j in 0 until (qtdPlayer - 1)) {
                     if (otherPlayers.isNotEmpty()) {
                         playersList.add(otherPlayers.removeAt(otherPlayers.size - 1))
-                    } else if (setters.isNotEmpty()) {
+                    } else if (setters.isNotEmpty()) { // se só restar setters
                         playersList.add(setters.removeAt(setters.size - 1))
                     }
                 }
@@ -379,8 +371,52 @@ class ResultViewModel : ViewModel() {
                     }
                 }
             }
-            saveTeam(i + 1, playersList)
+            // alterar ordem apenas dos times completos
+            if (playersList.size == qtdPlayer) {
+                completeTeams.add(playersList)
+            } else {
+                incompleteTeams.add(playersList)
+            }
         }
+        allTeams.addAll(completeTeams.shuffled().toMutableList())
+        allTeams.addAll(incompleteTeams)
+        saveTeams(allTeams)
+    }
+
+    private fun getPlayersByPosition(players: List<PlayerEntity>): PlayerPositions {
+        val setters = PlayerListWithCount(
+            players.filter { it.positionPlayer == 1 }.shuffled()
+                .toMutableList(), count = 1
+        )
+        val outsides = PlayerListWithCount(
+            players.filter { it.positionPlayer == 2 }.shuffled()
+                .toMutableList(), count = 2
+        )
+        val opposites = PlayerListWithCount(
+            players.filter { it.positionPlayer == 3 }.shuffled()
+                .toMutableList(), count = 1
+        )
+        val middles = PlayerListWithCount(
+            players.filter { it.positionPlayer == 4 }.shuffled()
+                .toMutableList(), count = 2
+        )
+        val liberos = PlayerListWithCount(
+            players.filter { it.positionPlayer == 5 }.shuffled()
+                .toMutableList(), count = 1
+        )
+        val noPosition = players.filter { it.positionPlayer == 0 }.shuffled().toMutableList()
+
+        // qtd de times completos
+        val countCompleteTeams = minOf(
+            setters.players.size,
+            outsides.players.size / 2,
+            opposites.players.size,
+            middles.players.size / 2
+        )
+
+        val positionsList = listOf(setters, outsides, opposites, middles, liberos)
+
+        return PlayerPositions(positionsList, noPosition, countCompleteTeams)
     }
 
     private fun saveTeam(teamNumber: Int, playerList: List<PlayerEntity>) {
@@ -391,13 +427,14 @@ class ResultViewModel : ViewModel() {
         teamsList.add(team)
     }
 
+
     private fun saveTeams(teams: MutableList<MutableList<PlayerEntity>>) {
         for (i in teams.indices) {
             if (teams[i].isEmpty()) return
-            val sortedTeam = teams[i].sortedBy { it.positionPlayer }
+            //val sortedTeam = teams[i].sortedBy { it.positionPlayer }
             val team = Team(
                 num = (i + 1),
-                playerList = sortedTeam
+                playerList = teams[i]
             )
             teamsList.add(team)
         }
