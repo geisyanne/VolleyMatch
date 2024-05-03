@@ -1,96 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_primary"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context=".presentation.main.MainActivity">
 
     <TextView
+        android:id="@+id/txt_main_AppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:layout_marginTop="70dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="50sp"
-        android:textColor="@color/yellow_primary"
+        android:layout_marginVertical="@dimen/_53sdp"
         android:fontFamily="@font/lilita_one"
-        />
+        android:text="@string/app_name"
+        android:textColor="@color/yellow_primary"
+        android:textSize="@dimen/_42ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/txt_main_AppDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_desc"
-        android:layout_marginTop="125dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:textColor="@color/white"
         android:fontFamily="@font/dosis_bold"
-        />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="210dp"
-        app:cardCornerRadius="60dp"
-        app:cardElevation="0dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="0dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="170dp"
-                android:layout_height="130dp"
-                android:layout_marginBottom="70dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="5dp">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/main_btn_draw_team"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/blue_primary"
-                    android:text="@string/draw_teams"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/m_plus_rounded_1c_medium"
-                    android:textSize="17sp" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="170dp"
-                android:layout_height="130dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="5dp">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/main_btn_scoreboard"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/blue_primary"
-                    android:text="@string/btn_scoreboard"
-                    android:fontFamily="@font/m_plus_rounded_1c_medium"
-                    android:textColor="@color/white"
-                    android:textSize="17sp" />
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+        android:text="@string/app_desc"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_17ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_main_AppName" />
 
     <View
-        android:foregroundGravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:layout_height="70dp" />
+        android:id="@+id/view_bg_lower"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_cardview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_main_AppDesc"
+        app:layout_constraintVertical_bias="1" />
 
-</RelativeLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_draw_teams"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_100sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp"
+        app:layout_constraintBottom_toTopOf="@id/card_scoreboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_bg_lower">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/main_btn_draw_team"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blue_primary"
+            android:fontFamily="@font/m_plus_rounded_1c_medium"
+            android:text="@string/draw_teams"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_scoreboard"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginBottom="@dimen/_60sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/main_btn_scoreboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blue_primary"
+            android:fontFamily="@font/m_plus_rounded_1c_medium"
+            android:text="@string/btn_scoreboard"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

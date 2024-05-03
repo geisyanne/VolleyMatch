@@ -49,6 +49,31 @@
         <item name="android:layout_marginTop">20dp</item>
     </style>
 
+    <!-- customizableDialog -->
+    <style name="Theme.VolleyMatch.Text.customizableDialog" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginTop">@dimen/_25sdp</item>
+        <item name="android:layout_marginStart">@dimen/_25sdp</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Theme.VolleyMatch.Switch.customizableDialog" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/_6sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_25sdp</item>
+        <item name="android:checked">false</item>
+        <item name="android:gravity">center</item>
+        <item name="materialThemeOverlay">@style/SwitchColorOverlay</item>
+    </style>
+
+    <style name="SwitchColorOverlay">
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorSecondary">@color/yellow_primary</item>
+    </style>
+
+
     <!-- ActionMode.Style -->
     <style name="actionModeTheme" parent="@style/Widget.MaterialComponents.ActionMode">
         <item name="titleTextStyle">@style/TextActionMode</item>

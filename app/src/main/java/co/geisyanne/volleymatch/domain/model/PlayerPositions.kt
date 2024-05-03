@@ -10,5 +10,5 @@ data class PlayerPositions(
 
 data class PlayerListWithCount(
     val players: MutableList<PlayerEntity>,
-    var count: Int // qtd de jogadores dessa posição em um time
+    var qtdPlayerPos: Int // qtd de jogadores dessa posição em um time
 )
