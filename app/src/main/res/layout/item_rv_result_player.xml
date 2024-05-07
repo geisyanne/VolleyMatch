@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingVertical="5dp">
+    android:paddingVertical="@dimen/_4sdp">
 
     <TextView
         android:id="@+id/item_result_txt_name"
@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:text="@string/player"
         android:textStyle="bold"
-        android:textSize="14sp" />
+        android:textSize="@dimen/_13ssp" />
 
     <TextView
         android:id="@+id/item_result_txt_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/position"
-        android:textSize="14sp" />
+        android:textSize="@dimen/_13ssp" />
 
 </LinearLayout>

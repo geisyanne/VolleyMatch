@@ -3,12 +3,12 @@
     android:id="@+id/dialog_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingVertical="16dp"
+    android:paddingVertical="@dimen/_11sdp"
     android:orientation="vertical">
 
     <TextView
         style="@style/Theme.VolleyMatch.FormTextTitle"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/_11sdp"
         android:text="@string/name_group" />
 
     <com.google.android.material.textfield.TextInputLayout

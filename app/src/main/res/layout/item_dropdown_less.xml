@@ -1,7 +1,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_dropdown_txt"
     android:layout_width="match_parent"
-    android:layout_height="36dp"
-    android:padding="14dp"
+    android:layout_height="@dimen/_27sdp"
+    android:padding="@dimen/_11sdp"
     android:textColor="@color/black"
-    android:textSize="14sp" />
+    android:textSize="@dimen/_12ssp" />

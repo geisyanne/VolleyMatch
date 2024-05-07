@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/item_cad_result"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="@dimen/_6sdp"
     app:cardUseCompatPadding="true"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:padding="10dp"
+        android:layout_marginStart="@dimen/_4sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:padding="@dimen/_8sdp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/item_result_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="@dimen/_4sdp"
             android:text="@string/team"
-            android:textSize="16sp"
+            android:textSize="@dimen/_14ssp"
             android:textColor="@color/blue_medium"
             android:textStyle="bold" />
 
@@ -33,6 +33,5 @@
             tools:listitem="@layout/item_rv_result_player" />
 
     </LinearLayout>
-
 
 </androidx.cardview.widget.CardView>
