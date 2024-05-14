@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    style="@style/containerMain"
     android:padding="@dimen/_6sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,13 +12,13 @@
         android:paddingVertical="@dimen/_10sdp">
 
         <TextView
+            style="@style/txtBlueWhite"
             android:id="@+id/draw_txt_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
             android:text="@string/params"
             android:textAllCaps="true"
-            android:textColor="@color/blue_dark"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,10 +28,10 @@
         <View
             android:id="@+id/draw_view"
             android:layout_width="0dp"
+            android:background="?attr/colorSecondary"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_4sdp"
-            android:background="@color/yellow_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/draw_txt_1" />
@@ -58,9 +59,9 @@
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/draw_dropdown_num"
+                android:dropDownSelector="@color/yellow_light"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_28sdp"
-                android:dropDownSelector="@color/yellow_light"
                 android:entries="@array/numbers"
                 android:inputType="none"
                 android:paddingTop="@dimen/_5sdp"
@@ -82,10 +83,10 @@
             app:layout_constraintBottom_toBottomOf="@id/draw_txt_3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toTopOf="@id/draw_txt_3"
-            app:thumbTint="@color/blue_primary"
-            app:trackDecorationTint="@color/yellow_primary"
+            app:thumbTint="?attr/colorPrimary"
+            app:trackDecorationTint="?attr/colorSecondary"
             app:layout_constraintStart_toEndOf="@id/draw_txt_3"
-            app:trackTint="@color/yellow_primary" />
+            app:trackTint="?attr/colorSecondary" />
 
         <TextView
             android:id="@+id/draw_txt_4"
@@ -103,13 +104,14 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/draw_txt_4"
             app:layout_constraintTop_toTopOf="@id/draw_txt_4"
-            app:thumbTint="@color/blue_primary"
-            app:trackDecorationTint="@color/yellow_primary"
-            app:trackTint="@color/yellow_primary" />
+            app:thumbTint="?attr/colorPrimary"
+            app:trackDecorationTint="?attr/colorSecondary"
+            app:trackTint="?attr/colorSecondary" />
 
         <Button
             android:id="@+id/draw_btn_go_result"
             android:layout_width="0dp"
+            android:backgroundTint="@color/blue_primary"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_25sdp"
             android:layout_marginTop="@dimen/_25sdp"

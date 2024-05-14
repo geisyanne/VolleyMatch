@@ -1,6 +1,7 @@
 package co.geisyanne.volleymatch.presentation.drawTeams.result
 
 import android.content.Context
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +17,11 @@ import co.geisyanne.volleymatch.domain.model.Team
 class ResultAdapter(
     private val context: Context,
     private var teams: MutableList<Team>,
-    private val showPosition: Boolean
+    private val showPosition: Boolean,
 ) : RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
-    private val cardColors = intArrayOf(R.color.yellow_transparent, R.color.blue_transparent)
+
+    private val currentNightMode = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         return ResultViewHolder(
@@ -30,6 +32,13 @@ class ResultAdapter(
     override fun getItemCount() = teams.size
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
+
+        val cardColors = if (currentNightMode) {
+            intArrayOf(R.color.blue_medium_2, R.color.blue_medium)
+        } else {
+            intArrayOf(R.color.yellow_transparent, R.color.blue_transparent)
+        }
+
         val color = ContextCompat.getColor(context, cardColors[position % cardColors.size])
         holder.itemView.findViewById<CardView>(R.id.item_cad_result).setCardBackgroundColor(color)
 

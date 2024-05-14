@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_6sdp"
+        android:elevation="@dimen/_5sdp"
+        style="@style/containerPlayers"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +19,7 @@
             android:padding="@dimen/_4sdp">
 
             <CheckBox
+                style="@style/CheckBoxCustom"
                 android:id="@+id/item_rv_checkbox_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +61,7 @@
 
             <RatingBar
                 android:id="@+id/item_rv_ratingBar"
-                style="@style/Widget.AppCompat.RatingBar.Small"
+                style="@style/ratingBarCustomizable"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"

@@ -7,6 +7,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorPrimary"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_13ssp" />
@@ -17,7 +18,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_3sdp"
         android:elevation="@dimen/_1sdp"
-        android:indeterminateTint="@color/yellow_primary"
+        android:indeterminateTint="?attr/colorSecondary"
         android:visibility="gone"
         tools:visibility="visible" />
 

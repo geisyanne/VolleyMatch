@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:paddingTop="@dimen/_5sdp"
+    style="@style/containerMain"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
@@ -53,7 +54,7 @@
         android:id="@+id/player_btn_register"
         style="@style/AppTheme.VolleyMatch.FloatingActionButton"
         android:src="@drawable/icon_add"
-        app:tint="@color/blue_dark"
+        app:tint="?attr/colorPrimaryVariant"
         android:contentDescription="@string/desc_next_screen"
         app:elevation="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"

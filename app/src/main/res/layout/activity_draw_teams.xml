@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/containerMain"
     tools:context=".presentation.drawTeams.home.HomeDrawTeamsActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -23,11 +24,11 @@
                 android:id="@+id/main_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/blue_primary"
-                app:navigationIconTint="@color/white"
+                android:background="?attr/colorPrimary"
+                app:navigationIconTint="?attr/colorOnPrimary"
                 app:title="@string/app_name"
                 app:titleCentered="true"
-                app:titleTextColor="@color/white">
+                app:titleTextColor="?attr/colorOnPrimary">
 
             </com.google.android.material.appbar.MaterialToolbar>
 
@@ -43,12 +44,11 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/drawTeam_bottom_nav"
+        style="@style/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_on_primary"
         app:itemIconTint="@drawable/icon_state_color"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-        app:itemTextColor="@color/blue_primary"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,9 +8,9 @@
 
     <LinearLayout
         android:id="@+id/scoreboard_view_team1"
+        style="@style/scoreboardColors"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/blue_primary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,11 +20,11 @@
 
         <TextView
             android:id="@+id/scoreboard_txt_score1"
+            style="@style/scoreboardColorsTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/point"
-            android:textColor="@color/yellow_primary"
             android:textSize="310sp"
             android:textStyle="bold" />
 
@@ -32,9 +32,9 @@
 
     <LinearLayout
         android:id="@+id/scoreboard_view_team2"
+        style="@style/scoreboardColors2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/yellow_primary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,11 +44,11 @@
 
         <TextView
             android:id="@+id/scoreboard_txt_score2"
+            style="@style/scoreboardColorsTxt2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/point"
-            android:textColor="@color/blue_primary"
             android:textSize="310sp"
             android:textStyle="bold" />
 
@@ -56,6 +56,7 @@
 
     <ImageButton
         android:id="@+id/scoreboard_menu"
+        style="@style/scoreboardColorsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"

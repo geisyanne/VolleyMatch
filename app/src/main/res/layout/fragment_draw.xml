@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/_5sdp">
+    style="@style/containerMain"
+    android:paddingTop="@dimen/_7sdp">
 
     <TextView
         android:id="@+id/txt_select_next"
@@ -14,7 +15,7 @@
         android:textAlignment="center"
         android:textSize="@dimen/_13ssp"
         android:textStyle="bold"
-        android:layout_marginVertical="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_7sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,9 +30,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginStart="@dimen/_1sdp"
         app:layout_constraintStart_toEndOf="@id/txt_select_next"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/blue_primary" />
+        app:tint="?attr/colorPrimaryVariant" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/draw_rv"
@@ -47,7 +49,7 @@
         android:id="@+id/draw_select_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:progressTint="@color/yellow_primary"
+        android:progressTint="?attr/colorSecondary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,10 +73,10 @@
         android:id="@+id/draw_btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/yellow_primary"
         android:src="@drawable/icon_arrow_forward"
         android:layout_margin="@dimen/_10sdp"
-        app:tint="@color/blue_dark"
+        android:backgroundTint="?attr/colorSecondary"
+        app:tint="?attr/colorPrimaryVariant"
         android:contentDescription="@string/desc_next_screen"
         app:elevation="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"

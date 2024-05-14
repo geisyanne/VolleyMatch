@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        style="@style/containerPlayers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/_12sdp"

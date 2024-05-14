@@ -6,14 +6,15 @@
     <color name="gray_medium">#434141</color>
 
     <color name="blue_primary">#3C8DCD</color>
-    <color name="blue_light">#629fD0</color>
     <color name="blue_medium">#2A618D</color>
+    <color name="blue_medium_2">#396F9C</color>
+    <color name="blue_medium_3">#385E7E</color>
     <color name="blue_dark">#214B6E</color>
+    <color name="blue_dark_2">#143551</color>
     <color name="blue_transparent">#BBDEFB</color>
 
     <color name="yellow_primary">#F1d118</color>
     <color name="yellow_light">#F7E226</color>
-    <color name="yellow_medium">#DFC904</color>
     <color name="yellow_transparent">#FFECB3</color>
 
 </resources>

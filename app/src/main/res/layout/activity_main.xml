@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_primary"
+    android:background="?attr/colorPrimary"
     tools:context=".presentation.main.MainActivity">
 
     <TextView
@@ -34,6 +34,7 @@
 
     <View
         android:id="@+id/view_bg_lower"
+        style="@style/containerInitial"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/round_cardview"
@@ -59,7 +60,7 @@
             android:id="@+id/main_btn_draw_team"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/blue_primary"
+            android:background="?attr/colorPrimary"
             android:fontFamily="@font/m_plus_rounded_1c_medium"
             android:text="@string/draw_teams"
             android:textColor="@color/white"
@@ -81,7 +82,7 @@
             android:id="@+id/main_btn_scoreboard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/blue_primary"
+            android:background="?attr/colorPrimary"
             android:fontFamily="@font/m_plus_rounded_1c_medium"
             android:text="@string/btn_scoreboard"
             android:textColor="@color/white"

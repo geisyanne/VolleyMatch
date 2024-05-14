@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/containerMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="@dimen/_8sdp"
@@ -24,6 +25,6 @@
         app:elevation="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/blue_dark" />
+        app:tint="?attr/colorPrimaryVariant" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

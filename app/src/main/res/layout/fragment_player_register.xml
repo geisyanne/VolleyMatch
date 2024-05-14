@@ -61,7 +61,7 @@
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:numStars="5"
-                android:progressTint="@color/yellow_primary"
+                android:progressTint="?attr/colorSecondary"
                 android:stepSize="1.0" />
 
 
