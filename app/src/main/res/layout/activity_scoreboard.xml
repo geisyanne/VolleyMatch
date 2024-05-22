@@ -18,14 +18,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <me.grantland.widget.AutofitTextView
             android:id="@+id/scoreboard_txt_score1"
             style="@style/scoreboardColorsTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            app:minTextSize="200sp"
+            android:textSize="310sp"
             android:gravity="center"
             android:text="@string/point"
-            android:textSize="310sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -42,14 +45,17 @@
         app:layout_constraintStart_toEndOf="@id/scoreboard_view_team1"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <me.grantland.widget.AutofitTextView
             android:id="@+id/scoreboard_txt_score2"
             style="@style/scoreboardColorsTxt2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            app:minTextSize="200sp"
+            android:textSize="310sp"
             android:gravity="center"
             android:text="@string/point"
-            android:textSize="310sp"
             android:textStyle="bold" />
 
     </LinearLayout>

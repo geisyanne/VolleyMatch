@@ -224,6 +224,7 @@ class ResultViewModel : ViewModel() {
 
         val setters =
             players.filter { it.positionPlayer == 1 }.shuffled().take(qtdTeams).toMutableList()
+        val otherPlayers = players.filterNot { it in setters }.toMutableList()
 
         // add levantador
         allTeams.forEach { team ->
@@ -232,21 +233,24 @@ class ResultViewModel : ViewModel() {
             }
         }
 
-        val otherPlayers = players.filterNot { it in setters }.toMutableList()
         val playersLow = otherPlayers.filter { it.level < 3 }.shuffled().toMutableList()
         val playersMed = otherPlayers.filter { it.level in 3..4 }.shuffled().toMutableList()
         val playersHigh = otherPlayers.filter { it.level == 5 }.shuffled().toMutableList()
-
 
         val playersLvl = listOf(playersHigh, playersMed, playersLow)
         distributeNoPosWithLvl(
             qtdCompleteTeams,
             qtdPlayer,
             playersLvl,
-            allTeams
+            allTeams,
         )
 
-        saveTeams(allTeams)
+        val allTeamsShuffled = allTeams
+            .shuffled()
+            .sortedByDescending { it.size == qtdPlayer }
+            .toMutableList()
+
+        saveTeams(allTeamsShuffled)
     }
 
     private fun distributeNoPosWithLvl(
@@ -255,14 +259,13 @@ class ResultViewModel : ViewModel() {
         playersLvl: List<MutableList<PlayerEntity>>,
         teams: MutableList<MutableList<PlayerEntity>>
     ) {
-        while (checkCompleteTeams(teams, qtdPlayer, qtdCompleteTeams)) {
 
+        while (!checkCompleteTeams(teams, qtdPlayer, qtdCompleteTeams)) {
             for (playerLvl in playersLvl) {
-                if (!tryAddPlayers(playerLvl, teams, qtdPlayer, qtdCompleteTeams)) {
-                    break
+                if (playerLvl.isNotEmpty()) {
+                    tryAddPlayers(playerLvl, teams, qtdPlayer, qtdCompleteTeams)
                 }
             }
-
         }
 
         val remainingPlayers = mutableListOf<PlayerEntity>().apply {
@@ -279,7 +282,6 @@ class ResultViewModel : ViewModel() {
                 }
             }
         }
-
     }
 
     private fun tryAddPlayers(
@@ -287,27 +289,33 @@ class ResultViewModel : ViewModel() {
         teams: MutableList<MutableList<PlayerEntity>>,
         qtdPlayer: Int,
         qtdCompleteTeams: Int
-    ): Boolean {
-
-        var countCompleteTeams = 0
+    ) {
 
         if (playersLvl.isNotEmpty()) {
-            for (i in teams.indices) {
+            for (i in 0 until qtdCompleteTeams) {
                 if (playersLvl.isNotEmpty() && teams[i].size < qtdPlayer) {
                     teams[i].add(playersLvl.removeAt(playersLvl.size - 1))
                 }
-                if (teams[i].size == qtdPlayer) countCompleteTeams +=1
             }
         }
-        return countCompleteTeams < qtdCompleteTeams
     }
 
-    private fun checkCompleteTeams(teams: MutableList<MutableList<PlayerEntity>>, qtdPlayer: Int, qtdCompleteTeams: Int) : Boolean {
-        return teams.count { it.size == qtdPlayer } < qtdCompleteTeams
+    private fun checkCompleteTeams(
+        teams: MutableList<MutableList<PlayerEntity>>,
+        qtdPlayer: Int,
+        qtdCompleteTeams: Int
+    ): Boolean {
+        return teams.count { it.size == qtdPlayer } == qtdCompleteTeams
     }
 
-
-
+    /* private fun checkCompleteDistribution(
+         teams: MutableList<MutableList<PlayerEntity>>,
+         qtdPlayer: Int,
+         qtdCompleteTeams: Int,
+         qtdAllPlayers: Int
+     ): Boolean {
+         return teams.sumBy { it.size } != qtdAllPlayers
+     }*/
 
     /*        // criar times
             for (i in 0 until qtdTeams) {
@@ -461,6 +469,7 @@ class ResultViewModel : ViewModel() {
                 incompleteTeams.add(playersList)
             }
         }
+
         allTeams.addAll(completeTeams.shuffled().toMutableList())
         allTeams.addAll(incompleteTeams)
         saveTeams(allTeams)
@@ -512,6 +521,5 @@ class ResultViewModel : ViewModel() {
             teamsList.add(team)
         }
     }
-
 
 }
