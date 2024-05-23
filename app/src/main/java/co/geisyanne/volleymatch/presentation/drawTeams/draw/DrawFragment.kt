@@ -35,6 +35,8 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     private var actionMode: ActionMode? = null
 
+    private var isFirstResume = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -208,6 +210,11 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
         selectedQtdAdapter = 2
         activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_title_drawTeams)
+
+        if (!isFirstResume) {
+            adapter.updateList(selectedPlayer)
+        }
+        isFirstResume = false
     }
 
     override fun onPause() {
@@ -219,6 +226,8 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
     override fun onDestroy() {
         binding = null
+
+        selectedPlayer = emptyList()
 
         if (actionMode != null)
             actionMode?.finish()

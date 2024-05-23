@@ -29,7 +29,7 @@
                 android:maxLines="1"
                 android:padding="@dimen/_12sdp"
                 android:text="@string/player"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
             <TextView

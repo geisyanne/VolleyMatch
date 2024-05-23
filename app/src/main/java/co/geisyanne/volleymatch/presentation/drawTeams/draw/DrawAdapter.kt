@@ -46,6 +46,12 @@ class DrawAdapter(
         return listSelectedPlayers
     }
 
+    fun updateList(preSelectedPlayers: List<PlayerEntity>) {
+        listSelectedPlayers.clear()
+        listSelectedPlayers.addAll(preSelectedPlayers)
+        notifyDataSetChanged()
+    }
+
     var onItemSelect: ((Boolean) -> Unit)? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
