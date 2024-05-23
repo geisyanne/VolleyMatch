@@ -11,11 +11,13 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
 import co.geisyanne.volleymatch.databinding.FragmentDrawBinding
+import co.geisyanne.volleymatch.presentation.common.extension.getSnackbarColor
 import co.geisyanne.volleymatch.presentation.drawTeams.home.FragmentAttachListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
@@ -66,9 +68,12 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     }
 
     private fun showSnackbar(messageResId: Int) {
+
+
+
         binding?.let {
             Snackbar.make(it.root, messageResId, 300)
-                .setBackgroundTint(resources.getColor(R.color.blue_dark))
+                .setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))
                 .show()
         }
     }

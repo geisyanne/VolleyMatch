@@ -1,12 +1,6 @@
 package co.geisyanne.volleymatch.presentation.common.extension
 
-import android.app.Activity
 import android.content.Context
-import android.os.Build
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
-import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity

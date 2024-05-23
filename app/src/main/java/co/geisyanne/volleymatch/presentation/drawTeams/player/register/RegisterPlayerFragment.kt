@@ -1,5 +1,6 @@
 package co.geisyanne.volleymatch.presentation.drawTeams.player.register
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
 import co.geisyanne.volleymatch.databinding.FragmentPlayerRegisterBinding
+import co.geisyanne.volleymatch.presentation.common.extension.getSnackbarColor
 import co.geisyanne.volleymatch.presentation.common.extension.hideKeyboard
 import co.geisyanne.volleymatch.presentation.common.util.TxtWatcher
 import com.google.android.material.snackbar.Snackbar
@@ -110,7 +112,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
 
         viewModel.messageEventData.observe(viewLifecycleOwner) { stringResId ->
             Snackbar.make(requireView(), stringResId, 500)
-                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.blue_dark))
+                .setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))
                 .show()
         }
     }

@@ -6,12 +6,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
 import co.geisyanne.volleymatch.databinding.FragmentResultBinding
 import co.geisyanne.volleymatch.domain.model.Team
+import co.geisyanne.volleymatch.presentation.common.extension.getSnackbarColor
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -90,7 +92,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
                     binding?.root ?: return,
                     R.string.not_enought_players,
                     5000
-                ).setBackgroundTint(resources.getColor(R.color.blue_dark))
+                ).setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))
             snackbar?.show()
         }
     }
