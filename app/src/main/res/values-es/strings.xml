@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">VolleyMatch</string>
+
+    <string name="draw_teams">Sortear\n equipos</string>
+    <string name="draw_teams_menu">Sortear equipos</string>
+
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+
+    <!-- Screen: scoreboard-->
+    <string name="btn_scoreboard">Marcador</string>
+    <string name="txt_score">%02d</string>
+    <string name="txt_help"><b>Clic normal:</b> +1 punto\n<b>Clic largo:</b> -1 punto</string>
+    <string name="help">Ayuda</string>
+    <string name="restart">Reiniciar marcador</string>
+    <string name="point">00</string>
+
+    <!-- Screen: groups -->
+    <string name="groups">Grupos</string>
+    <string name="group">Grupo</string>
+    <string name="name_group">Nombre del grupo</string>
+    <string name="create_group">Crear Grupo</string>
+    <string name="group_empty_player_list">No hay jugadores en el grupo</string>
+    <string name="empty_groups_list">No se encontraron grupos</string>
+    <string name="add_player">Agregar al grupo</string>
+
+    <!-- Screen: register -->
+    <string name="name">Nombre</string>
+    <string name="position">Posición</string>
+    <string name="undefined_position">No definida</string>
+    <string name="skill_level">Nivel de habilidad</string>
+
+    <!-- Screen: player -->
+    <string name="player">Jugador</string>
+    <string name="register_player">Registrar Jugador</string>
+    <string name="save">Guardar</string>
+    <string name="players">Jugadores</string>
+    <string name="empty_player_list">No se encontraron jugadores</string>
+    <string name="no_player">Ningún jugador</string>
+    <string name="qtd_player">%d Jugador</string>
+    <string name="qtd_players">%d Jugadores</string>
+    <string name="search_player">Buscar jugador(a)</string>
+    <string name="empty_player_register">Ningún jugador registrado</string>
+
+    <!-- Screen: draw -->
+    <string name="draw">Sortear</string>
+    <string name="select_players">Seleccionar jugadores</string>
+    <string name="select_group">Seleccionar grupo</string>
+    <string name="list">Lista</string>
+    <string name="qtd_players_team">Jugadores por equipo</string>
+    <string name="position_5x1">Sistema táctico 5x1</string>
+    <string name="skill_level_drawTeam">Habilidad</string>
+    <string name="selected_all">Seleccionar todos</string>
+    <string name="clear_all">Desmarcar todos</string>
+    <string name="params">  Criterios para el sorteo  </string>
+    <string name="desc_next_screen">Avanzar a la siguiente pantalla</string>
+    <string name="select_next">"Seleccione los jugadores y avance"</string>
+
+    <!-- Screen: result -->
+    <string name="result">Resultado</string>
+    <string name="team">Equipo</string>
+    <string name="share_txt">Compartir vía</string>
+    <string name="team_txt">"EQUIPO "</string>
+    <string name="setter_txt">Colocador(a)</string>
+    <string name="outside_txt">Punta</string>
+    <string name="opposite_txt">Opuesto(a)</string>
+    <string name="middle_txt">Central</string>
+    <string name="libero_txt">Libero</string>
+    <string name="info_app_txt">"Sorteo generado en la app VolleyMatch.\n%s"</string>
+    <string name="not_enought_players">No hay jugadores con posiciones definidas en número suficiente para todos los equipos</string>
+    <string name="position_show">" - %s"</string>
+    <string name="num_team_show">EQUIPO %s</string>
+    <string name="share">Compartir</string>
+
+    <!-- toolbar -->
+    <string name="toolbar_title_players">Jugadores</string>
+    <string name="toolbar_title_drawTeams">Sortear equipos</string>
+    <string name="toolbar_title_register">Registrar jugador</string>
+    <string name="toolbar_title_edit">Editar jugador</string>
+    <string name="toolbar_title_result">Equipos sorteados</string>
+    <string name="toolbar_title_groups">Grupos</string>
+    <string name="search">Buscar</string>
+
+    <!-- dialogs -->
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="create">Crear</string>
+    <string name="confirm_player_deletion">¿Eliminar este jugador?</string>
+    <string name="confirm_group_deletion">¿Eliminar este grupo?</string>
+    <string name="alert_selection">¡Seleccione los jugadores!</string>
+    <string name="yes">SÍ</string>
+    <string name="no">NO</string>
+
+    <!-- database operations -->
+    <string name="player_inserted_successfully">Jugador registrado</string>
+    <string name="player_error">¡Error! Inténtalo de nuevo</string>
+    <string name="player_updated_successfully">Jugador actualizado</string>
+    <string name="player_error_to_updated">Error al actualizar jugador</string>
+    <string name="player_deleted_successfully">Jugador eliminado</string>
+    <string name="player_error_to_delete">Error al eliminar jugador</string>
+    <string name="player_error_in_search">Error al buscar jugador</string>
+    <string name="group_inserted_successfully">Grupo creado</string>
+    <string name="group_error_to_insert">Grupo no registrado</string>
+    <string name="group_updated_successfully">Grupo actualizado</string>
+    <string name="group_error_to_updated">Error al actualizar grupo</string>
+    <string name="group_deleted_successfully">Grupo eliminado</string>
+    <string name="group_error_to_delete">Error al eliminar grupo</string>
+    <string name="crosRef_inserted_successfully">Jugador añadido al grupo</string>
+    <string name="crosRef_error_to_insert">Error al añadir jugador al grupo</string>
+
+    <!-- description -->
+    <string name="desc_name">Escribe el nombre del jugador</string>
+    <string name="desc_group">Selecciona el grupo al que pertenece el jugador</string>
+    <string name="app_desc">Para tus partidos de voleibol</string>
+
+</resources>

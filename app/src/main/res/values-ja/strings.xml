@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">VolleyMatch</string>
+
+    <string name="draw_teams">チームを\n抽選する</string>
+    <string name="draw_teams_menu">チームを抽選する</string>
+
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+
+    <!-- Screen: scoreboard-->
+    <string name="btn_scoreboard">スコアボード</string>
+    <string name="txt_score">%02d</string>
+    <string name="txt_help"><b>通常のクリック：</b> +1 ポイント\n<b>長押し：</b> -1 ポイント</string>
+    <string name="help">ヘルプ</string>
+    <string name="restart">スコアをリセット</string>
+    <string name="point">00</string>
+
+    <!-- Screen: groups -->
+    <string name="groups">グループ</string>
+    <string name="group">グループ</string>
+    <string name="name_group">グループ名</string>
+    <string name="create_group">グループを作成</string>
+    <string name="group_empty_player_list">グループにプレイヤーがいません</string>
+    <string name="empty_groups_list">グループが見つかりません</string>
+    <string name="add_player">グループに追加</string>
+
+    <!-- Screen: register -->
+    <string name="name">名前</string>
+    <string name="position">ポジション</string>
+    <string name="undefined_position">未定義</string>
+    <string name="skill_level">スキルレベル</string>
+
+    <!-- Screen: player -->
+    <string name="player">プレイヤー</string>
+    <string name="register_player">プレイヤーを登録</string>
+    <string name="save">保存</string>
+    <string name="players">プレイヤー</string>
+    <string name="empty_player_list">プレイヤーが見つかりません</string>
+    <string name="no_player">プレイヤーなし</string>
+    <string name="qtd_player">%d プレイヤー</string>
+    <string name="qtd_players">%d プレイヤー</string>
+    <string name="search_player">プレイヤーを検索</string>
+    <string name="empty_player_register">登録されたプレイヤーがいません</string>
+
+    <!-- Screen: draw -->
+    <string name="draw">抽選する</string>
+    <string name="select_players">プレイヤーを選択</string>
+    <string name="select_group">グループを選択</string>
+    <string name="list">リスト</string>
+    <string name="qtd_players_team">チームごとのプレイヤー</string>
+    <string name="position_5x1">5x1 戦術システム</string>
+    <string name="skill_level_drawTeam">スキル</string>
+    <string name="selected_all">全て選択</string>
+    <string name="clear_all">全てクリア</string>
+    <string name="params">  抽選基準  </string>
+    <string name="desc_next_screen">次の画面に進む</string>
+    <string name="select_next">"プレイヤーを選択して進む"</string>
+
+    <!-- Screen: result -->
+    <string name="result">結果</string>
+    <string name="team">チーム</string>
+    <string name="share_txt">共有方法</string>
+    <string name="team_txt">"チーム "</string>
+    <string name="setter_txt">セッター</string>
+    <string name="outside_txt">アウトサイド</string>
+    <string name="opposite_txt">オポジット</string>
+    <string name="middle_txt">ミドル</string>
+    <string name="libero_txt">リベロ</string>
+    <string name="info_app_txt">"VolleyMatchアプリで生成された抽選。\n%s"</string>
+    <string name="not_enought_players">全てのチームに必要な人数のプレイヤーが揃っていません</string>
+    <string name="position_show">" - %s"</string>
+    <string name="num_team_show">チーム %s</string>
+    <string name="share">共有</string>
+
+    <!-- toolbar -->
+    <string name="toolbar_title_players">プレイヤー</string>
+    <string name="toolbar_title_drawTeams">チームを抽選する</string>
+    <string name="toolbar_title_register">プレイヤーを登録</string>
+    <string name="toolbar_title_edit">プレイヤーを編集</string>
+    <string name="toolbar_title_result">抽選結果</string>
+    <string name="toolbar_title_groups">グループ</string>
+    <string name="search">検索</string>
+
+    <!-- dialogs -->
+    <string name="edit">編集</string>
+    <string name="delete">削除</string>
+    <string name="cancel">キャンセル</string>
+    <string name="create">作成</string>
+    <string name="confirm_player_deletion">このプレイヤーを削除しますか？</string>
+    <string name="confirm_group_deletion">このグループを削除しますか？</string>
+    <string name="alert_selection">プレイヤーを選択してください！</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+
+    <!-- database operations -->
+    <string name="player_inserted_successfully">プレイヤーが登録されました</string>
+    <string name="player_error">エラー！もう一度お試しください</string>
+    <string name="player_updated_successfully">プレイヤーが更新されました</string>
+    <string name="player_error_to_updated">プレイヤーの更新に失敗しました</string>
+    <string name="player_deleted_successfully">プレイヤーが削除されました</string>
+    <string name="player_error_to_delete">プレイヤーの削除に失敗しました</string>
+    <string name="player_error_in_search">プレイヤーの検索に失敗しました</string>
+    <string name="group_inserted_successfully">グループが作成されました</string>
+    <string name="group_error_to_insert">グループの登録に失敗しました</string>
+    <string name="group_updated_successfully">グループが更新されました</string>
+    <string name="group_error_to_updated">グループの更新に失敗しました</string>
+    <string name="group_deleted_successfully">グループが削除されました</string>
+    <string name="group_error_to_delete">グループの削除に失敗しました</string>
+    <string name="crosRef_inserted_successfully">プレイヤーがグループに追加されました</string>
+    <string name="crosRef_error_to_insert">プレイヤーをグループに追加する際にエラーが発生しました</string>
+
+    <!-- description -->
+    <string name="desc_name">プレイヤーの名前を入力してください</string>
+    <string name="desc_group">プレイヤーが所属するグループを選択してください</string>
+    <string name="app_desc">バレーボールの試合のために</string>
+
+</resources>

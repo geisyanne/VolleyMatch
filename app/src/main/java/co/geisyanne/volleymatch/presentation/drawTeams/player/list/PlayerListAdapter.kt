@@ -90,14 +90,8 @@ class PlayerListAdapter(
                 txtPos.visibility = View.GONE
             } else {
                 txtPos.visibility = View.VISIBLE
-                val posText = when (player.positionPlayer) {
-                    1 -> "Levantador(a)"
-                    2 -> "Ponteiro(a)"
-                    3 -> "Oposto(a)"
-                    4 -> "Central"
-                    5 -> "Líbero"
-                    else -> throw IllegalArgumentException("Posição inválida")
-                }
+                val posTextArray = itemView.context.resources.getStringArray(R.array.positionsPlayer)
+                val posText = posTextArray[player.positionPlayer]
                 txtPos.text = posText
             }
 
