@@ -43,7 +43,7 @@
                 android:paddingHorizontal="@dimen/_6sdp"
                 android:paddingVertical="@dimen/_4sdp"
                 android:text="@string/position"
-                android:textColor="@color/gray_light"
+                android:textColor="?attr/colorTertiaryFixed"
                 android:textSize="@dimen/_11ssp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

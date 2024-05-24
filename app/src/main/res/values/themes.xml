@@ -10,11 +10,11 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/yellow_primary</item>
         <item name="colorOnSecondary">@color/blue_dark</item>
-        <item name="colorSecondaryVariant">@color/yellow_light</item>
+        <item name="colorSecondaryVariant">@color/gray_light</item>
         <item name="colorSecondaryContainer">#FEFAFD</item>
         <!-- Tertiary brand color. -->
         <item name="colorTertiary">@color/black</item>
-        <item name="colorTertiaryFixed">@color/gray_medium</item>
+        <item name="colorTertiaryFixed">@color/gray_light</item>
         <item name="colorTertiaryContainer">#F2F6F8</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>

@@ -14,8 +14,8 @@
         <item name="colorSecondaryContainer">@color/blue_medium_3</item>
         <!-- Tertiary brand color. -->
         <item name="colorTertiary">@color/black</item>
-        <item name="colorTertiaryFixed">@color/gray_medium</item>
-        <item name="colorTertiaryContainer">#26557C</item>
+        <item name="colorTertiaryFixed">@color/blue_dark_2</item>
+        <item name="colorTertiaryContainer">#6889A5</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Toolbar. -->

@@ -38,7 +38,8 @@
         <item name="android:layout_height">@dimen/_43sdp</item>
         <item name="android:layout_marginBottom">@dimen/_8sdp</item>
         <item name="android:inputType">none</item>
-        <item name="android:dropDownSelector">@color/yellow_light</item>
+        <item name="android:textSize">@dimen/_13ssp</item>
+        <item name="android:dropDownSelector">?attr/colorSecondaryVariant</item>
         <item name="android:paddingTop">@dimen/_6sdp</item>
         <item name="android:paddingBottom">@dimen/_6sdp</item>
     </style>
