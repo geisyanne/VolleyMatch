@@ -10,6 +10,7 @@
         android:id="@+id/scoreboard_view_team1"
         style="@style/scoreboardColors"
         android:layout_width="0dp"
+        android:paddingHorizontal="@dimen/_7sdp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal"
@@ -18,17 +19,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <me.grantland.widget.AutofitTextView
+        <TextView
             android:id="@+id/scoreboard_txt_score1"
             style="@style/scoreboardColorsTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:maxLines="1"
-            android:singleLine="true"
-            app:minTextSize="200sp"
-            android:textSize="310sp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:autoSizeMaxTextSize="500sp"
+            android:autoSizeMinTextSize="210sp"
+            android:autoSizeTextType="uniform"
+            android:includeFontPadding="false"
             android:gravity="center"
             android:text="@string/point"
+            android:textSize="@dimen/_100ssp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -39,23 +44,28 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:paddingHorizontal="@dimen/_7sdp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/scoreboard_view_team1"
         app:layout_constraintTop_toTopOf="parent">
 
-        <me.grantland.widget.AutofitTextView
+        <TextView
             android:id="@+id/scoreboard_txt_score2"
             style="@style/scoreboardColorsTxt2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:maxLines="1"
-            android:singleLine="true"
-            app:minTextSize="200sp"
-            android:textSize="310sp"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:autoSizeMaxTextSize="500sp"
+            android:autoSizeMinTextSize="210sp"
+            android:autoSizeTextType="uniform"
+            android:includeFontPadding="false"
             android:gravity="center"
             android:text="@string/point"
+            android:textSize="@dimen/_100ssp"
             android:textStyle="bold" />
 
     </LinearLayout>
