@@ -13,7 +13,10 @@ Para fazer o download na Google Play Store, [clique aqui](https://play.google.co
 - **Design**: Material Design 3 para uma interface moderna e intuitiva.
 - **Componentes**: Utilização de LiveData para atualização da interface em tempo real.
 - **Monitoramento**: Integração com Firebase Crashlytics para rastreamento de erros e falhas.
- 
+
+
+ > Consulte o arquivo [LICENSE](https://github.com/geisyanne/VolleyMatch/blob/main/LICENSE.md) para direitos e limitações de licença (MIT).
+  
 ## Layout mobile
 
 ![layoutmobile1](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(1).png)![layoutmobile2](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(2).png)  
