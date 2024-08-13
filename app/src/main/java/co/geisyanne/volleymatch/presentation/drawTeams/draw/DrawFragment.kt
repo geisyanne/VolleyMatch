@@ -68,9 +68,6 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     }
 
     private fun showSnackbar(messageResId: Int) {
-
-
-
         binding?.let {
             Snackbar.make(it.root, messageResId, 300)
                 .setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))

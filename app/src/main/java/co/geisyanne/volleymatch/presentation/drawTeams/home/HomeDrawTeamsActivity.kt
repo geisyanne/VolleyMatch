@@ -6,17 +6,19 @@ import android.view.Menu
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
+import co.geisyanne.volleymatch.data.local.entity.TeamEntity
 import co.geisyanne.volleymatch.databinding.ActivityDrawTeamsBinding
+import co.geisyanne.volleymatch.domain.model.Team
 import co.geisyanne.volleymatch.presentation.drawTeams.draw.DrawFragment
 import co.geisyanne.volleymatch.presentation.drawTeams.player.list.PlayerListFragment
 import co.geisyanne.volleymatch.presentation.drawTeams.player.register.RegisterPlayerFragment
+import co.geisyanne.volleymatch.presentation.drawTeams.result.EditResultFragment
 import co.geisyanne.volleymatch.presentation.drawTeams.result.ResultFragment
 
 class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
@@ -167,6 +169,21 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         supportActionBar?.title = getString(R.string.toolbar_title_result)
     }
 
+    override fun goToEditResult(
+        teams: MutableList<TeamEntity>,
+        pos: Boolean
+    ) {
+        val bundle = Bundle().apply {
+            putParcelableArrayList("KEY_TEAMS", ArrayList(teams))
+            putBoolean("KEY_POS", pos)
+        }
+        val fragment = EditResultFragment()
+        fragment.arguments = bundle
+        replaceFragment(fragment, addToBackStack = true)
+        binding?.drawTeamBottomNav?.visibility = View.GONE
+        supportActionBar?.title = getString(R.string.edit_teams)
+    }
+
     /*override fun goToGroup(groupId: Long) {
        *//* val fragment = GroupWithPlayersFragment()
         replaceFragment(fragment, addToBackStack = true)
@@ -179,3 +196,4 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
     }
 
 }
+

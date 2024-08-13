@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
-import co.geisyanne.volleymatch.domain.model.Team
+import co.geisyanne.volleymatch.data.local.entity.TeamEntity
 
 class ResultAdapter(
     private val context: Context,
-    private var teams: MutableList<Team>,
+    var teams: MutableList<TeamEntity>,
     private val showPosition: Boolean,
 ) : RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
@@ -58,7 +58,7 @@ class ResultAdapter(
             }
         }
 
-        fun bind(team: Team) {
+        fun bind(team: TeamEntity) {
 
             val numTeamShow =
                 context.resources.getString(R.string.num_team_show, team.num.toString())

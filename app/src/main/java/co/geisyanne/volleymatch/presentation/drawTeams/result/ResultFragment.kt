@@ -1,5 +1,6 @@
 package co.geisyanne.volleymatch.presentation.drawTeams.result
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -11,9 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
+import co.geisyanne.volleymatch.data.local.entity.TeamEntity
 import co.geisyanne.volleymatch.databinding.FragmentResultBinding
 import co.geisyanne.volleymatch.domain.model.Team
 import co.geisyanne.volleymatch.presentation.common.extension.getSnackbarColor
+import co.geisyanne.volleymatch.presentation.drawTeams.home.FragmentAttachListener
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -24,6 +27,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     private val viewModel: ResultViewModel by viewModel()
     private var binding: FragmentResultBinding? = null
+    private var fragmentAttachListener: FragmentAttachListener? = null
 
     //private lateinit var adapter: ResultAdapter
     private var snackbar: Snackbar? = null
@@ -31,7 +35,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     private var players: ArrayList<PlayerEntity>? = null
     private var qtdPlayer: Int = 0
     private var lvl: Boolean = false
-    private var teams: MutableList<Team> = mutableListOf()
+    private var teams: MutableList<TeamEntity> = mutableListOf()
     private var showPosition: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +69,12 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         binding?.resultBtnDrawAgain?.setOnClickListener {
             drawAndDisplayTeams()
         }
+
+//        binding?.resultBtnDrawEdit?.setOnClickListener {
+//            fragmentAttachListener?.goToEditResult(teams, showPosition)
+//        }
+
+
     }
 
     private fun drawAndDisplayTeams() {
@@ -80,7 +90,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         qtdPlayer: Int,
         pos: Boolean,
         lvl: Boolean
-    ): MutableList<Team> {
+    ): MutableList<TeamEntity> {
         return players?.let { viewModel.drawTeams(it, qtdPlayer, pos, lvl) } ?: mutableListOf()
     }
 
@@ -170,6 +180,14 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         // app info
         stringBuilder.append(getString(R.string.info_app_txt, currentDateTime))
         return stringBuilder.toString()
+    }
+
+    // CHECK: IF THE ACTIVITY IMPLEMENTS AN INTERFACE
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FragmentAttachListener) {
+            fragmentAttachListener = context
+        }
     }
 
     override fun onPause() {

@@ -112,4 +112,10 @@
     <string name="desc_group">Selecione o grupo do qual o jogador faz parte</string>
     <string name="app_desc">Para suas partidas de voleibol</string>
 
+    <!-- Screen: edit result -->
+    <string name="description_edit_1" translatable="false">Alteração manual dos times</string>
+    <string name="description_edit_2" translatable="false">Arraste e solte os jogadores</string>
+    <string name="edit_teams">Editar times</string>
+
+
 </resources>

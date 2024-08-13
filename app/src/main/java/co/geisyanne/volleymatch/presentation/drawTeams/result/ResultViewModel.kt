@@ -2,6 +2,7 @@ package co.geisyanne.volleymatch.presentation.drawTeams.result
 
 import androidx.lifecycle.ViewModel
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
+import co.geisyanne.volleymatch.data.local.entity.TeamEntity
 import co.geisyanne.volleymatch.domain.model.PlayerListWithCount
 import co.geisyanne.volleymatch.domain.model.PlayerPositions
 import co.geisyanne.volleymatch.domain.model.Team
@@ -10,7 +11,7 @@ import kotlin.random.Random
 
 class ResultViewModel : ViewModel() {
 
-    private var teamsList: MutableList<Team> = mutableListOf()
+    private var teamsList: MutableList<TeamEntity> = mutableListOf()
     private var remainingPlayers: MutableList<PlayerEntity> = mutableListOf()
     private var startingTeam: Int = 0
     // private var countCompleteTeams: Int = 0
@@ -20,7 +21,7 @@ class ResultViewModel : ViewModel() {
         qtdPlayer: Int,
         pos: Boolean,
         lvl: Boolean
-    ): MutableList<Team> {
+    ): MutableList<TeamEntity> {
 
         teamsList.clear()
         remainingPlayers.clear()
@@ -514,7 +515,7 @@ class ResultViewModel : ViewModel() {
     private fun saveTeams(teams: MutableList<MutableList<PlayerEntity>>) {
         for (i in teams.indices) {
             if (teams[i].isEmpty()) return
-            val team = Team(
+            val team = TeamEntity(
                 num = (i + 1),
                 playerList = teams[i]
             )
