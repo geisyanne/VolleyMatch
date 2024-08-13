@@ -19,14 +19,16 @@ Para fazer o download na Google Play Store, [clique aqui](https://play.google.co
   
 ## Layout mobile
 
-![layoutmobile1](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(1).png)![layoutmobile2](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(2).png)  
+![layoutmobile1](https://github.com/geisyanne/VolleyMatch/blob/main/forReadme/for_readme(1).png)
 
-![layoutmobile3](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(3).png)  
+![layoutmobile2](https://github.com/geisyanne/VolleyMatch/blob/main/forReadme/for_readme(2).png)  
 
-![layoutmobile4](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(4).png)  
+![layoutmobile3](https://github.com/geisyanne/VolleyMatch/blob/main/forReadme/for_readme(3).png)  
 
-![layoutmobile5](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(5).png)  
+![layoutmobile4](https://github.com/geisyanne/VolleyMatch/blob/main/forReadme/for_readme(4).png)  
 
-![layoutmobile1](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(6).png)  
+![layoutmobile5](https://github.com/geisyanne/VolleyMatch/blob/main/forReadme/for_readme(5).png)  
 
-![layoutmobile6](https://github.com/geisyanne/VolleyMatch/blob/main/for_readme(7).png)  
+![layoutmobile1](https://github.com/geisyanne/VolleyMatch/blob/main/forReadme/for_readme(6).png)  
+
+![layoutmobile6](https://github.com/geisyanne/VolleyMatch/blob/main/forReadme/for_readme(7).png)  
