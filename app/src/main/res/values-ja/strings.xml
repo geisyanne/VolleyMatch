@@ -4,8 +4,6 @@
     <string name="draw_teams">チームを\n抽選する</string>
     <string name="draw_teams_menu">チームを抽選する</string>
 
-    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
-
     <!-- Screen: scoreboard-->
     <string name="btn_scoreboard">スコアボード</string>
     <string name="txt_score">%02d</string>
@@ -21,7 +19,7 @@
     <string name="create_group">グループを作成</string>
     <string name="group_empty_player_list">グループにプレイヤーがいません</string>
     <string name="empty_groups_list">グループが見つかりません</string>
-    <string name="add_player">グループに追加</string>
+    <string name="add_player">プレイヤーを追加</string>
 
     <!-- Screen: register -->
     <string name="name">名前</string>

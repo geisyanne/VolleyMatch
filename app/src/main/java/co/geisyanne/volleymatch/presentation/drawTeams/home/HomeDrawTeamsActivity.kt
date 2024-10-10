@@ -1,83 +1,82 @@
 package co.geisyanne.volleymatch.presentation.drawTeams.home
 
+import android.content.Intent
 import android.graphics.PorterDuff
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
-import co.geisyanne.volleymatch.data.local.entity.TeamEntity
 import co.geisyanne.volleymatch.databinding.ActivityDrawTeamsBinding
-import co.geisyanne.volleymatch.domain.model.Team
 import co.geisyanne.volleymatch.presentation.drawTeams.draw.DrawFragment
 import co.geisyanne.volleymatch.presentation.drawTeams.player.list.PlayerListFragment
 import co.geisyanne.volleymatch.presentation.drawTeams.player.register.RegisterPlayerFragment
-import co.geisyanne.volleymatch.presentation.drawTeams.result.EditResultFragment
 import co.geisyanne.volleymatch.presentation.drawTeams.result.ResultFragment
+import co.geisyanne.volleymatch.presentation.main.MainActivity
+import co.geisyanne.volleymatch.util.Ad
+import com.google.android.gms.ads.AdView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
     PlayerListFragment.ActionBarTitleUpdater {
 
-    private var binding: ActivityDrawTeamsBinding? = null
-
-    private lateinit var playerListFragment: PlayerListFragment
-    private lateinit var drawFragment: DrawFragment
-
-    //private lateinit var groupListFragment: GroupFragment
-
-    private var currentFragment: Fragment? = null
+    private lateinit var binding: ActivityDrawTeamsBinding
+    private lateinit var rootLayout: ConstraintLayout
+    private val bannerAd: AdView by lazy { binding.bannerAd }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDrawTeamsBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
-        setSupportActionBar(binding?.mainToolbar)
-        supportActionBar?.title = "Jogadores"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        setupToolbar()
+        replaceFragment(PlayerListFragment())
 
-        playerListFragment = PlayerListFragment()
-        drawFragment = DrawFragment()
-        //groupListFragment = GroupFragment()
+        bannerAd.visibility = View.GONE
+        rootLayout = binding.containerDrawTeams
 
-        replaceFragment(playerListFragment)
-        binding?.drawTeamBottomNav?.selectedItemId =
-            R.id.menu_bottom_player // NO PRE-SELECTED BOTTOM NAVIGATION
-
-        binding?.drawTeamBottomNav?.setOnItemSelectedListener { menuItem ->
-
-            when (menuItem.itemId) {
-                /*R.id.menu_bottom_groups -> {
-                    showFragment(groupListFragment)
-                    setToolbarTitle(R.string.toolbar_title_groups)
-                    true
-                }*/
-
-                R.id.menu_bottom_player -> {
-                    showFragment(playerListFragment)
-                    supportActionBar?.title = getString(R.string.toolbar_title_players)
-                    true
-                }
-
-                R.id.menu_bottom_draw_times -> {
-                    showFragment(drawFragment)
-                    supportActionBar?.title = getString(R.string.toolbar_title_drawTeams)
-                    true
-                }
-
-                else -> throw IllegalArgumentException("Menu item desconhecido: ${menuItem.itemId}")
-            }
-
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(500)
+            setupAd()
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bannerAd.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bannerAd.resume()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.mainToolbar)
+        supportActionBar?.apply {
+            title = getString(R.string.toolbar_title_players)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.baseline_home_filled_24)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -89,6 +88,36 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         setupSearchView(searchView)
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+    private fun setupAd() {
+        Ad.initialize(this)
+        Ad.loadBannerAd(bannerAd)
+        observeKeyboardStateForAdVisibility()
+    }
+
+
+    private fun observeKeyboardStateForAdVisibility() {
+        rootLayout.viewTreeObserver.addOnGlobalLayoutListener {
+            val r = Rect()
+            rootLayout.getWindowVisibleDisplayFrame(r)
+            val screenHeight = rootLayout.rootView.height
+            val keypadHeight = screenHeight - r.bottom
+            bannerAd.visibility = if (keypadHeight > 100) View.GONE else View.VISIBLE
+        }
     }
 
     private fun setupSearchView(searchView: SearchView) {
@@ -109,45 +138,32 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         supportActionBar?.title = title
     }
 
-    private fun showFragment(fragment: Fragment) {
-        if (currentFragment !== fragment) {
-            replaceFragment(fragment)
-            currentFragment = fragment
-        }
-    }
-
-    private fun replaceFragment(
-        fragment: Fragment,
-        addToBackStack: Boolean = false,
-        tag: String? = null
-    ) {
-        val transaction = supportFragmentManager.beginTransaction()
-
-        transaction.replace(R.id.drawTeam_container_fragment, fragment, tag)
-
-        if (addToBackStack) {
-            transaction.addToBackStack(null)
-        }
-
-        transaction.commit()
-    }
-
     override fun goToRegisterPlayer() {
-        val fragment = RegisterPlayerFragment()
-        replaceFragment(fragment, addToBackStack = true, "RegisterPlayerTag")
-        binding?.drawTeamBottomNav?.visibility = View.GONE
-        supportActionBar?.title = getString(R.string.toolbar_title_register)
+        navigateToFragment(
+            fragment = RegisterPlayerFragment(),
+            tag = "RegisterPlayerTag",
+            titleResId = R.string.toolbar_title_register
+        )
     }
 
     override fun goToUpdatePlayer(player: PlayerEntity?) {
         val bundle = Bundle().apply {
             putParcelable("KEY_PLAYER", player)
         }
-        val fragment = RegisterPlayerFragment()
-        fragment.arguments = bundle
-        replaceFragment(fragment, addToBackStack = true, "UpdatePlayerTag")
-        binding?.drawTeamBottomNav?.visibility = View.GONE
-        supportActionBar?.title = getString(R.string.toolbar_title_edit)
+        val fragment = RegisterPlayerFragment().apply { arguments = bundle }
+        navigateToFragment(
+            fragment = fragment,
+            tag = "UpdatePlayerTag",
+            titleResId = R.string.toolbar_title_edit
+        )
+    }
+
+    override fun goToDrawTeams() {
+        navigateToFragment(
+            fragment = DrawFragment(),
+            tag = null,
+            titleResId = R.string.toolbar_title_drawTeams
+        )
     }
 
     override fun goToResult(
@@ -162,37 +178,49 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
             putBoolean("KEY_POS", pos)
             putBoolean("KEY_LVL", lvl)
         }
-        val fragment = ResultFragment()
-        fragment.arguments = bundle
-        replaceFragment(fragment, addToBackStack = true)
-        binding?.drawTeamBottomNav?.visibility = View.GONE
-        supportActionBar?.title = getString(R.string.toolbar_title_result)
+        val fragment = ResultFragment().apply { arguments = bundle }
+
+        navigateToFragment(
+            fragment = fragment,
+            tag = null,
+            titleResId = R.string.toolbar_title_result
+        )
     }
 
-    override fun goToEditResult(
-        teams: MutableList<TeamEntity>,
-        pos: Boolean
+    private fun navigateToFragment(
+        fragment: Fragment,
+        tag: String?,
+        titleResId: Int
     ) {
-        val bundle = Bundle().apply {
-            putParcelableArrayList("KEY_TEAMS", ArrayList(teams))
-            putBoolean("KEY_POS", pos)
-        }
-        val fragment = EditResultFragment()
-        fragment.arguments = bundle
-        replaceFragment(fragment, addToBackStack = true)
-        binding?.drawTeamBottomNav?.visibility = View.GONE
-        supportActionBar?.title = getString(R.string.edit_teams)
+        replaceFragment(fragment, true, tag, titleResId)
     }
 
-    /*override fun goToGroup(groupId: Long) {
-       *//* val fragment = GroupWithPlayersFragment()
-        replaceFragment(fragment, addToBackStack = true)
-        binding?.drawTeamBottomNav?.visibility = View.GONE*//*
-    }*/
+    private fun replaceFragment(
+        fragment: Fragment,
+        addToBackStack: Boolean = false,
+        tag: String? = null,
+        titleResId: Int? = null
+    ) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.setReorderingAllowed(true) // Permite reordenação das transações
+        transaction.replace(R.id.drawTeam_container_fragment, fragment, tag)
+
+        if (addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+
+        transaction.commit()
+
+        titleResId?.let {
+            supportFragmentManager.executePendingTransactions() // Executa qualquer transação pendente imediatamente
+            supportActionBar?.title = getString(titleResId)
+        }
+    }
 
     override fun onDestroy() {
-        binding = null
         super.onDestroy()
+        bannerAd.destroy()
+
     }
 
 }

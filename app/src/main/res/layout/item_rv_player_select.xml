@@ -53,10 +53,10 @@
 
             <TextView
                 android:id="@+id/item_rv_txt_pos"
+                style="@style/txtGray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/position"
-                android:textColor="@color/gray_medium"
                 android:textSize="@dimen/_11ssp" />
 
             <RatingBar

@@ -46,6 +46,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         binding?.run {
             playerRv.layoutManager = LinearLayoutManager(requireContext())
             playerBtnRegister.setOnClickListener { fragmentAttachListener?.goToRegisterPlayer() }
+            playerBtnGoDraw.setOnClickListener { fragmentAttachListener?.goToDrawTeams() }
         }
 
         setupSwipeLeftRightDelete()
@@ -68,7 +69,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
                 .setMessage(R.string.confirm_player_deletion)
                 .setCancelable(false)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    viewModel?.deletePlayer(position)
+                    viewModel.deletePlayer(position)
                     adapter.notifyItemRemoved(position)
                 }
                 .setNeutralButton(R.string.no) { dialog, _ ->
@@ -158,6 +159,13 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
             } else {
                 View.VISIBLE
             }
+
+            binding?.playerBtnGoDraw?.visibility = if (hasFocus) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+
         }
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -203,7 +211,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
 
     override fun onResume() {
         super.onResume()
-        activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
+        //activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_title_players)
     }
 

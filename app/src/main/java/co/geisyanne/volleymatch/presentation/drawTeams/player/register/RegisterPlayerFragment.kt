@@ -1,6 +1,5 @@
 package co.geisyanne.volleymatch.presentation.drawTeams.player.register
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -54,6 +53,9 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
     }
 
     private fun registerPlayerForm() {
+
+        binding?.playerRegisterBtnSave?.setText(getString(R.string.save))
+
         binding?.playerRegisterEditName?.addTextChangedListener(TxtWatcher {
             binding?.playerRegisterBtnSave?.isEnabled = it.isNotEmpty()
         })
@@ -113,6 +115,7 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
         viewModel.messageEventData.observe(viewLifecycleOwner) { stringResId ->
             Snackbar.make(requireView(), stringResId, 500)
                 .setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 .show()
         }
     }

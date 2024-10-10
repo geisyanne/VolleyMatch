@@ -21,7 +21,7 @@
     <string name="create_group">Criar Grupo</string>
     <string name="group_empty_player_list">Nenhum jogador no grupo</string>
     <string name="empty_groups_list">Nenhum grupo encontrado</string>
-    <string name="add_player">Adicionar ao grupo</string>
+    <string name="add_player">Adicionar jogador</string>
 
     <!-- Screen: register -->
     <string name="name">Nome</string>

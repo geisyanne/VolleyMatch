@@ -71,6 +71,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
         binding?.let {
             Snackbar.make(it.root, messageResId, 300)
                 .setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 .show()
         }
     }
@@ -210,7 +211,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     override fun onResume() {
         super.onResume()
         selectedQtdAdapter = 2
-        activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
+        //activity?.findViewById<View>(R.id.drawTeam_bottom_nav)?.visibility = View.VISIBLE
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_title_drawTeams)
 
         if (!isFirstResume) {

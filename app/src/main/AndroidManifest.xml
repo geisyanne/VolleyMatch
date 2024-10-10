@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!-- Manter tela de placar ativa -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -15,26 +19,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VolleyMatch.Starting"
         tools:targetApi="31">
+
         <activity
             android:name=".presentation.drawTeams.home.HomeDrawTeamsActivity"
             android:theme="@style/Theme.VolleyMatch"
             android:exported="false"
             android:screenOrientation="portrait"
             android:parentActivityName=".presentation.main.MainActivity" />
+
         <activity
             android:name=".presentation.scoreboard.ScoreboardActivity"
             android:theme="@style/Theme.VolleyMatch"
             android:screenOrientation="landscape"
             android:exported="false" />
+
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7670458186490717~6984081528"/>
+
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            tools:replace="android:resource"
+            android:resource="@xml/ga_ad_services_config" />
+
     </application>
 
 </manifest>

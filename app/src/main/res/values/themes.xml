@@ -49,6 +49,10 @@
         <item name="android:textColor">@color/blue_dark</item>
     </style>
 
+    <style name="txtGray">
+        <item name="android:textColor">@color/gray_medium</item>
+    </style>
+
     <style name="txtBlueMediumYellow">
         <item name="android:textColor">@color/blue_medium</item>
     </style>

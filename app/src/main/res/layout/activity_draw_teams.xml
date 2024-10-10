@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/containerMain"
+    android:id="@+id/container_draw_teams"
     tools:context=".presentation.drawTeams.home.HomeDrawTeamsActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/drawTeam_bottom_nav"
+        app:layout_constraintBottom_toTopOf="@id/banner_ad"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -43,6 +44,17 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-7670458186490717/7922529187"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/drawTeam_bottom_nav"
         style="@style/bottomNav"
@@ -55,5 +67,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_bottom_nav" />
+        -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

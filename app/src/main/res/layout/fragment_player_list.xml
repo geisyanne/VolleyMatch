@@ -3,17 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/_5sdp"
+    android:paddingTop="@dimen/_4sdp"
     style="@style/containerMain"
     android:layout_height="match_parent">
 
+   <LinearLayout
+       android:id="@+id/container_linear"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginVertical="@dimen/_3sdp"
+       android:layout_marginHorizontal="@dimen/_9sdp"
+       android:orientation="horizontal"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintBottom_toTopOf="@+id/container">
+
+       <com.google.android.material.button.MaterialButton
+           android:id="@+id/player_btn_register"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="@dimen/_11ssp"
+           android:textColor="?attr/colorPrimaryVariant"
+           android:textStyle="bold"
+           android:backgroundTint="?attr/colorSecondary"
+           android:text="@string/add_player" />
+
+   </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/container_linear">
 
         <com.tsuryo.swipeablerv.SwipeableRecyclerView
             android:id="@+id/player_rv"
@@ -52,9 +77,9 @@
         tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/player_btn_register"
+        android:id="@+id/player_btn_go_draw"
         style="@style/AppTheme.VolleyMatch.FloatingActionButton"
-        android:src="@drawable/icon_add"
+        android:src="@drawable/icon_arrow_forward"
         app:tint="?attr/colorPrimaryVariant"
         android:contentDescription="@string/desc_next_screen"
         app:elevation="@dimen/_4sdp"

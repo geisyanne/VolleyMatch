@@ -30,8 +30,8 @@ android {
         applicationId = "co.geisyanne.volleymatch"
         minSdk = 26
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.1.3"
+        versionCode = 8
+        versionName = "1.1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         signingConfig = signingConfigs.getByName("release")
@@ -68,10 +68,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.cardview:cardview:1.0.0")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation("com.google.firebase:firebase-crashlytics:19.0.3")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation("com.google.firebase:firebase-crashlytics:19.2.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.2")
 
     // room
     val roomVersion = "2.6.1"
@@ -89,8 +89,10 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.5.0")
 
     // firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.google.android.gms:play-services-ads:23.4.0")
 
     // SSP and SDP - scalable size unit
     implementation ("com.intuit.ssp:ssp-android:1.1.1")

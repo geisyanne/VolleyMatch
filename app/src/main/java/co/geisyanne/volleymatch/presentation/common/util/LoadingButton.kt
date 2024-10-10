@@ -20,6 +20,7 @@ class LoadingButton : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         setup(context, attrs)
     }
+
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         setup(context, attrs)
     }
@@ -28,11 +29,11 @@ class LoadingButton : FrameLayout {
         val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.component_button_loading, this)
 
-        val typeArray = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0)
-        text = typeArray.getString(R.styleable.LoadingButton_text) // SEARCHING FOR ATTRIBUTES
+        button = findViewById(R.id.button)
+        progress = findViewById(R.id.progress)
 
-        button = getChildAt(0) as Button
-        progress = getChildAt(1) as ProgressBar
+        val typeArray = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0)
+        text = typeArray.getString(R.styleable.LoadingButton_text) // texto inicial
 
         button.text = text
         button.isEnabled = false
@@ -40,21 +41,22 @@ class LoadingButton : FrameLayout {
         typeArray.recycle()
     }
 
-    // FRAME WITH BUTTON FUNCTIONS
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
-        button.isEnabled = enabled // CHANGE BUTTON STATE
+        button.isEnabled = enabled
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
-        button.setOnClickListener(l) // RUN BUTTON, NOT FRAME LAYOUT
+        button.setOnClickListener(l)
     }
 
-    public fun setText(text: String) {
+
+    fun setText(text: String) {
+        this.text = text
         button.text = text
     }
 
-    public fun showProgress(enabled: Boolean) {
+    fun showProgress(enabled: Boolean) {
         if (enabled) {
             button.text = ""
             button.isEnabled = false
@@ -65,5 +67,4 @@ class LoadingButton : FrameLayout {
             progress.visibility = View.GONE
         }
     }
-
 }

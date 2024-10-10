@@ -2,22 +2,22 @@
     <!-- Estado pressionado -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="4dp" /> <!-- Raio do canto para criar um botão arredondado -->
-            <solid android:color="@color/yellow_transparent" /> <!-- Cor de fundo quando pressionado -->
+            <corners android:radius="4dp" />
+            <solid android:color="@color/yellow_transparent" />
         </shape>
     </item>
     <!-- Estado ativado -->
     <item android:state_enabled="true">
         <shape android:shape="rectangle">
-            <corners android:radius="4dp" /> <!-- Raio do canto para criar um botão arredondado -->
-            <solid android:color="@color/blue_primary" /> <!-- Cor de fundo quando ativado -->
+            <corners android:radius="4dp" />
+            <solid android:color="@color/blue_primary" />
         </shape>
     </item>
     <!-- Estado desativado -->
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="4dp" /> <!-- Raio do canto para criar um botão arredondado -->
-            <solid android:color="@color/blue_transparent" /> <!-- Cor de fundo quando desativado -->
+            <corners android:radius="4dp" />
+            <solid android:color="@color/blue_transparent" />
         </shape>
     </item>
 </selector>

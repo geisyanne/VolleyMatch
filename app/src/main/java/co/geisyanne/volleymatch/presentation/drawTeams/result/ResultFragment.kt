@@ -14,7 +14,6 @@ import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.data.local.entity.PlayerEntity
 import co.geisyanne.volleymatch.data.local.entity.TeamEntity
 import co.geisyanne.volleymatch.databinding.FragmentResultBinding
-import co.geisyanne.volleymatch.domain.model.Team
 import co.geisyanne.volleymatch.presentation.common.extension.getSnackbarColor
 import co.geisyanne.volleymatch.presentation.drawTeams.home.FragmentAttachListener
 import com.google.android.material.snackbar.Snackbar
@@ -102,7 +101,9 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
                     binding?.root ?: return,
                     R.string.not_enought_players,
                     5000
-                ).setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))
+                )
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), getSnackbarColor()))
+                    .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             snackbar?.show()
         }
     }

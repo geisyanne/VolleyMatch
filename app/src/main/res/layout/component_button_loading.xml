@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <Button
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTint="@color/btn_tint_selector"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_13ssp" />
 
     <ProgressBar
+        android:id="@+id/progress"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_gravity="center"
         android:elevation="@dimen/_1sdp"
         android:indeterminateTint="?attr/colorSecondary"
         android:visibility="gone"
-        tools:visibility="visible" />
-
-</merge>
+        tools:visibility="visible"/>
+</FrameLayout>

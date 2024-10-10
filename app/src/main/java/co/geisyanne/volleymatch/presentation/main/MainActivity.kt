@@ -7,6 +7,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import co.geisyanne.volleymatch.databinding.ActivityMainBinding
 import co.geisyanne.volleymatch.presentation.drawTeams.home.HomeDrawTeamsActivity
 import co.geisyanne.volleymatch.presentation.scoreboard.ScoreboardActivity
+import co.geisyanne.volleymatch.util.Ad
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,4 +32,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }

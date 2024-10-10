@@ -52,6 +52,10 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="txtGray">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="txtBlueMediumYellow">
         <item name="android:textColor">@color/yellow_primary</item>
     </style>
@@ -65,7 +69,7 @@
         <!-- Define a cor das estrelas preenchidas -->
         <item name="android:progressTint">@color/blue_primary</item>
         <!-- Define a cor das estrelas vazias -->
-        <item name="android:progressBackgroundTint">@color/blue_dark_2</item>
+        <item name="android:progressBackgroundTint">@color/gray_light</item>
     </style>
 
     <style name="CheckBoxCustom" parent="Widget.AppCompat.CompoundButton.CheckBox">

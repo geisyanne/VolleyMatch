@@ -4,8 +4,6 @@
     <string name="draw_teams">Draw\n teams</string>
     <string name="draw_teams_menu">Draw teams</string>
 
-    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
-
     <!-- Screen: scoreboard-->
     <string name="btn_scoreboard">Scoreboard</string>
     <string name="txt_score">%02d</string>
@@ -21,7 +19,7 @@
     <string name="create_group">Create Group</string>
     <string name="group_empty_player_list">No players in the group</string>
     <string name="empty_groups_list">No groups found</string>
-    <string name="add_player">Add to group</string>
+    <string name="add_player">Add player</string>
 
     <!-- Screen: register -->
     <string name="name">Name</string>

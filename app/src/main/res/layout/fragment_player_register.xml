@@ -67,8 +67,7 @@
 
             <co.geisyanne.volleymatch.presentation.common.util.LoadingButton
                 android:id="@+id/player_register_btn_save"
-                style="@style/Theme.VolleyMatch.FormLoadingButton"
-                app:text="@string/save" />
+                style="@style/Theme.VolleyMatch.FormLoadingButton" />
 
         </LinearLayout>
 

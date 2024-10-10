@@ -1,12 +1,10 @@
 package co.geisyanne.volleymatch.presentation.drawTeams.player.register
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.geisyanne.volleymatch.R
-
 import co.geisyanne.volleymatch.domain.repository.PlayerRepository
 import kotlinx.coroutines.launch
 
@@ -42,7 +40,6 @@ class RegisterPlayerViewModel(
 
             } catch (e: Exception) {
                 _messageEventData.value = R.string.player_error
-                Log.e(TAG, "Erro ao inserir jogador", e)
             }
         }
 
@@ -55,7 +52,6 @@ class RegisterPlayerViewModel(
                 _messageEventData.value = R.string.player_updated_successfully
             } catch (e: Exception) {
                 _messageEventData.value = R.string.player_error
-                Log.e(TAG, "Erro ao editar jogador", e)
             }
         }
 
@@ -65,8 +61,8 @@ class RegisterPlayerViewModel(
         data object Updated : PlayerState()
     }
 
-    companion object {
+    /*companion object {
         private val TAG = RegisterPlayerViewModel::class.java.simpleName
-    }
+    }*/
 
 }

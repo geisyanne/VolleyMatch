@@ -4,8 +4,6 @@
     <string name="draw_teams">Sortear\n equipos</string>
     <string name="draw_teams_menu">Sortear equipos</string>
 
-    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
-
     <!-- Screen: scoreboard-->
     <string name="btn_scoreboard">Marcador</string>
     <string name="txt_score">%02d</string>
@@ -21,7 +19,7 @@
     <string name="create_group">Crear Grupo</string>
     <string name="group_empty_player_list">No hay jugadores en el grupo</string>
     <string name="empty_groups_list">No se encontraron grupos</string>
-    <string name="add_player">Agregar al grupo</string>
+    <string name="add_player">Añadir jugador</string>
 
     <!-- Screen: register -->
     <string name="name">Nombre</string>
