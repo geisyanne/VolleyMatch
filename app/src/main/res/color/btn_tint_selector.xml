@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado ativado -->
+    <item android:color="?attr/colorPrimary" android:state_enabled="true"/>
+    <!-- Estado desativado -->
+    <item android:color="@color/blue_transparent" android:state_enabled="false"/>
+    <!-- Estado pressionado -->
+    <item android:color="@color/yellow_transparent" android:state_pressed="true"/>
+</selector>
