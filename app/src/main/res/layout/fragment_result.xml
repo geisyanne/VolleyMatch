@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/containerMain"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="@dimen/_8sdp"
-    android:paddingVertical="@dimen/_5sdp">
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/_7sdp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/result_rv_teams"
@@ -21,6 +20,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/result_btn_draw_again"
         style="@style/AppTheme.VolleyMatch.FloatingActionButton"
+        android:contentDescription="@string/draw_again"
         android:src="@drawable/baseline_shuffle_24"
         app:elevation="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"

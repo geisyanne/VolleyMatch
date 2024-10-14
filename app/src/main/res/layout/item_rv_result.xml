@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/item_cad_result"
     app:cardCornerRadius="@dimen/_6sdp"
+    android:layout_marginHorizontal="@dimen/_6sdp"
     app:cardUseCompatPadding="true"
     android:layout_height="wrap_content">
 

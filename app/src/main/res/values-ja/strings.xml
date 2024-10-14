@@ -110,5 +110,6 @@
     <string name="desc_name">プレイヤーの名前を入力してください</string>
     <string name="desc_group">プレイヤーが所属するグループを選択してください</string>
     <string name="app_desc">バレーボールの試合のために</string>
+    <string name="draw_again">もう一度抽選する</string>
 
 </resources>

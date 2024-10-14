@@ -38,35 +38,33 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/drawTeam_container_fragment"
             android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/_1sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <View
+        android:id="@+id/view_ad_separator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="?attr/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/banner_ad"
+        tools:visibility="visible" />
+
+
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/banner_ad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:adSize="SMART_BANNER"
+        android:visibility="gone"
         app:adUnitId="ca-app-pub-7670458186490717/7922529187"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <!--
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/drawTeam_bottom_nav"
-        style="@style/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconTint="@drawable/icon_state_color"
-        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_bottom_nav" />
-        -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

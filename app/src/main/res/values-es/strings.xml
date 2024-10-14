@@ -110,5 +110,6 @@
     <string name="desc_name">Escribe el nombre del jugador</string>
     <string name="desc_group">Selecciona el grupo al que pertenece el jugador</string>
     <string name="app_desc">Para tus partidos de voleibol</string>
+    <string name="draw_again">Sorteo nuevamente</string>
 
 </resources>

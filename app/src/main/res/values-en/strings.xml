@@ -110,5 +110,6 @@
     <string name="desc_name">Enter the player\'s name</string>
     <string name="desc_group">Select the group the player belongs to</string>
     <string name="app_desc">For your volleyball matches</string>
+    <string name="draw_again">Draw again</string>
 
 </resources>

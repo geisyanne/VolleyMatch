@@ -110,5 +110,6 @@
     <string name="desc_name">Geben Sie den Namen des Spielers ein</string>
     <string name="desc_group">Wählen Sie die Gruppe aus, zu der der Spieler gehört</string>
     <string name="app_desc">Für Ihre Volleyballspiele</string>
+    <string name="draw_again">Erneut ziehen</string>
 
 </resources>

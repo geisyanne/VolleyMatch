@@ -45,7 +45,6 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         setupToolbar()
         replaceFragment(PlayerListFragment())
 
-        bannerAd.visibility = View.GONE
         rootLayout = binding.containerDrawTeams
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -103,20 +102,35 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
             }
         }
     }
+
     private fun setupAd() {
+        val adSeparator = binding.viewAdSeparator
+
         Ad.initialize(this)
-        Ad.loadBannerAd(bannerAd)
-        observeKeyboardStateForAdVisibility()
+
+        Ad.loadBannerAd(bannerAd, adSeparator) { adLoaded ->
+            if (adLoaded) {
+                observeKeyboardStateForAdVisibility()
+            }
+        }
     }
 
-
     private fun observeKeyboardStateForAdVisibility() {
+        val adSeparator = binding.viewAdSeparator
+
         rootLayout.viewTreeObserver.addOnGlobalLayoutListener {
             val r = Rect()
             rootLayout.getWindowVisibleDisplayFrame(r)
             val screenHeight = rootLayout.rootView.height
             val keypadHeight = screenHeight - r.bottom
-            bannerAd.visibility = if (keypadHeight > 100) View.GONE else View.VISIBLE
+
+            if (keypadHeight > 100) {
+                bannerAd.visibility = View.GONE
+                adSeparator.visibility = View.GONE
+            } else {
+                bannerAd.visibility = View.VISIBLE
+                adSeparator.visibility = View.VISIBLE
+            }
         }
     }
 

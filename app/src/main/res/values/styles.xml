@@ -53,7 +53,8 @@
     <style name="AppTheme.VolleyMatch.FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/_10sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_10sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_30sdp</item>
         <item name="backgroundTint">?attr/colorSecondary</item>
     </style>
 
