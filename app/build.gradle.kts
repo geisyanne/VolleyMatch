@@ -30,8 +30,8 @@ android {
         applicationId = "co.geisyanne.volleymatch"
         minSdk = 26
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.1.6"
+        versionCode = 10
+        versionName = "1.1.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         signingConfig = signingConfigs.getByName("release")
@@ -70,8 +70,8 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
     implementation("com.google.firebase:firebase-crashlytics:19.2.0")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.8.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.8.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.3")
 
     // room
     val roomVersion = "2.6.1"

@@ -16,6 +16,7 @@ import co.geisyanne.volleymatch.R
 import co.geisyanne.volleymatch.databinding.FragmentPlayerListBinding
 import co.geisyanne.volleymatch.presentation.drawTeams.home.FragmentAttachListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -141,7 +142,7 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
         adapter.toggleSelection(position)
         val size = adapter.selectedItems.size()
         if (size == 0) {
-            actionMode?.finish()  // DISABLE TOOLBAR ACTION
+            actionMode?.finish()
         } else {
             actionMode?.title = "$size"
             actionMode?.invalidate()
@@ -149,41 +150,34 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
         val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
+        val searchView = searchItem?.actionView as? SearchView
 
-        // HIDE REGISTER BTN DURING SEARCH
-        searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
-            binding?.playerBtnRegister?.visibility = if (hasFocus) {
-                View.GONE
-            } else {
-                View.VISIBLE
+        if (searchView != null) {
+            // HIDE REGISTER BTN DURING SEARCH
+            searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+                binding?.playerBtnRegister?.visibility = if (hasFocus) View.GONE else View.VISIBLE
+                binding?.playerBtnGoDraw?.visibility = if (hasFocus) View.GONE else View.VISIBLE
             }
 
-            binding?.playerBtnGoDraw?.visibility = if (hasFocus) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let { searchDatabase(it) }
+                    return true
+                }
 
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let { searchDatabase(it) }
+                    return true
+                }
+            })
+        } else {
+            FirebaseCrashlytics.getInstance().log("SearchView não disponível no Fragment")
+            FirebaseCrashlytics.getInstance()
+                .recordException(IllegalStateException("SearchView não encontrado no Fragment"))
         }
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    searchDatabase(query)
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
-                    searchDatabase(newText)
-
-                }
-                return true
-            }
-        })
     }
 
     private fun searchDatabase(name: String) {
@@ -222,7 +216,6 @@ class PlayerListFragment : Fragment(R.layout.fragment_player_list) {
     override fun onDestroy() {
         binding = null
 
-        // DESTROY ACTION MODE
         if (actionMode != null)
             actionMode?.finish()
 

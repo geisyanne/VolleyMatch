@@ -24,6 +24,7 @@ import co.geisyanne.volleymatch.presentation.drawTeams.result.ResultFragment
 import co.geisyanne.volleymatch.presentation.main.MainActivity
 import co.geisyanne.volleymatch.util.Ad
 import com.google.android.gms.ads.AdView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -82,11 +83,16 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         menuInflater.inflate(R.menu.menu_search, menu)
 
         val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
+        val searchView = searchItem?.actionView as? SearchView
 
-        setupSearchView(searchView)
+        if (searchView != null) {
+            setupSearchView(searchView)
+        } else {
+            FirebaseCrashlytics.getInstance().log("SearchView não disponível")
+            FirebaseCrashlytics.getInstance().recordException(IllegalStateException("SearchView não encontrado"))
+        }
 
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -233,7 +239,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
 
     override fun onDestroy() {
         super.onDestroy()
-        bannerAd.destroy()
+        bannerAd?.destroy()
 
     }
 
