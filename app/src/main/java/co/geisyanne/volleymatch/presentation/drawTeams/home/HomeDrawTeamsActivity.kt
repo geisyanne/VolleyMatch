@@ -2,6 +2,7 @@ package co.geisyanne.volleymatch.presentation.drawTeams.home
 
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -65,6 +66,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
     }
 
     private fun setupToolbar() {
+
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.apply {
             title = getString(R.string.toolbar_title_players)
