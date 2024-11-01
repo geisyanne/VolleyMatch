@@ -2,7 +2,6 @@ package co.geisyanne.volleymatch.presentation.drawTeams.home
 
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -27,7 +26,6 @@ import com.google.android.gms.ads.AdView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
@@ -36,6 +34,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
     private lateinit var binding: ActivityDrawTeamsBinding
     private lateinit var rootLayout: ConstraintLayout
     private val bannerAd: AdView by lazy { binding.bannerAd }
+    private var isAdLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +48,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
         rootLayout = binding.containerDrawTeams
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(500)
+            //delay(500)
             setupAd()
         }
 
@@ -110,33 +109,8 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
     }
 
     private fun setupAd() {
-        val adSeparator = binding.viewAdSeparator
-
-        Ad.initialize(this)
-
-        Ad.loadBannerAd(bannerAd, adSeparator) { adLoaded ->
-            if (adLoaded) {
-                observeKeyboardStateForAdVisibility()
-            }
-        }
-    }
-
-    private fun observeKeyboardStateForAdVisibility() {
-        val adSeparator = binding.viewAdSeparator
-
-        rootLayout.viewTreeObserver.addOnGlobalLayoutListener {
-            val r = Rect()
-            rootLayout.getWindowVisibleDisplayFrame(r)
-            val screenHeight = rootLayout.rootView.height
-            val keypadHeight = screenHeight - r.bottom
-
-            if (keypadHeight > 100) {
-                bannerAd.visibility = View.GONE
-                adSeparator.visibility = View.GONE
-            } else {
-                bannerAd.visibility = View.VISIBLE
-                adSeparator.visibility = View.VISIBLE
-            }
+        Ad.loadBannerAd(bannerAd, binding.containerAd) { adLoaded ->
+            isAdLoaded = adLoaded
         }
     }
 
@@ -147,11 +121,25 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
             searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         searchEditText.setTextColor(ContextCompat.getColor(this, R.color.white))
 
+        searchEditText.setOnFocusChangeListener { _, hasFocus ->
+            updateVisibilityContainerAd(hasFocus)
+        }
+
         val closeIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
         closeIcon.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
+    }
+
+    fun updateVisibilityContainerAd(hasFocusEditTxt: Boolean) {
+        if (!isAdLoaded) return
+
+        if (hasFocusEditTxt) {
+            binding.containerAd.visibility = View.GONE
+        } else {
+            binding.containerAd.visibility = View.VISIBLE
+        }
     }
 
     override fun updateActionBarTitle(title: String) {
@@ -239,7 +227,7 @@ class HomeDrawTeamsActivity : AppCompatActivity(), FragmentAttachListener,
 
     override fun onDestroy() {
         super.onDestroy()
-        bannerAd?.destroy()
+        bannerAd.destroy()
 
     }
 

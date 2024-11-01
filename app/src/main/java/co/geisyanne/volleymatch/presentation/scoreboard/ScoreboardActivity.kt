@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.view.View
 import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -34,11 +35,11 @@ class ScoreboardActivity : AppCompatActivity() {
             PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE,
             "VolleyMatch:WakeLock"
         )
-        wakeLock?.acquire()
+        wakeLock?.acquire(3 * 60 * 60 * 1000L)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         setupListeners()
-
+        hideSystemUI()
     }
 
     private fun setupListeners() {
@@ -118,27 +119,46 @@ class ScoreboardActivity : AppCompatActivity() {
             .show()
     }
 
-    @Suppress("DEPRECATION")
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemUI()
+    }
+
+    private fun hideSystemUI() {
         val decorView = window.decorView
-        if (hasFocus) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                decorView.windowInsetsController?.hide(WindowInsets.Type.systemBars())
-            } else {
-                decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Esconde as barras do sistema usando WindowInsetsController (para Android 11+)
+            decorView.windowInsetsController?.let { controller ->
+                controller.hide(WindowInsets.Type.systemBars())
+                controller.systemBarsBehavior =
+                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
+        } else {
+            // Esconde as barras do sistema usando systemUiVisibility (para Android 10 e anteriores)
+            decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    )
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideSystemUI()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        wakeLock?.release()
     }
 
     override fun onDestroy() {
         binding = null
-        wakeLock?.release()
         super.onDestroy()
     }
 

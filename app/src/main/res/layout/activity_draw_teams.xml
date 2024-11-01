@@ -11,7 +11,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/banner_ad"
+        app:layout_constraintBottom_toTopOf="@id/container_ad"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -44,27 +44,26 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <View
-        android:id="@+id/view_ad_separator"
+    <FrameLayout
+        android:id="@+id/container_ad"
+        android:layout_height="56dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_2sdp"
-        android:background="?attr/colorPrimary"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/banner_ad"
-        tools:visibility="visible" />
-
-
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/banner_ad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adSize="SMART_BANNER"
-        android:visibility="gone"
-        app:adUnitId="ca-app-pub-7670458186490717/7922529187"
-        tools:visibility="visible"
+        android:background="@color/white"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/banner_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-7670458186490717/7922529187" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import co.geisyanne.volleymatch.databinding.FragmentPlayerRegisterBinding
 import co.geisyanne.volleymatch.presentation.common.extension.getSnackbarColor
 import co.geisyanne.volleymatch.presentation.common.extension.hideKeyboard
 import co.geisyanne.volleymatch.presentation.common.util.TxtWatcher
+import co.geisyanne.volleymatch.presentation.drawTeams.home.HomeDrawTeamsActivity
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,6 +47,11 @@ class RegisterPlayerFragment : Fragment(R.layout.fragment_player_register) {
     }
 
     private fun configureForm() {
+
+        binding?.playerRegisterEditName?.setOnFocusChangeListener { _, hasFocus ->
+            (activity as? HomeDrawTeamsActivity)?.updateVisibilityContainerAd(hasFocus)
+        }
+
         when (tag) {
             "RegisterPlayerTag" -> registerPlayerForm()
             "UpdatePlayerTag" -> updatePlayerForm()
