@@ -30,8 +30,8 @@ android {
         applicationId = "co.geisyanne.volleymatch"
         minSdk = 26
         targetSdk = 35
-        versionCode = 11
-        versionName = "1.1.8"
+        versionCode = 12
+        versionName = "1.1.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         signingConfig = signingConfigs.getByName("release")
